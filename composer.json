@@ -23,6 +23,8 @@
         "fuel/parser": "dev-1.7/master",
         "fuelphp/upload": "2.0.2",
         "monolog/monolog": "1.5.*",
+        "opauth/opauth": "0.4.*",
+        "opauth/facebook": "dev-master",
         "michelf/php-markdown": "1.4.0"
     },
     "suggest": {
@@ -34,7 +36,16 @@
         "mthaml/mthaml": "Allow Haml templating with Twig supports with the Parser package"
     },
     "config": {
+        "github-oauth": {
+            "github.com": "3760a9b1ff304b23f4d9e4e113b70f5bcd9bc9a2"
+        },
         "vendor-dir": "fuel/vendor"
+    },
+    "extra": {
+        "installer-paths": {
+            "fuel/{$name}": ["fuel/core"],
+            "{$name}": ["fuel/docs"]
+        }
     },
     "scripts": {
         "post-install-cmd": [
