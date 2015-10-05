@@ -1,14 +1,4 @@
 <?php
-/**
- * Part of the Fuel framework.
- *
- * @package    Fuel
- * @version    1.7
- * @author     Fuel Development Team
- * @license    MIT License
- * @copyright  2010 - 2015 Fuel Development Team
- * @link       http://fuelphp.com
- */
 
 return array(
 
@@ -48,13 +38,13 @@ return array(
 	/**
 	 * Default location for the file cache
 	 */
-	// 'cache_dir'       => APPPATH.'cache/',
+	'cache_dir'       => APPPATH.'cache/',
 
 	/**
 	 * Settings for the file finder cache (the Cache class has it's own config!)
 	 */
-	// 'caching'         => false,
-	// 'cache_lifetime'  => 3600, // In Seconds
+	'caching'         => false,
+	'cache_lifetime'  => 3600, // In Seconds
 
 	/**
 	 * Callback to use with ob_start(), set this to 'ob_gzhandler' for gzip encoding of output
@@ -77,14 +67,18 @@ return array(
 	/**
 	 * Localization & internationalization settings
 	 */
-	// 'language'           => 'en', // Default language
-	// 'language_fallback'  => 'en', // Fallback language when file isn't available for default language
-	// 'locale'             => 'en_US', // PHP set_locale() setting, null to not set
-
+	'language'           => 'en', // Default language
+	'language_fallback'  => 'en', // Fallback language when file isn't available for default language
+	'locale'             => 'en_US', // PHP set_locale() setting, null to not set
+    'locales' => array(
+        'en' => 'en_US',
+        'vi' => 'vi_VN',
+        'ja' => 'ja_JP',
+    ),
 	/**
 	 * Internal string encoding charset
 	 */
-	// 'encoding'  => 'UTF-8',
+	'encoding'  => 'UTF-8',
 
 	/**
 	 * DateTime settings
@@ -93,7 +87,7 @@ return array(
 	 * default_timezone		optional, if you want to change the server's default timezone
 	 */
 	// 'server_gmt_offset'  => 0,
-	// 'default_timezone'   => null,
+	//'default_timezone' => 'Asia/Ho_Chi_Minh',
 
 	/**
 	 * Logging Threshold.  Can be set to any of the following:
@@ -105,9 +99,9 @@ return array(
 	 * Fuel::L_INFO
 	 * Fuel::L_ALL
 	 */
-	// 'log_threshold'    => Fuel::L_WARNING,
-	// 'log_path'         => APPPATH.'logs/',
-	// 'log_date_format'  => 'Y-m-d H:i:s',
+	'log_threshold'    => array(250, 400, 600),
+	'log_path'         => APPPATH.'logs/',
+	'log_date_format'  => 'Y-m-d H:i:s',
 
 	/**
 	 * Security settings
@@ -144,7 +138,7 @@ return array(
 		 * WARNING: Using xss_clean will cause a performance hit.
 		 * How much is dependant on how much input data there is.
 		 */
-		// 'input_filter'  => array(),
+		'input_filter'  => ('htmlentities'),
 
 		/**
 		 * This output filter can be any normal PHP function as well as 'xss_clean'
@@ -157,7 +151,7 @@ return array(
 		/**
 		 * Encoding mechanism to use on htmlentities()
 		 */
-		// 'htmlentities_flags' => ENT_QUOTES,
+		'htmlentities_flags' => ENT_QUOTES,
 
 		/**
 		 * Wether to encode HTML entities as well
@@ -167,7 +161,7 @@ return array(
 		/**
 		 * Whether to automatically filter view data
 		 */
-		// 'auto_filter_output'  => true,
+		'auto_filter_output'  => false,
 
 		/**
 		 * With output encoding switched on all objects passed will be converted to strings or
@@ -256,7 +250,7 @@ return array(
 	/**************************************************************************/
 	/* Always Load                                                            */
 	/**************************************************************************/
-	// 'always_load'  => array(
+	'always_load'  => array(
 
 		/**
 		 * These packages are loaded on Fuel's startup.
@@ -269,9 +263,9 @@ return array(
 		 *     array('auth'	=> PKGPATH.'auth/')
 		 * );
 		 */
-		// 'packages'  => array(
-		// 	//'orm',
-		// ),
+		'packages'  => array(
+		 	'auth', 'orm'
+		),
 
 		/**
 		 * These modules are always loaded on Fuel's startup. You can specify them
@@ -296,7 +290,7 @@ return array(
 		 * add it like 'session' => 'auth'.
 		 * If you don't want the config in a group use null as groupname.
 		 */
-		// 'config'  => array(),
+		'config' => array('auth', 'app'),
 
 		/**
 		 * Language files to autoload
@@ -307,6 +301,6 @@ return array(
 		 * If you don't want the lang in a group use null as groupname.
 		 */
 		// 'language'  => array(),
-	// ),
+	),
 
 );
