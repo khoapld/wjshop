@@ -32,7 +32,7 @@
                     <form id="update-username-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_username', [], []); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Username</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" name="username" value="<?php echo $user['username']; ?>" />
                             </div>
                             <div class="col-sm-3">
@@ -43,7 +43,7 @@
                     <form id="update-email-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_email', [], []); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Email</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" name="email" value="<?php echo $user['email']; ?>" />
                             </div>
                             <div class="col-sm-3">
@@ -54,7 +54,7 @@
                     <form id="update-group-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_group', [], []); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Group</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <select class="populate placeholder" name="group" id="s2_group" disabled>
                                     <?php foreach ($user_config['group'] as $k => $v): ?>
                                         <option value="<?php echo $k; ?>" <?php echo $user['group'] != $k ? : 'selected'; ?> ><?php echo $v; ?></option>
@@ -69,13 +69,13 @@
                     <form id="update-user-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_info', [], []); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Full name</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" name="full_name" value="<?php echo $user['full_name']; ?>" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Gender</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <select class="populate placeholder" name="gender" id="s2_gender">
                                     <?php foreach ($user_config['gender'] as $k => $v): ?>
                                         <option value="<?php echo $k; ?>" <?php echo $user['gender'] != $k ? : 'selected'; ?> ><?php echo $v; ?></option>
@@ -84,20 +84,20 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Birthday</label>
-                            <div class="col-lg-5">
+                            <label class="col-sm-3 control-label">Birthday</label>
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" placeholder="YYYY/MM/DD" name="birthday" value="<?php echo $user['birthday']; ?>" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Phone number</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" name="telephone" value="<?php echo $user['telephone']; ?>" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Address</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" name="address" value="<?php echo $user['address']; ?>" />
                             </div>
                         </div>
@@ -146,12 +146,12 @@
                                 <input type="password" class="form-control" name="confirm_password" />
                             </div>
                         </div>
-                    </fieldset>
-                    <div class="form-group">
-                        <div class="col-sm-7 col-sm-offset-5">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="form-group">
+                            <div class="col-sm-7 col-sm-offset-5">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </form>
             </div>
         </div>
@@ -197,36 +197,36 @@
 
 <script type="text/template" id="update-icon-qq-template">
     <div class="qq-uploader-selector qq-uploader span12">
-        <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
-            <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
-        </div>
-        <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
-            <span class="qq-upload-drop-area-text-selector"></span>
-        </div>
-        <div class="qq-upload-button-selector qq-upload-button btn btn-info" style="width: auto;">
-            <div><i class="fa fa-upload icon-white"></i> Select file</div>
-        </div>
-        <div class="col-sm-12" id="main-icon">
-            <br>
-            <img src="<?php echo $user['photo']; ?>" alt="icon" class="img-thumbnail">
-        </div>
-        <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
-            <li>
-                <div class="qq-upload-settings">
-                    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
-                </div>
-                <div class="qq-progress-bar-container-selector">
-                    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
-                </div>
-                <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
-                <img class="qq-thumbnail-selector" qq-server-scale>
-                <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
-                <div class="qq-upload-filename">
-                    <span class="qq-upload-file-selector qq-upload-file"></span>
-                    <span class="qq-upload-size-selector qq-upload-size"></span>
-                    <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
-                </div>
-            </li>
-        </ul>
+    <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+    </div>
+    <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+    <span class="qq-upload-drop-area-text-selector"></span>
+    </div>
+    <div class="qq-upload-button-selector qq-upload-button btn btn-info" style="width: auto;">
+    <div><i class="fa fa-upload icon-white"></i> Select file</div>
+    </div>
+    <div class="col-sm-12" id="main-icon">
+    <br>
+    <img src="<?php echo $user['user_photo_display']; ?>" alt="icon" class="img-thumbnail">
+    </div>
+    <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
+    <li>
+    <div class="qq-upload-settings">
+    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+    </div>
+    <div class="qq-progress-bar-container-selector">
+    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+    </div>
+    <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+    <img class="qq-thumbnail-selector" qq-server-scale>
+    <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+    <div class="qq-upload-filename">
+    <span class="qq-upload-file-selector qq-upload-file"></span>
+    <span class="qq-upload-size-selector qq-upload-size"></span>
+    <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+    </div>
+    </li>
+    </ul>
     </div>
 </script>

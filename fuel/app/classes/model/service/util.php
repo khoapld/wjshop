@@ -64,4 +64,15 @@ class Model_Service_Util
         return $content;
     }
 
+    public static function get_app_config($name, $option = array())
+    {
+        $data = array();
+        $config = Config::get('app.' . $name);
+        foreach ($option as $key) {
+            $data[$key] = $config[$key];
+        }
+
+        return !empty($option) ? $data : $config;
+    }
+
 }

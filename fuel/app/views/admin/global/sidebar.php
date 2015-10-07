@@ -6,15 +6,15 @@
         </a>
     </li>
     <li>
-        <a href="/admin/category/list" class="<?php echo $controller == 'Controller_Admin_Category' ? 'active' : ''; ?>">
+        <a href="/admin/category" class="<?php echo $controller == 'Controller_Admin_Category' ? 'active' : ''; ?>">
             <i class="fa fa-folder-open-o"></i>
-            <span class="hidden-xs">Category List</span>
+            <span class="hidden-xs">Category</span>
         </a>
     </li>
     <li>
         <a href="/admin/product/list" class="<?php echo $controller == 'Controller_Admin_Product' ? 'active' : ''; ?>">
             <i class="fa fa-shopping-cart"></i>
-            <span class="hidden-xs">Product List</span>
+            <span class="hidden-xs">Product</span>
         </a>
     </li>
 </ul>

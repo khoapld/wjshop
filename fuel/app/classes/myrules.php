@@ -15,6 +15,15 @@ class MyRules
         return !self::_empty($val);
     }
 
+    public static function _validation_valid_numeric($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        $pattern = '/^([0-9])+$/';
+        return preg_match($pattern, $val) > 0;
+    }
+
     public static function _validation_valid_username($val)
     {
         if (self::_empty($val)) {
@@ -26,12 +35,12 @@ class MyRules
 
     public static function _validation_unique_username($val)
     {
-        return !Model_Base_User::valid_user_field('username', $val);
+        return !Model_Base_User::valid_field('username', $val);
     }
 
     public static function _validation_unique_email($val)
     {
-        return !Model_Base_User::valid_user_field('email', $val);
+        return !Model_Base_User::valid_field('email', $val);
     }
 
     public static function _validation_valid_password($val)
@@ -43,21 +52,12 @@ class MyRules
         return preg_match($pattern, $val) > 0;
     }
 
-    public static function _validation_valid_numeric($val)
-    {
-        if (self::_empty($val)) {
-            return true;
-        }
-        $pattern = '/^([0-9])+$/';
-        return preg_match($pattern, $val) > 0;
-    }
-
     public static function _validation_valid_gender($val)
     {
         if (self::_empty($val)) {
             return true;
         }
-        $_config = Model_Base_User::get_app_config('user', array('gender'));
+        $_config = Model_Service_Util::get_app_config('user', array('gender'));
         return array_key_exists($val, $_config['gender']);
     }
 
@@ -66,8 +66,25 @@ class MyRules
         if (self::_empty($val)) {
             return true;
         }
-        $_config = Model_Base_User::get_app_config('user', array('group'));
+        $_config = Model_Service_Util::get_app_config('user', array('group'));
         return array_key_exists($val, $_config['group']);
+    }
+
+    public static function _validation_valid_category($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        return Model_Base_Category::valid_field('id', $val);
+    }
+
+    public static function _validation_valid_category_status($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        $_config = Model_Service_Util::get_app_config('category', array('status'));
+        return array_key_exists($val, $_config['status']);
     }
 
 //    public static function _validation_required($val)

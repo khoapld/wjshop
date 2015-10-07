@@ -41,7 +41,7 @@ class Model_Base_User
         return false;
     }
 
-    public static function insert_user($data)
+    public static function insert($data)
     {
         try {
             $props = [
@@ -60,12 +60,13 @@ class Model_Base_User
         }
     }
 
-    public static function update_user($id, $data)
+    public static function update($id, $data)
     {
         try {
-            $user = Model_User::find($id);
-            $user->set($data);
-            $user->save();
+            $data['updated_at'] = date('Y-m-d H:i:s', Date::forge()->get_timestamp());
+            $query = Model_User::find($id);
+            $query->set($data);
+            $query->save();
         } catch (Exception $e) {
             Log::write('ERROR', $e->getMessage());
             return false;
@@ -78,7 +79,7 @@ class Model_Base_User
     {
         $user = Model_User::find($id);
         if ($user) {
-            $user_config = self::get_app_config('user');
+            $user_config = Model_Service_Util::get_app_config('user');
             return array(
                 'username' => $user->username,
                 'email' => $user->email,
@@ -91,24 +92,13 @@ class Model_Base_User
                 'address' => $user->address,
                 'telephone' => $user->telephone,
                 'user_photo' => $user->user_photo,
-                'photo' => empty($user->user_photo) ? _PATH_NO_ICON_ : _PATH_ICON_ . $user->user_photo
+                'user_photo_display' => empty($user->user_photo) ? _PATH_NO_ICON_ : _PATH_ICON_ . $user->user_photo
             );
         }
         return false;
     }
 
-    public static function get_app_config($name, $option = array())
-    {
-        $data = array();
-        $config = Config::get('app.' . $name);
-        foreach ($option as $key) {
-            $data[$key] = $config[$key];
-        }
-
-        return !empty($option) ? $data : $config;
-    }
-
-    public static function valid_user_field($field, $val)
+    public static function valid_field($field, $val)
     {
         $result = Model_User::query()->where(array($field => $val));
         return ($result->count() > 0);

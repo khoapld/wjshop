@@ -33,14 +33,25 @@ class Model_Service_Upload
         if ($resize) {
             switch ($type) {
                 case 'icon':
-                    if (Model_Base_User::update_user($options['user_id'], array('user_photo' => $photo_name[0]))) {
+                    if (Model_Base_User::update($options['user_id'], array('user_photo' => $photo_name[0]))) {
                         $old_photo = $file['saved_to'] . $type . '/' . $options['user_photo'];
-                        if (file_exists($old_photo)) {
+                        if (File::exists($old_photo)) {
                             File::delete($old_photo);
                         }
                         $data['photo_name'] = _PATH_ICON_ . $photo_name[0];
                     } else {
                         $data['error'] = 'Save icon to database error';
+                    }
+                    break;
+                case 'category':
+                    $old_photo = $options['type'] === 'new' ? : $file['saved_to'] . $type . '/' . Model_Category::find($options['category_id'])->category_photo;
+                    if (Model_Base_Category::update($options['category_id'], array('category_photo' => $photo_name[0]))) {
+                        if (File::exists($old_photo)) {
+                            File::delete($old_photo);
+                        }
+                        $data['photo_name'] = _PATH_CATEGORY_ . $photo_name[0];
+                    } else {
+                        $data['error'] = 'Save category photo to database error';
                     }
                     break;
                 default:
@@ -57,16 +68,16 @@ class Model_Service_Upload
     public static function resize_photo($path, $photo, $type = null)
     {
         $file = $path . $photo;
-        if (file_exists($file)) {
+        if (File::exists($file)) {
             $rotate_number = self::exifRotation($file);
             $image_config = Config::get('app.image');
-            if ($type == 'icon') {
+            if (in_array($type, array('icon', 'category'))) {
                 if (!is_dir($path . $type)) {
                     mkdir($path . $type, 0700);
                 }
                 @Image::load($path . $photo)
                         ->rotate($rotate_number)
-                        ->resize($image_config[$type], $image_config[$type], false)
+                        ->resize($image_config[$type], null, true)
                         ->save($path . $type . '/' . $photo);
             } else {
 //                foreach ($s3_config['versions'] as $version => $size) {

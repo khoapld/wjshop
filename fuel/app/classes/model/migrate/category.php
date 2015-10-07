@@ -20,16 +20,18 @@ class Model_Migrate_Category extends Model_Migrate_Migratebase
             'id' => ['constraint' => 11, 'type' => 'int', 'auto_increment' => true],
             'parent_category_id' => ['constraint' => 11, 'type' => 'int', 'default' => 0],
             'category_name' => ['type' => 'text'],
-            'category_photo' => ['constraint' => 32, 'type' => 'varchar', 'null' => true],
-            'rank' => ['type' => 'int', 'constraint' => 11, 'default' => 0],
-            'del_flg' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 0],
+            'category_photo' => ['constraint' => 50, 'type' => 'varchar', 'null' => true],
+            'level' => ['type' => 'int', 'constraint' => 4, 'default' => 0],
+            'rank' => ['type' => 'int', 'constraint' => 4, 'null' => true],
+            'status' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 2],
             'created_at' => ['type' => 'timestamp', 'default' => DB::expr('CURRENT_TIMESTAMP')],
             'updated_at' => ['type' => 'timestamp', 'default' => '0000-00-00 00:00:00']
             ], ['id'], true, 'InnoDB', 'utf8_general_ci'
         );
 
         DBUtil::create_index(self::$_table_name, 'parent_category_id', 'parent_category_id');
-        DBUtil::create_index(self::$_table_name, 'del_flg', 'del_flg');
+        DBUtil::create_index(self::$_table_name, 'level', 'level');
+        DBUtil::create_index(self::$_table_name, 'status', 'status');
     }
 
     public static function down()

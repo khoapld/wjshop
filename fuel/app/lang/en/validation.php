@@ -18,6 +18,13 @@ return [
 	'valid_string'    => 'The valid string rule :rule(:param:1) failed for field :label',
 	'required_with'   => 'The field :label must contain a value if :param:1 contains a value.',
 	'valid_date'      => 'The field :label must contain a valid formatted date.',
-    'unique_username' => 'The :label is exist.',
-    'unique_email'    => 'The :label is exist.',
+    'valid_numeric'   => 'The filed :label is not correct format.',
+    'valid_username'  => 'The filed :label is not correct format.',
+    'unique_username' => 'The field :label is exist.',
+    'unique_email'    => 'The field :label is exist.',
+    'valid_paswword'  => 'The filed :label is not correct format.',
+    'valid_gender'    => 'The filed :label is not correct.',
+    'valid_group'     => 'The filed :label is not correct.',
+    'valid_category'  => 'The field :label is exist.',
+    'valid_category_status' => 'The filed :label is not correct.'
 ];

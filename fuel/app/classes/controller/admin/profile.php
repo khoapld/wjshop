@@ -22,7 +22,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
 
     public function action_index()
     {
-        $this->data['user_config'] = Model_Base_User::get_app_config('user', array('gender', 'group'));
+        $this->data['user_config'] = Model_Service_Util::get_app_config('user', array('gender', 'group'));
         $this->template->title = 'Profile Page';
         $this->template->content = View::forge($this->layout . '/profile/index', $this->data);
     }
@@ -36,7 +36,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
             $props = array(
                 'username' => $val->validated('username')
             );
-            if (Model_Base_User::update_user($this->user_id, $props)) {
+            if (Model_Base_User::update($this->user_id, $props)) {
                 Auth::force_login($this->user_id);
                 Log::write('NOTICE', 'Update username success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update username success';
@@ -59,7 +59,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
             $props = array(
                 'email' => strtolower($val->validated('email'))
             );
-            if (Model_Base_User::update_user($this->user_id, $props)) {
+            if (Model_Base_User::update($this->user_id, $props)) {
                 Log::write('NOTICE', 'Update email success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update email success';
             } else {
@@ -91,7 +91,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
                 'telephone' => $val->validated('telephone'),
                 'address' => Model_Service_Util::mb_trim($val->validated('address'))
             );
-            if (Model_Base_User::update_user($this->user_id, $props)) {
+            if (Model_Base_User::update($this->user_id, $props)) {
                 Log::write('NOTICE', 'Update info success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update info success';
             } else {
@@ -114,7 +114,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
             $props = array(
                 'password' => Model_Service_Util::hash_password($val->validated('password'))
             );
-            if (Model_Base_User::update_user($this->user_id, $props)) {
+            if (Model_Base_User::update($this->user_id, $props)) {
                 Log::write('NOTICE', 'Update password success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update password success';
             } else {

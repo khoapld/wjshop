@@ -68,67 +68,43 @@ $(function () {
     // Load Timepicker plugin
     //LoadTimePickerScript(DemoTimePicker);
     // Add tooltip to form-controls
-    //$('.form-control').tooltip();
-    LoadSelect2Script(FormSelect2);
 
     // Load form validation
     LoadBootstrapValidatorScript(FormValidator);
 
+    // Load Datatables and run plugin on tables 
+    //LoadDataTablesScripts(DataTable);
+
+    //$('.form-control').tooltip();
+    LoadSelect2Script(FormSelect2);
+
     // Add drag-n-drop feature to boxes
     WinMove();
 
-    // Load and run Uploader
-    LoadFineUploader(IconUpload);
-
-
 });
 
-/*-------------------------------------------
- Function for Icon upload page
- ---------------------------------------------*/
-function IconUpload() {
-    var uploader = new qq.FineUploader({
-        autoUpload: false,
-        multiple: false,
-        element: document.getElementById('update-icon-uploader'),
-        template: 'update-icon-qq-template',
-        form: {
-            element: 'update-icon-qq-form'
-        },
-        classes: {
-            success: 'alert alert-success',
-            fail: 'alert alert-error'
-        },
-        validation: {
-            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-            sizeLimit: 5120000,
-            itemLimit: 1
-        },
-        showMessage: function (message) {
-            show_alert_error(message);
-        },
-        request: {
-            inputName: 'user_photo',
-            endpoint: '/admin/profile/update_icon'
-        },
-        callbacks: {
-            onSubmitted: function () {
-                $('#main-icon').hide();
-            },
-            onCancel: function () {
-                $('#main-icon').show();
-            },
-            onComplete: function (id, name, responseJSON, xhr) {
-                if (responseJSON.success) {
-                    $('div.avatar > img, div#main-icon > img').attr('src', responseJSON.photo_name);
-                    show_alert_success(responseJSON.error);
-                } else {
-                    show_alert_error(responseJSON.error);
-                }
-                $('a#qq-cancel-link')[0].click();
-            }
+//
+//  Dynamically load DataTables plugin
+//  homepage: http://datatables.net v1.9.4 license - GPL or BSD
+//
+function LoadDataTablesScripts(callback) {
+    function LoadDatatables() {
+        $.getScript('/plugins/datatables/jquery.dataTables.js', function () {
+            $.getScript('/plugins/datatables/ZeroClipboard.js', function () {
+                $.getScript('/plugins/datatables/TableTools.js', function () {
+                    $.getScript('/plugins/datatables/dataTables.bootstrap.js', callback);
+                });
+            });
+        });
+    }
+    if (!$.fn.dataTables) {
+        LoadDatatables();
+    }
+    else {
+        if (callback && typeof (callback) === "function") {
+            callback();
         }
-    });
+    }
 }
 
 //  Dynamically load Widen FineUploader
@@ -187,12 +163,7 @@ function MessagesMenuWidth() {
 
 // Run Select2 plugin on elements
 function FormSelect2() {
-    //$('#s2_group').select2({placeholder: "Select Group"});
-    $('#s2_group').select2();
-    $('#s2_gender').select2();
-    $('#s2_year').select2({placeholder: 'Year'});
-    $('#s2_month').select2({placeholder: 'Month'});
-    $('#s2_day').select2({placeholder: 'Day'});
+    $('select').select2();
 }
 
 // Run timepicker
@@ -256,8 +227,15 @@ jQuery.fn.swap = function (b) {
 // form validator function
 //
 function FormValidator() {
+    $.fn.bootstrapValidator.DEFAULT_OPTIONS = $.extend({}, $.fn.bootstrapValidator.DEFAULT_OPTIONS, {
+        message: 'The field is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
     $('#update-username-form').bootstrapValidator({
-        message: 'This value is not valid',
         fields: {
             username: {
                 message: 'The username is not valid',
@@ -277,9 +255,10 @@ function FormValidator() {
                 }
             }
         }
+    }).on('success.form.bv', function (e) {
+        e.preventDefault();
     });
     $('#update-email-form').bootstrapValidator({
-        message: 'This value is not valid',
         fields: {
             email: {
                 validators: {
@@ -292,9 +271,10 @@ function FormValidator() {
                 }
             }
         }
+    }).on('success.form.bv', function (e) {
+        e.preventDefault();
     });
     $('#update-user-form').bootstrapValidator({
-        message: 'This value is not valid',
         fields: {
             username: {
                 message: 'The username is not valid',
@@ -361,9 +341,10 @@ function FormValidator() {
                 }
             }
         }
+    }).on('success.form.bv', function (e) {
+        e.preventDefault();
     });
     $('#update-password-form').bootstrapValidator({
-        message: 'This value is not valid',
         fields: {
             password: {
                 validators: {
@@ -397,6 +378,160 @@ function FormValidator() {
                 }
             }
         }
+    }).on('success.form.bv', function (e) {
+        e.preventDefault();
+    });
+    $('#create-category-form').bootstrapValidator({
+        fields: {
+            category_name: {
+                message: 'The category name is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The category name is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        max: 255,
+                        message: 'The username must be less than 255 characters long'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function (e, data) {
+        e.preventDefault();
+    }).on('error.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    }).on('success.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    });
+    ;
+}
+
+/*-------------------------------------------
+ Function for Icon upload page
+ ---------------------------------------------*/
+function IconUpload() {
+    var uploader = new qq.FineUploader({
+        autoUpload: false,
+        multiple: false,
+        element: document.getElementById('update-icon-uploader'),
+        template: 'update-icon-qq-template',
+        form: {
+            element: 'update-icon-qq-form'
+        },
+        classes: {
+            success: 'alert alert-success',
+            fail: 'alert alert-error'
+        },
+        validation: {
+            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+            sizeLimit: 5120000
+        },
+        showMessage: function (message) {
+            show_alert_error(message);
+        },
+        request: {
+            inputName: 'user_photo',
+            endpoint: '/admin/profile/update_icon'
+        },
+        callbacks: {
+            onSubmitted: function () {
+                $('#main-icon').hide();
+            },
+            onCancel: function () {
+                $('#main-icon').show();
+            },
+            onComplete: function (id, name, responseJSON, xhr) {
+                if (responseJSON.success) {
+                    $('div.avatar > img, div#main-icon > img').attr('src', responseJSON.photo_name);
+                    show_alert_success(responseJSON.error);
+                } else {
+                    show_alert_error(responseJSON.error);
+                }
+                $('a#qq-cancel-link')[0].click();
+            }
+        }
+    });
+}
+
+/*-------------------------------------------
+ Function for Icon upload page
+ ---------------------------------------------*/
+function CategoryUpload() {
+    var uploader = new qq.FineUploader({
+        autoUpload: false,
+        multiple: false,
+        element: document.getElementById('category-qq-uploader'),
+        template: 'category-qq-template',
+        form: {
+            element: 'create-category-form'
+        },
+        classes: {
+            success: 'alert alert-success',
+            fail: 'alert alert-error'
+        },
+        validation: {
+            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+            sizeLimit: 5120000
+        },
+        showMessage: function (message) {
+            show_alert_error(message);
+        },
+        request: {
+            inputName: 'category_photo',
+            endpoint: '/admin/category/create'
+        },
+        callbacks: {
+            onSubmitted: function () {
+                $('#main-icon').hide();
+            },
+            onCancel: function () {
+                $('#main-icon').show();
+            },
+            onComplete: function (id, name, responseJSON, xhr) {
+                if (responseJSON.success) {
+                    show_alert_success(responseJSON.error);
+                    if (responseJSON.category.type === 'new') {
+                        var html = '<tr id="category-' + responseJSON.category.id +
+                                '" data-id="' + responseJSON.category.id +
+                                '" data-parent-id="' + responseJSON.category.parent_category_id +
+                                '" data-category-name="' + responseJSON.category.category_name + '"> \
+                                        <td class="category_name">\n\
+                                            <img class="img-rounded" src="' + responseJSON.category.category_photo_display + '"> \
+                                            <span>' + responseJSON.category.category_name_display + '</span> \
+                                        </td> \
+                                        <td class="text-center"> \
+                                            <div class="toggle-switch-status toggle-switch-primary-status"> \
+                                                <label> \
+                                                    <input type="checkbox" name="status"> \
+                                                    <div class="toggle-switch-inner-status"></div> \
+                                                    <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div> \
+                                                </label> \
+                                            </div> \
+                                        </td> \
+                                        <td class="text-center"><button type="button" class="btn btn-danger edit">Edit</button></td> \
+                                    </tr>';
+                        $('#category-list').append(html);
+                        $('select[name="parent_category_id"]').append('<option value="' + responseJSON.category.id + '">' + responseJSON.category.category_name_display + '</option>');
+                    } else {
+                        var block = $('#category-list').find('tr#category-' + responseJSON.category.id);
+                        block.attr('data-parent-id', responseJSON.category.parent_category_id);
+                        block.attr('data-category-name', responseJSON.category.category_name);
+                        block.find('img').attr('src', responseJSON.category.category_photo_display);
+                        block.find('td.category_name > span').html(responseJSON.category.category_name_display);
+                        $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
+                        $('#create-category-form').find('div#main-icon > img').attr('src', responseJSON.category.no_image);
+                        $('#create-category-form').find('input[name="id"]').val('');
+                    }
+
+                    $('#create-category-form').bootstrapValidator('resetForm', true);
+                    $('#create-category-form').find('select').prop("selectedIndex", 0);
+                    LoadSelect2Script(FormSelect2);
+                } else if (responseJSON.error) {
+                    show_alert_error(responseJSON.error);
+                }
+                $('a#qq-cancel-link')[0].click();
+            }
+        }
     });
 }
 
@@ -413,34 +548,33 @@ function SubmitForm($form) {
     }
     $form.find('.error').empty();
     $form.find('button').attr('disabled', 'disabled');
-    if (fName === 'change-icon-photo-form') {
-        $('#' + fName).ajaxSubmit({
-            url: url,
-            complete: function (xhr) {
-                $form.find('button').removeAttr('disabled');
-            }
-        });
-    } else {
-        var posting = $.post(url, formData);
-        posting.done(function (data) {
-            if (data.success) {
-                if (fName === 'update-password-form') {
-                    $form.find('input').val('');
-                }
-                $form.find('div').removeClass('has-success');
-                show_alert_success(data.success);
-            } else if (data.errors) {
-                var msg = '';
-                $.each(data.errors, function (index, value) {
-                    $form.find('input[name="' + index + '"]').parents('div.form-group').removeClass('has-success').addClass('has-error');
-                    msg += value + '\n\r';
-                });
-                show_alert_error(msg);
-            }
-            $form.find('button').removeAttr('disabled');
-        });
-    }
 
+    var posting = $.post(url, formData);
+    posting.done(function (data) {
+        if (data.success) {
+            if (fName === 'update-password-form') {
+                resetForm($form);
+            }
+            $form.find('div').removeClass('has-success');
+            show_alert_success(data.success);
+        } else if (data.errors) {
+            var msg = '';
+            $.each(data.errors, function (index, value) {
+                $form.find('input[name="' + index + '"]').parents('div.form-group').removeClass('has-success').addClass('has-error');
+                $form.find('input[name="' + index + '"]').next().removeClass('glyphicon-ok').addClass('glyphicon-remove');
+                msg += value + '\n\r';
+            });
+            show_alert_error(msg);
+        }
+        $form.find('button').removeAttr('disabled');
+    });
+
+}
+
+function resetForm(form) {
+    form.bootstrapValidator('resetForm', true);
+    form.find('select').prop('selectedIndex', 0);
+    LoadSelect2Script($('select').select2());
 }
 
 function show_alert_success(msg) {
@@ -463,3 +597,45 @@ function show_alert_error(msg) {
     });
 }
 
+//
+// Function for table, located in element with id = datatable
+//
+function DataTable() {
+    $.extend($.fn.dataTable.defaults, {
+        bInfo: false,
+        bSort: false,
+        bPaginate: false
+    });
+    var asInitVals = [];
+    var oTable = $('#datatable').dataTable({
+        "aaSorting": [[0, "asc"]],
+        "sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+        "sPaginationType": "bootstrap",
+        "oLanguage": {
+            "sSearch": "",
+            "sLengthMenu": '_MENU_'
+        },
+        "bAutoWidth": false
+    });
+    var header_inputs = $("#datatable thead input");
+    header_inputs.on('keyup', function () {
+        /* Filter on the column (the index) of this element */
+        oTable.fnFilter(this.value, header_inputs.index(this));
+    }).on('focus', function () {
+        if (this.className === "search_init") {
+            this.className = "";
+            this.value = "";
+        }
+    }).on('blur', function (i) {
+        if (this.value === "") {
+            this.className = "search_init";
+            this.value = asInitVals[header_inputs.index(this)];
+        }
+    });
+    header_inputs.each(function (i) {
+        asInitVals[i] = this.value;
+    });
+    $('.dataTables_filter').each(function () {
+        $(this).find('label input[type=text]').attr('placeholder', 'Search');
+    });
+}

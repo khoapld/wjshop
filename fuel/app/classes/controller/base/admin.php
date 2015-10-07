@@ -83,6 +83,7 @@ class Controller_Base_Admin extends Controller_Hybrid
             define('_PATH_NO_ICON_', $base_url . $path_config['no_icon']);
             define('_PATH_NO_IMAGE_', $base_url . $path_config['no_image']);
             define('_PATH_ICON_', $base_url . $path_config['icon']);
+            define('_PATH_CATEGORY_', $base_url . $path_config['category']);
             define('_PATH_PHOTO_', $base_url . $path_config['photo']);
         }
     }

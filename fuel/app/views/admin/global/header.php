@@ -16,7 +16,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
                                     <div class="avatar">
-                                        <img src="<?php echo $user['photo']; ?>" class="img-rounded" alt="avatar" />
+                                        <img src="<?php echo $user['user_photo_display']; ?>" class="img-rounded" alt="avatar" />
                                     </div>
                                     <i class="fa fa-angle-down pull-right"></i>
                                     <div class="user-mini pull-right">
