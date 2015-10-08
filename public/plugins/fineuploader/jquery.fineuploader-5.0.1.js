@@ -9597,12 +9597,12 @@ qq.extend(qq.FormSupport.prototype, {
                 return el.disabled && el.type.toLowerCase() !== "hidden";
             },
             selectValue = function(select) {
-                var value = null;
+                var value = [];
 
                 qq.each(qq(select).children(), function(idx, child) {
                     if (child.tagName.toLowerCase() === "option" && child.selected) {
-                        value = child.value;
-                        return false;
+                        value[value.length] = child.value;
+                        //return false;
                     }
                 });
 

@@ -54,6 +54,17 @@ class Model_Service_Upload
                         $data['error'] = 'Save category photo to database error';
                     }
                     break;
+                case 'product':
+                    $old_photo = $options['type'] === 'new' ? : $file['saved_to'] . $type . '/' . Model_Product::find($options['product_id'])->product_photo;
+                    if (Model_Base_Product::update($options['product_id'], array('product_photo' => $photo_name[0]))) {
+                        if (File::exists($old_photo)) {
+                            File::delete($old_photo);
+                        }
+                        $data['photo_name'] = _PATH_PRODUCT_ . $photo_name[0];
+                    } else {
+                        $data['error'] = 'Save category photo to database error';
+                    }
+                    break;
                 default:
                     $data['error'] = 'No type';
                     break;
@@ -71,27 +82,27 @@ class Model_Service_Upload
         if (File::exists($file)) {
             $rotate_number = self::exifRotation($file);
             $image_config = Config::get('app.image');
-            if (in_array($type, array('icon', 'category'))) {
-                if (!is_dir($path . $type)) {
-                    mkdir($path . $type, 0700);
-                }
-                @Image::load($path . $photo)
-                        ->rotate($rotate_number)
-                        ->resize($image_config[$type], null, true)
-                        ->save($path . $type . '/' . $photo);
-            } else {
-//                foreach ($s3_config['versions'] as $version => $size) {
-//                    if (!is_dir($path . $version)) {
-//                        mkdir($path . $version, 0700);
-//                    }
-//                    @Image::load($path . $photo)
-//                            ->rotate($rotate_number)
-//                            ->resize($size, null, true)
-//                            ->save($path . $version . '/' . $photo);
-//                }
+            if (!is_dir($path . $type)) {
+                mkdir($path . $type, 0700);
+            }
+            switch ($type) {
+                case 'icon':
+                    @Image::load($path . $photo)
+                            ->rotate($rotate_number)
+                            ->resize($image_config[$type], $image_config[$type], false)
+                            ->save($path . $type . '/' . $photo);
+                    break;
+                case 'category':
+                case 'product':
+                    @Image::load($path . $photo)
+                            ->rotate($rotate_number)
+                            ->resize($image_config[$type], null, true)
+                            ->save($path . $type . '/' . $photo);
+                    break;
+                default:
+                    break;
             }
             File::delete($path . $photo);
-
             return true;
         }
 

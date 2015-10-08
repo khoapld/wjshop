@@ -4,6 +4,7 @@ return array(
     'image' => array(
         'icon' => 160,
         'category' => 320,
+        'product' => 320,
         'photo' => array('l' => '1024', 'm' => '640', 's' => '320'),
     ),
     'path' => array(
@@ -11,6 +12,7 @@ return array(
         'no_image' => 'assets/img/no_image.png',
         'icon' => 'upload/icon/',
         'category' => 'upload/category/',
+        'product' => 'upload/product/',
         'photo' => 'upload/photo/m/',
     ),
     'user' => array(
@@ -27,6 +29,12 @@ return array(
         ),
     ),
     'category' => array(
+        'status' => array(
+            1 => 'Show',
+            2 => 'Hide'
+        ),
+    ),
+    'product' => array(
         'status' => array(
             1 => 'Show',
             2 => 'Hide'

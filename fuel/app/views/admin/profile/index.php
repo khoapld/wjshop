@@ -35,7 +35,7 @@
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" name="username" value="<?php echo $user['username']; ?>" />
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3 text-center">
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" name="email" value="<?php echo $user['email']; ?>" />
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3 text-center">
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </div>
@@ -101,10 +101,8 @@
                                 <input type="text" class="form-control" name="address" value="<?php echo $user['address']; ?>" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-9 col-sm-offset-4">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </fieldset>
@@ -146,10 +144,8 @@
                                 <input type="password" class="form-control" name="confirm_password" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-7 col-sm-offset-5">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </fieldset>
                 </form>
@@ -184,10 +180,8 @@
                       class="form-horizontal"
                       method="post"
                       action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_icon', [], []); ?>">
-                    <div class="form-group">
-                        <div class="col-sm-7 col-sm-offset-5">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>

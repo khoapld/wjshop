@@ -1,17 +1,4 @@
 $(function () {
-
-    // submit form
-    var formName = [
-        'update-username-form', 'update-email-form', 'update-user-form', 'update-password-form'
-    ];
-    for (var i = 0; i < formName.length; i++) {
-        $('#' + formName[i]).on('submit', function (event) {
-            event.preventDefault();
-            var $form = $(this);
-            SubmitForm($form);
-        });
-    }
-
     var height = window.innerHeight - 49;
     $('#main').css('min-height', height)
             .on('click', '.expand-link', function (e) {
@@ -58,22 +45,21 @@ $(function () {
         setTimeout(MessagesMenuWidth, 250);
     });
 
-    // Create Wysiwig editor for textare
-    //TinyMCEStart('#wysiwig_simple', null);
-    //TinyMCEStart('#wysiwig_full', 'extreme');
     // Add slider for change test input length
     //FormLayoutExampleInputLength($(".slider-style"));
+
     // Initialize datepicker
     //$('#input_date').datepicker({setDate: new Date()});
+
     // Load Timepicker plugin
     //LoadTimePickerScript(DemoTimePicker);
     // Add tooltip to form-controls
 
-    // Load form validation
-    LoadBootstrapValidatorScript(FormValidator);
-
     // Load Datatables and run plugin on tables 
     //LoadDataTablesScripts(DataTable);
+
+    // Load form validation
+    LoadBootstrapValidatorScript(FormValidator);
 
     //$('.form-control').tooltip();
     LoadSelect2Script(FormSelect2);
@@ -81,6 +67,21 @@ $(function () {
     // Add drag-n-drop feature to boxes
     WinMove();
 
+    $(document).on('click', 'a', function () {
+        $(this).attr('disabled', true);
+    });
+
+    // submit form
+    var formName = [
+        'update-username-form', 'update-email-form', 'update-user-form', 'update-password-form'
+    ];
+    for (var i = 0; i < formName.length; i++) {
+        $('#' + formName[i]).on('submit', function (event) {
+            event.preventDefault();
+            var $form = $(this);
+            SubmitForm($form);
+        });
+    }
 });
 
 //
@@ -164,6 +165,7 @@ function MessagesMenuWidth() {
 // Run Select2 plugin on elements
 function FormSelect2() {
     $('select').select2();
+    $('select[id="category_id"]').select2({placeholder: "Select Category"});
 }
 
 // Run timepicker
@@ -235,6 +237,8 @@ function FormValidator() {
             validating: 'glyphicon glyphicon-refresh'
         }
     });
+
+    // Update username form validator
     $('#update-username-form').bootstrapValidator({
         fields: {
             username: {
@@ -258,6 +262,8 @@ function FormValidator() {
     }).on('success.form.bv', function (e) {
         e.preventDefault();
     });
+
+    // Update email form validator
     $('#update-email-form').bootstrapValidator({
         fields: {
             email: {
@@ -274,6 +280,8 @@ function FormValidator() {
     }).on('success.form.bv', function (e) {
         e.preventDefault();
     });
+
+    // Update user info form validator
     $('#update-user-form').bootstrapValidator({
         fields: {
             username: {
@@ -344,6 +352,8 @@ function FormValidator() {
     }).on('success.form.bv', function (e) {
         e.preventDefault();
     });
+
+    // Update password form validator
     $('#update-password-form').bootstrapValidator({
         fields: {
             password: {
@@ -381,6 +391,8 @@ function FormValidator() {
     }).on('success.form.bv', function (e) {
         e.preventDefault();
     });
+
+    // Create category form validator
     $('#create-category-form').bootstrapValidator({
         fields: {
             category_name: {
@@ -391,7 +403,7 @@ function FormValidator() {
                     },
                     stringLength: {
                         max: 255,
-                        message: 'The username must be less than 255 characters long'
+                        message: 'The product name must be less than 255 characters long'
                     }
                 }
             }
@@ -403,7 +415,38 @@ function FormValidator() {
     }).on('success.field.bv', function (e, data) {
         data.bv.disableSubmitButtons(false);
     });
-    ;
+
+    // Create product form validator
+    $('#create-product-form').bootstrapValidator({
+        fields: {
+            category_ids: {
+                message: 'The category is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The category is required and can\'t be empty'
+                    }
+                }
+            },
+            product_name: {
+                message: 'The product name is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The product name is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        max: 255,
+                        message: 'The product name must be less than 255 characters long'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function (e, data) {
+        e.preventDefault();
+    }).on('error.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    }).on('success.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    });
 }
 
 /*-------------------------------------------
@@ -430,8 +473,7 @@ function IconUpload() {
             show_alert_error(message);
         },
         request: {
-            inputName: 'user_photo',
-            endpoint: '/admin/profile/update_icon'
+            inputName: 'user_photo'
         },
         callbacks: {
             onSubmitted: function () {
@@ -454,7 +496,7 @@ function IconUpload() {
 }
 
 /*-------------------------------------------
- Function for Icon upload page
+ Function for Categpry upload page
  ---------------------------------------------*/
 function CategoryUpload() {
     var uploader = new qq.FineUploader({
@@ -477,8 +519,7 @@ function CategoryUpload() {
             show_alert_error(message);
         },
         request: {
-            inputName: 'category_photo',
-            endpoint: '/admin/category/create'
+            inputName: 'category_photo'
         },
         callbacks: {
             onSubmitted: function () {
@@ -489,6 +530,8 @@ function CategoryUpload() {
             },
             onComplete: function (id, name, responseJSON, xhr) {
                 if (responseJSON.success) {
+                    $('#add-category .box-content').fadeOut();
+                    $('#add-category .collapse-link > i').attr('class', 'fa fa-chevron-down');
                     show_alert_success(responseJSON.error);
                     if (responseJSON.category.type === 'new') {
                         var html = '<tr id="category-' + responseJSON.category.id +
@@ -522,10 +565,7 @@ function CategoryUpload() {
                         $('#create-category-form').find('div#main-icon > img').attr('src', responseJSON.category.no_image);
                         $('#create-category-form').find('input[name="id"]').val('');
                     }
-
-                    $('#create-category-form').bootstrapValidator('resetForm', true);
-                    $('#create-category-form').find('select').prop("selectedIndex", 0);
-                    LoadSelect2Script(FormSelect2);
+                    resetForm($('#create-category-form'));
                 } else if (responseJSON.error) {
                     show_alert_error(responseJSON.error);
                 }
@@ -535,65 +575,51 @@ function CategoryUpload() {
     });
 }
 
-//
-// Submit Form function
-//
-function SubmitForm($form) {
-    var $form = $form,
-            fName = $form.attr('id'),
-            formData = $form.serialize(),
-            url = $form.attr('action');
-    if (typeof url === 'undefined') {
-        url = $form.attr('j_action');
-    }
-    $form.find('.error').empty();
-    $form.find('button').attr('disabled', 'disabled');
-
-    var posting = $.post(url, formData);
-    posting.done(function (data) {
-        if (data.success) {
-            if (fName === 'update-password-form') {
-                resetForm($form);
+/*-------------------------------------------
+ Function for Product upload page
+ ---------------------------------------------*/
+function ProductUpload() {
+    var uploader = new qq.FineUploader({
+        autoUpload: false,
+        multiple: false,
+        element: document.getElementById('product-qq-uploader'),
+        template: 'product-qq-template',
+        form: {
+            element: 'create-product-form'
+        },
+        classes: {
+            success: 'alert alert-success',
+            fail: 'alert alert-error'
+        },
+        validation: {
+            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+            sizeLimit: 5120000
+        },
+        showMessage: function (message) {
+            show_alert_error(message);
+        },
+        request: {
+            inputName: 'main_photo'
+        },
+        callbacks: {
+            onSubmitted: function () {
+                $('#main-icon').hide();
+            },
+            onCancel: function () {
+                $('#main-icon').show();
+            },
+            onComplete: function (id, name, responseJSON, xhr) {
+                if (responseJSON.success) {
+                    show_alert_success(responseJSON.error);
+//                    resetForm($('#create-product-form'));
+//                    tinymce.activeEditor.setContent('');
+                    location = '/admin/product';
+                } else if (responseJSON.error) {
+                    show_alert_error(responseJSON.error);
+                }
+                $('a#qq-cancel-link')[0].click();
             }
-            $form.find('div').removeClass('has-success');
-            show_alert_success(data.success);
-        } else if (data.errors) {
-            var msg = '';
-            $.each(data.errors, function (index, value) {
-                $form.find('input[name="' + index + '"]').parents('div.form-group').removeClass('has-success').addClass('has-error');
-                $form.find('input[name="' + index + '"]').next().removeClass('glyphicon-ok').addClass('glyphicon-remove');
-                msg += value + '\n\r';
-            });
-            show_alert_error(msg);
         }
-        $form.find('button').removeAttr('disabled');
-    });
-
-}
-
-function resetForm(form) {
-    form.bootstrapValidator('resetForm', true);
-    form.find('select').prop('selectedIndex', 0);
-    LoadSelect2Script($('select').select2());
-}
-
-function show_alert_success(msg) {
-    $('#alert').modal('show');
-    $('#alert').on('shown.bs.modal', function () {
-        $('#alert div.modal-content').html('<div class="alert alert-success text-center">' + msg + '</div>');
-    });
-    $('#alert').on('hidden.bs.modal', function () {
-        $('#alert div.modal-content').html('');
-    });
-}
-
-function show_alert_error(msg) {
-    $('#alert').modal('show');
-    $('#alert').on('shown.bs.modal', function () {
-        $('#alert div.modal-content').html('<div class="alert alert-danger text-center">' + msg + '</div>');
-    });
-    $('#alert').on('hidden.bs.modal', function () {
-        $('#alert div.modal-content').html('');
     });
 }
 
@@ -637,5 +663,89 @@ function DataTable() {
     });
     $('.dataTables_filter').each(function () {
         $(this).find('label input[type=text]').attr('placeholder', 'Search');
+    });
+}
+
+//
+// Helper for run TinyMCE editor with textarea's
+//
+function TinyMCEStart(elem, mode) {
+    var plugins = [];
+    if (mode === 'basic') {
+        var plugins = [
+            'advlist autolink lists link charmap preview anchor',
+            'searchreplace visualblocks code',
+            'insertdatetime media table contextmenu paste'
+        ];
+        var toolbar = 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | preview';
+    }
+    tinymce.init({
+        selector: elem,
+        plugins: plugins,
+        toolbar: toolbar
+    });
+}
+
+//
+// Submit Form function
+//
+function SubmitForm($form) {
+    var $form = $form,
+            fName = $form.attr('id'),
+            formData = $form.serialize(),
+            url = $form.attr('action');
+    if (typeof url === 'undefined') {
+        url = $form.attr('j_action');
+    }
+    $form.find('.error').empty();
+    $form.find('button').attr('disabled', 'disabled');
+
+    var posting = $.post(url, formData);
+    posting.done(function (data) {
+        if (data.success) {
+            if (fName === 'update-password-form') {
+                resetForm($form);
+            }
+            $form.find('div').removeClass('has-success');
+            show_alert_success(data.success);
+        } else if (data.errors) {
+            var msg = '';
+            $.each(data.errors, function (index, value) {
+                $form.find('input[name="' + index + '"]').parents('div.form-group').removeClass('has-success').addClass('has-error');
+                $form.find('input[name="' + index + '"]').next().removeClass('glyphicon-ok').addClass('glyphicon-remove');
+                msg += value + '\n\r';
+            });
+            show_alert_error(msg);
+        }
+        $form.find('button').removeAttr('disabled');
+    });
+
+}
+
+function resetForm(form, value) {
+    if (typeof value === 'undefined') {
+        value = '';
+    }
+    form.bootstrapValidator('resetForm', true);
+    LoadSelect2Script($('select').select2('val', value));
+}
+
+function show_alert_success(msg) {
+    $('#alert').modal('show');
+    $('#alert').on('shown.bs.modal', function () {
+        $('#alert div.modal-content').html('<div class="alert alert-success text-center">' + msg + '</div>');
+    });
+    $('#alert').on('hidden.bs.modal', function () {
+        $('#alert div.modal-content').html('');
+    });
+}
+
+function show_alert_error(msg) {
+    $('#alert').modal('show');
+    $('#alert').on('shown.bs.modal', function () {
+        $('#alert div.modal-content').html('<div class="alert alert-danger text-center">' + msg + '</div>');
+    });
+    $('#alert').on('hidden.bs.modal', function () {
+        $('#alert div.modal-content').html('');
     });
 }

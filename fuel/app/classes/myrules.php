@@ -87,6 +87,23 @@ class MyRules
         return array_key_exists($val, $_config['status']);
     }
 
+    public static function _validation_valid_product($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        return Model_Base_Product::valid_field('id', $val);
+    }
+
+    public static function _validation_valid_product_status($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        $_config = Model_Service_Util::get_app_config('product', array('status'));
+        return array_key_exists($val, $_config['status']);
+    }
+
 //    public static function _validation_required($val)
 //    {
 //        $val = Model_Service_Util::mb_trim($val);

@@ -7,15 +7,16 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-12">
+    <div class="col-xs-12 col-sm-12" id="add-category">
         <div class="box no-drop">
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
+                    <span>Add Category</span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
+                        <i class="fa fa-chevron-down"></i>
                     </a>
                     <a class="expand-link">
                         <i class="fa fa-expand"></i>
@@ -26,44 +27,38 @@
                 </div>
                 <div class="no-move"></div>
             </div>
-            <div class="box-content">
-                <fieldset>
-                    <legend>Add Category</legend>
-                    <form id="create-category-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/category/create', [], []); ?>" class="form-horizontal">
+            <div class="box-content" style="display: none;">
+                <form id="create-category-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/category/create', [], []); ?>" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Parent category</label>
                         <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Parent category</label>
-                                <div class="col-sm-8">
-                                    <select class="populate placeholder" name="parent_category_id">
-                                        <option value="" >--- Select category ---</option>
-                                        <?php foreach ($category as $k => $v): ?>
-                                            <option value="<?php echo $k; ?>" ><?php echo $v['category_name_display']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Category name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="category_name" />
-                                </div>
-                            </div>
+                            <select class="populate placeholder" name="parent_category_id">
+                                <option value="" >--- Select category ---</option>
+                                <?php foreach ($category as $k => $v): ?>
+                                    <option value="<?php echo $k; ?>" ><?php echo $v['category_name_display']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Category name</label>
                         <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Category photo</label>
-                                <div class="col-sm-6">
-                                    <div id="category-qq-uploader"></div>
-                                </div>
-                            </div>
+                            <input type="text" class="form-control" name="category_name" />
                         </div>
-                        <div class="col-sm-7 col-sm-offset-5">
-                            <input type="hidden" name="id" />
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="button" id="reset" class="btn btn-default">Reset</button>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Category photo</label>
+                        <div class="col-sm-6">
+                            <div id="category-qq-uploader"></div>
                         </div>
-                    </form>
-                </fieldset>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="hidden" name="id" />
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" id="reset" class="btn btn-default">Reset</button>
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -72,6 +67,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
+                    <span>Category List</span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -87,9 +83,6 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <fieldset>
-                    <legend>Category List</legend>
-                </fieldset>
                 <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
                     <thead>
                         <tr>
