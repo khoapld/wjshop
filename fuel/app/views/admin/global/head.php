@@ -9,9 +9,6 @@
 <link href="/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
-<!--<link href="/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
-<link href="/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
-<link href="/plugins/xcharts/xcharts.min.css" rel="stylesheet">-->
 <link href="/plugins/select2/select2.css" rel="stylesheet">
 
 <?php echo Asset::css(['admin.css']); ?>

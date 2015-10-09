@@ -24,6 +24,7 @@ class Controller_Base_Admin extends Controller_Hybrid
         $this->controller = Request::active()->controller;
         $this->action = Request::active()->action;
         static::$method = $this->controller . '/' . $this->action;
+        $this->data['success'] = false;
         $this->render_template();
         parent::before();
         $this->set_path();

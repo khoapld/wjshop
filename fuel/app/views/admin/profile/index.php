@@ -173,13 +173,11 @@
             </div>
             <div class="box-content">
                 <legend>Change icon photo</legend>
-                <div class="row">
-                    <div id="update-icon-uploader"></div>
-                </div>
-                <form id="update-icon-qq-form"
-                      class="form-horizontal"
-                      method="post"
+                <form id="update-icon-form" class="form-horizontal" method="post"
                       action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_icon', [], []); ?>">
+                    <div class="form-group">
+                        <div id="update-icon-uploader"></div>
+                    </div>
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
@@ -189,7 +187,7 @@
     </div>
 </div>
 
-<script type="text/template" id="update-icon-qq-template">
+<script type="text/template" id="update-icon-template">
     <div class="qq-uploader-selector qq-uploader span12">
     <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
@@ -197,7 +195,7 @@
     <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
     <span class="qq-upload-drop-area-text-selector"></span>
     </div>
-    <div class="qq-upload-button-selector qq-upload-button btn btn-info" style="width: auto;">
+    <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
     <div><i class="fa fa-upload icon-white"></i> Select file</div>
     </div>
     <div class="col-sm-12" id="main-icon">

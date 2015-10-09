@@ -8,7 +8,7 @@
 </div>
 <div class="row">
     <div class="col-xs-12 col-sm-12">
-        <div class="box no-drop">
+        <div class="box">
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
@@ -28,10 +28,8 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <div class="form-group">
-                    <div class="col-sm-2 col-sm-offset-10 text-right">
-                        <a class="btn btn-primary" href="/admin/product/new">New Product</a>
-                    </div>
+                <div class="form-group text-right">
+                    <a class="btn btn-lg btn-primary" href="/admin/product/new">New Product</a>
                 </div>
                 <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
                     <thead>
@@ -41,15 +39,25 @@
                             <th class="col-sm-1 text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="sortable" id="product-list">
+                    <tbody id="product-list">
                         <?php foreach ($product as $value): ?>
-                            <tr>
+                            <tr data-id="<?php echo $value['id']; ?>">
                                 <td>
                                     <img class="img-rounded" src="<?php echo $value['product_photo_display']; ?>">
                                     <span><?php echo $value['product_name'] ?></span>
                                 </td>
-                                <td><?php echo $value['status'] ?></td>
-                                <td>Edit</td>
+                                <td class="text-center">
+                                    <div class="toggle-switch-status toggle-switch-primary-status">
+                                        <label>
+                                            <input type="checkbox" name="status" <?php echo $value['status'] !== 1 ? : 'checked'; ?>>
+                                            <div class="toggle-switch-inner-status"></div>
+                                            <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-danger" href="/admin/product/<?php echo $value['id']; ?>">Edit</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

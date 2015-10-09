@@ -55,15 +55,20 @@ class Model_Service_Upload
                     }
                     break;
                 case 'product':
-                    $old_photo = $options['type'] === 'new' ? : $file['saved_to'] . $type . '/' . Model_Product::find($options['product_id'])->product_photo;
-                    if (Model_Base_Product::update($options['product_id'], array('product_photo' => $photo_name[0]))) {
-                        if (File::exists($old_photo)) {
-                            File::delete($old_photo);
+                    if ($options['type'] === 'main_photo') {
+                        $old_photo = $file['saved_to'] . $type . '/' . Model_Product::find($options['product_id'])->product_photo;
+                        if (Model_Base_Product::update($options['product_id'], array('product_photo' => $photo_name[0]))) {
+                            if (File::exists($old_photo)) {
+                                File::delete($old_photo);
+                            }
+                            $data['photo_name'] = _PATH_PRODUCT_ . $photo_name[0];
+                        } else {
+                            $data['error'] = 'Save product photo to database error';
                         }
-                        $data['photo_name'] = _PATH_PRODUCT_ . $photo_name[0];
-                    } else {
-                        $data['error'] = 'Save category photo to database error';
+                    } elseif ($options['type'] === 'sub_photo') {
+                        //
                     }
+
                     break;
                 default:
                     $data['error'] = 'No type';

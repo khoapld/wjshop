@@ -73,7 +73,8 @@ $(function () {
 
     // submit form
     var formName = [
-        'update-username-form', 'update-email-form', 'update-user-form', 'update-password-form'
+        'update-username-form', 'update-email-form', 'update-user-form', 'update-password-form',
+        'update-product-form'
     ];
     for (var i = 0; i < formName.length; i++) {
         $('#' + formName[i]).on('submit', function (event) {
@@ -447,51 +448,37 @@ function FormValidator() {
     }).on('success.field.bv', function (e, data) {
         data.bv.disableSubmitButtons(false);
     });
-}
 
-/*-------------------------------------------
- Function for Icon upload page
- ---------------------------------------------*/
-function IconUpload() {
-    var uploader = new qq.FineUploader({
-        autoUpload: false,
-        multiple: false,
-        element: document.getElementById('update-icon-uploader'),
-        template: 'update-icon-qq-template',
-        form: {
-            element: 'update-icon-qq-form'
-        },
-        classes: {
-            success: 'alert alert-success',
-            fail: 'alert alert-error'
-        },
-        validation: {
-            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-            sizeLimit: 5120000
-        },
-        showMessage: function (message) {
-            show_alert_error(message);
-        },
-        request: {
-            inputName: 'user_photo'
-        },
-        callbacks: {
-            onSubmitted: function () {
-                $('#main-icon').hide();
-            },
-            onCancel: function () {
-                $('#main-icon').show();
-            },
-            onComplete: function (id, name, responseJSON, xhr) {
-                if (responseJSON.success) {
-                    $('div.avatar > img, div#main-icon > img').attr('src', responseJSON.photo_name);
-                    show_alert_success(responseJSON.error);
-                } else {
-                    show_alert_error(responseJSON.error);
+    // Create product form validator
+    $('#update-product-form').bootstrapValidator({
+        fields: {
+            'category_ids[]': {
+                message: 'The category is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The category is required and can\'t be empty'
+                    }
                 }
-                $('a#qq-cancel-link')[0].click();
+            },
+            product_name: {
+                message: 'The product name is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The product name is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        max: 255,
+                        message: 'The product name must be less than 255 characters long'
+                    }
+                }
             }
         }
+    }).on('success.form.bv', function (e, data) {
+        e.preventDefault();
+    }).on('error.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    }).on('success.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
     });
 }
 
@@ -611,10 +598,66 @@ function ProductUpload() {
             onComplete: function (id, name, responseJSON, xhr) {
                 if (responseJSON.success) {
                     show_alert_success(responseJSON.error);
-//                    resetForm($('#create-product-form'));
-//                    tinymce.activeEditor.setContent('');
+
                     location = '/admin/product';
                 } else if (responseJSON.error) {
+                    show_alert_error(responseJSON.error);
+                }
+                $('a#qq-cancel-link')[0].click();
+            }
+        }
+    });
+}
+
+/*-------------------------------------------
+ Function for Product upload page
+ ---------------------------------------------*/
+function FormUpload(option) {
+    var uploader = new qq.FineUploader({
+        autoUpload: false,
+        multiple: false,
+        element: document.getElementById(option.el),
+        template: option.template,
+        form: {
+            element: option.form
+        },
+        classes: {
+            success: 'alert alert-success',
+            fail: 'alert alert-error'
+        },
+        validation: {
+            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+            sizeLimit: 5120000
+        },
+        showMessage: function (message) {
+            show_alert_error(message);
+        },
+        request: {
+            inputName: option.inputName
+        },
+        callbacks: {
+            onSubmitted: function () {
+                $('#main-icon').hide();
+            },
+            onCancel: function () {
+                $('#main-icon').show();
+            },
+            onComplete: function (id, name, responseJSON, xhr) {
+                if (responseJSON.errors) {
+                    var msg = '';
+                    $.each(responseJSON.errors, function (index, value) {
+                        msg += value + '\n\r';
+                    });
+                    show_alert_error(msg);
+                } else if (responseJSON.success) {
+                    if (typeof option.type !== 'undefined' && option.type === 'update-user-icon') {
+                        $('div.avatar > img, div#main-icon > img').attr('src', responseJSON.photo_name);
+                    }
+                    if (typeof option.type !== 'undefined' && option.type === 'create-product-photo') {
+                        location = '/admin/product';
+                    }
+                    show_alert_success(responseJSON.msg);
+                } else {
                     show_alert_error(responseJSON.error);
                 }
                 $('a#qq-cancel-link')[0].click();
@@ -708,6 +751,8 @@ function SubmitForm($form) {
             }
             $form.find('div').removeClass('has-success');
             show_alert_success(data.success);
+        } else if (data.error) {
+            show_alert_error(data.error);
         } else if (data.errors) {
             var msg = '';
             $.each(data.errors, function (index, value) {

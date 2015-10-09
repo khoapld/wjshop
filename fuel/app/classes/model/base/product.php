@@ -50,6 +50,12 @@ class Model_Base_Product
         return self::map_product($product);
     }
 
+    public static function get_by($field, $val)
+    {
+        $product = Model_Product::query()->where(array($field => $val))->get();
+        return self::map_product($product)[$val];
+    }
+
     public static function map_product($product)
     {
         $data = array();

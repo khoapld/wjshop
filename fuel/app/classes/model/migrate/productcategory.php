@@ -16,10 +16,9 @@ class Model_Migrate_ProductCategory extends Model_Migrate_Migratebase
 
         DBUtil::create_table(
             self::$_table_name, [
-            'category_id' => ['constraint' => 11, 'type' => 'int'],
             'product_id' => ['constraint' => 11, 'type' => 'int'],
-            'rank' => ['constraint' => 11, 'type' => 'int', 'default' => 1]
-            ], ['category_id', 'product_id'], true, 'InnoDB', 'utf8_general_ci'
+            'category_id' => ['constraint' => 11, 'type' => 'int']
+            ], ['product_id', 'category_id'], true, 'InnoDB', 'utf8_general_ci'
         );
     }
 

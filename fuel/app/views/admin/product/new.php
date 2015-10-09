@@ -1,9 +1,10 @@
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="/admin">Dashboard</a></li>
-            <li><a href="/admin/product">Product</a></li>
-            <li><a href="/admin/product/new">New</a></li>
+            <?php foreach (\Fuel\Core\Uri::segments() as $k => $segment): ?>
+                <?php $url = empty($url) ? 'admin' : $url . '/' . $segment; ?>
+                <li><a href="/<?php echo $url; ?>"><?php echo \Fuel\Core\Str::ucfirst($segment); ?></a></li>
+            <?php endforeach; ?>
         </ol>
     </div>
 </div>
@@ -35,7 +36,9 @@
                         <div class="col-sm-6">
                             <select multiple="multiple" id="category_id" class="populate placeholder" name="category_ids">
                                 <?php foreach ($category as $k => $v): ?>
-                                    <option value="<?php echo $k; ?>" ><?php echo $v['category_name_display']; ?></option>
+                                    <option value="<?php echo $k; ?>">
+                                        <?php echo $v['category_name_display']; ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -55,7 +58,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Main photo</label>
                         <div class="col-sm-6">
-                            <div id="product-qq-uploader"></div>
+                            <div id="product-photo-uploader"></div>
                         </div>
                     </div>
                     <div class="form-group text-center panel-heading">
@@ -69,12 +72,12 @@
     </div>
 </div>
 
-<script type="text/template" id="product-qq-template">
+<script type="text/template" id="product-photo-template">
     <div class="qq-uploader-selector qq-uploader span12">
     <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
     </div>
-    <div class="qq-upload-button-selector qq-upload-button btn btn-info" style="width: auto;">
+    <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
     <div><i class="fa fa-upload icon-white"></i> Select file</div>
     </div>
     <div class="col-sm-12" id="main-icon">

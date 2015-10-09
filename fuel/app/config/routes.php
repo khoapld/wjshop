@@ -9,6 +9,13 @@ return array(
     'admin/signin' => 'admin/auth/signin',
     'admin/signout' => 'admin/auth/signout',
     'admin' => 'admin/dashboard',
+    'admin/product' => 'admin/product/index',
+    'admin/product/new' => 'admin/product/new',
+    'admin/product/create' => 'admin/product/create',
+    'admin/product/update' => 'admin/product/update',
+    'admin/product/main_photo' => 'admin/product/main_photo',
+    'admin/product/status' => 'admin/product/status',
+    'admin/product/(:any)' => 'admin/product/edit/$1',
     // client
     'signin' => 'auth/signin',
     'signup' => 'auth/signup',

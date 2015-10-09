@@ -76,7 +76,6 @@ class Controller_Admin_Profile extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-//        $val->add_field('group', 'Group', 'required|valid_group');
         $val->add_field('full_name', 'Full name', 'trim|max_length[255]');
         $val->add_field('gender', 'Gender', 'trim|valid_gender');
         $val->add_field('birthday', 'Birthday', 'trim|exact_length[10]');
@@ -84,7 +83,6 @@ class Controller_Admin_Profile extends Controller_Base_Admin
         $val->add_field('address', 'Address', 'trim|max_length[255]');
         if ($val->run()) {
             $props = array(
-//                'group' => $val->validated('group'),
                 'full_name' => Model_Service_Util::mb_trim($val->validated('full_name')),
                 'gender' => $val->validated('gender'),
                 'birthday' => $val->validated('birthday'),
@@ -134,9 +132,14 @@ class Controller_Admin_Profile extends Controller_Base_Admin
             'user_photo' => $this->user_info['user_photo']
         );
         $upload = Model_Service_Upload::run('icon', $props);
-        $this->data['success'] = empty($upload['error']) ? true : false;
-        $this->data['error'] = empty($upload['error']) ? 'Success' : $upload['error'];
-        $this->data['photo_name'] = empty($upload['photo_name']) ? : $upload['photo_name'];
+        if (empty($upload['error'])) {
+            $this->data['success'] = true;
+            $this->data['msg'] = 'Change user icon success';
+            $this->data['photo_name'] = $upload['photo_name'];
+        } else {
+            $this->data['error'] = $upload['error'];
+        }
+
         return $this->response($this->data);
     }
 
