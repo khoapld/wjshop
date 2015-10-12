@@ -1,8 +1,10 @@
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="/admin">Dashboard</a></li>
-            <li><a href="/admin/category">Category</a></li>
+            <?php foreach (\Fuel\Core\Uri::segments() as $k => $segment): ?>
+                <?php $url = empty($url) ? 'admin' : $url . '/' . $segment; ?>
+                <li><a href="/<?php echo $url; ?>"><?php echo \Fuel\Core\Str::ucfirst($segment); ?></a></li>
+            <?php endforeach; ?>
         </ol>
     </div>
 </div>
@@ -49,7 +51,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Category photo</label>
                         <div class="col-sm-6">
-                            <div id="category-qq-uploader"></div>
+                            <div id="category-uploader"></div>
                         </div>
                     </div>
                     <div class="form-group text-center">
@@ -104,7 +106,7 @@
                                 <td class="text-center">
                                     <div class="toggle-switch-status toggle-switch-primary-status">
                                         <label>
-                                            <input type="checkbox" name="status" <?php echo $value['status'] !== 1 ? : 'checked'; ?>>
+                                            <input type="checkbox" name="status" <?php echo $value['status'] === 1 ? 'checked' : ''; ?>>
                                             <div class="toggle-switch-inner-status"></div>
                                             <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div>
                                         </label>
@@ -120,7 +122,7 @@
     </div>
 </div>
 
-<script type="text/template" id="category-qq-template">
+<script type="text/template" id="category-template">
     <div class="qq-uploader-selector qq-uploader span12">
     <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>

@@ -3,6 +3,7 @@
 use Fuel\Core\Log;
 use Fuel\Core\View;
 use Fuel\Core\Validation;
+use Fuel\Core\Input;
 use Fuel\Core\DB;
 
 class Controller_Admin_Category extends Controller_Base_Admin
@@ -46,14 +47,17 @@ class Controller_Admin_Category extends Controller_Base_Admin
             $create_id = !empty($category_id) ? Model_Base_Category::update($category_id, $category_props) : Model_Base_Category::insert($category_props);
             if ($create_id) {
                 $type = !empty($category_id) ? 'update' : 'new';
-                $category_id = !empty($category_id) ? : $create_id;
+                $category_id = !empty($category_id) ? $category_id : $create_id;
                 $photo_props = array(
                     'type' => $type,
                     'category_id' => $category_id
                 );
-                $upload = Model_Service_Upload::run('category', $photo_props);
+                if ($type === 'new' || Input::file('category_photo')) {
+                    $upload = Model_Service_Upload::run('category', $photo_props);
+                }
                 if (empty($upload['error'])) {
                     DB::commit_transaction();
+                    Log::write('NOTICE', 'Create category success', static::$method);
                     $this->data['category'] = array(
                         'type' => $type,
                         'id' => $category_id,
@@ -63,15 +67,15 @@ class Controller_Admin_Category extends Controller_Base_Admin
                         'category_photo_display' => empty($upload['photo_name']) ? : $upload['photo_name'],
                         'no_image' => _PATH_NO_IMAGE_
                     );
-                    Log::write('NOTICE', 'Create category success', static::$method);
+                    $this->data['success'] = true;
+                    $this->data['msg'] = 'Update photo success';
                 } else {
                     DB::rollback_transaction();
+                    $this->data['msg'] = $upload['error'];
                 }
-
-                $this->data['success'] = empty($upload['error']) ? true : false;
-                $this->data['error'] = empty($upload['error']) ? 'Create category success' : $upload['error'];
             } else {
-                $this->data['errors']['create_category'] = 'Create category error';
+                DB::rollback_transaction();
+                $this->data['msg'] = 'Create category error';
             }
         } else {
             $this->data['errors'] = $val->error_message();

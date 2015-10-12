@@ -99,7 +99,6 @@ class Controller_Admin_Product extends Controller_Base_Admin
                 $this->data['msg'] = 'Create product error';
             }
         } else {
-            $this->data['error'] = 'Create product error';
             $this->data['errors'] = $val->error_message();
         }
 

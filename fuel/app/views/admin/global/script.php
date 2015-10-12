@@ -2,9 +2,7 @@
 <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 <script src="/plugins/bootstrap/bootstrap.min.js"></script>
 
-<?php
-echo Asset::js(['admin.js']);
-?>
+<?php echo Asset::js(['admin.js']); ?>
 
 <?php if ($controller === 'Controller_Admin_Profile'): ?>
     <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
@@ -22,12 +20,19 @@ echo Asset::js(['admin.js']);
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Admin_Category'): ?>
+    <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
     <script>
-        var form = $('#create-category-form');
-
         // Load and run Uploader
-        LoadFineUploader(CategoryUpload);
+        var option = {
+            el: 'category-uploader',
+            template: 'category-template',
+            form: 'create-category-form',
+            inputName: 'category_photo',
+            type: 'create-category-photo'
+        };
+        FormUpload(option);
 
+        var form = $('#create-category-form');
         // Sort category
         var ul_sortable = $('.sortable');
         ul_sortable.sortable({

@@ -45,19 +45,6 @@ $(function () {
         setTimeout(MessagesMenuWidth, 250);
     });
 
-    // Add slider for change test input length
-    //FormLayoutExampleInputLength($(".slider-style"));
-
-    // Initialize datepicker
-    //$('#input_date').datepicker({setDate: new Date()});
-
-    // Load Timepicker plugin
-    //LoadTimePickerScript(DemoTimePicker);
-    // Add tooltip to form-controls
-
-    // Load Datatables and run plugin on tables 
-    //LoadDataTablesScripts(DataTable);
-
     // Load form validation
     LoadBootstrapValidatorScript(FormValidator);
 
@@ -84,44 +71,6 @@ $(function () {
         });
     }
 });
-
-//
-//  Dynamically load DataTables plugin
-//  homepage: http://datatables.net v1.9.4 license - GPL or BSD
-//
-function LoadDataTablesScripts(callback) {
-    function LoadDatatables() {
-        $.getScript('/plugins/datatables/jquery.dataTables.js', function () {
-            $.getScript('/plugins/datatables/ZeroClipboard.js', function () {
-                $.getScript('/plugins/datatables/TableTools.js', function () {
-                    $.getScript('/plugins/datatables/dataTables.bootstrap.js', callback);
-                });
-            });
-        });
-    }
-    if (!$.fn.dataTables) {
-        LoadDatatables();
-    }
-    else {
-        if (callback && typeof (callback) === "function") {
-            callback();
-        }
-    }
-}
-
-//  Dynamically load Widen FineUploader
-//  homepage: https://github.com/Widen/fine-uploader  v5.0.1 license - GPL3
-//
-function LoadFineUploader(callback) {
-    if (!$.fn.fineuploader) {
-        $.getScript('/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js', callback);
-    }
-    else {
-        if (callback && typeof (callback) === "function") {
-            callback();
-        }
-    }
-}
 
 //
 //  Dynamically load jQuery Select2 plugin
@@ -168,11 +117,6 @@ function FormSelect2() {
     $('select').select2();
     $('select[id="category_id"]').select2({placeholder: "Select Category"});
 }
-
-// Run timepicker
-//function DemoTimePicker() {
-//    $('#input_time').timepicker({setDate: new Date()});
-//}
 
 //
 //  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
@@ -483,143 +427,17 @@ function FormValidator() {
 }
 
 /*-------------------------------------------
- Function for Categpry upload page
- ---------------------------------------------*/
-function CategoryUpload() {
-    var uploader = new qq.FineUploader({
-        autoUpload: false,
-        multiple: false,
-        element: document.getElementById('category-qq-uploader'),
-        template: 'category-qq-template',
-        form: {
-            element: 'create-category-form'
-        },
-        classes: {
-            success: 'alert alert-success',
-            fail: 'alert alert-error'
-        },
-        validation: {
-            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-            sizeLimit: 5120000
-        },
-        showMessage: function (message) {
-            show_alert_error(message);
-        },
-        request: {
-            inputName: 'category_photo'
-        },
-        callbacks: {
-            onSubmitted: function () {
-                $('#main-icon').hide();
-            },
-            onCancel: function () {
-                $('#main-icon').show();
-            },
-            onComplete: function (id, name, responseJSON, xhr) {
-                if (responseJSON.success) {
-                    $('#add-category .box-content').fadeOut();
-                    $('#add-category .collapse-link > i').attr('class', 'fa fa-chevron-down');
-                    show_alert_success(responseJSON.error);
-                    if (responseJSON.category.type === 'new') {
-                        var html = '<tr id="category-' + responseJSON.category.id +
-                                '" data-id="' + responseJSON.category.id +
-                                '" data-parent-id="' + responseJSON.category.parent_category_id +
-                                '" data-category-name="' + responseJSON.category.category_name + '"> \
-                                        <td class="category_name">\n\
-                                            <img class="img-rounded" src="' + responseJSON.category.category_photo_display + '"> \
-                                            <span>' + responseJSON.category.category_name_display + '</span> \
-                                        </td> \
-                                        <td class="text-center"> \
-                                            <div class="toggle-switch-status toggle-switch-primary-status"> \
-                                                <label> \
-                                                    <input type="checkbox" name="status"> \
-                                                    <div class="toggle-switch-inner-status"></div> \
-                                                    <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div> \
-                                                </label> \
-                                            </div> \
-                                        </td> \
-                                        <td class="text-center"><button type="button" class="btn btn-danger edit">Edit</button></td> \
-                                    </tr>';
-                        $('#category-list').append(html);
-                        $('select[name="parent_category_id"]').append('<option value="' + responseJSON.category.id + '">' + responseJSON.category.category_name_display + '</option>');
-                    } else {
-                        var block = $('#category-list').find('tr#category-' + responseJSON.category.id);
-                        block.attr('data-parent-id', responseJSON.category.parent_category_id);
-                        block.attr('data-category-name', responseJSON.category.category_name);
-                        block.find('img').attr('src', responseJSON.category.category_photo_display);
-                        block.find('td.category_name > span').html(responseJSON.category.category_name_display);
-                        $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
-                        $('#create-category-form').find('div#main-icon > img').attr('src', responseJSON.category.no_image);
-                        $('#create-category-form').find('input[name="id"]').val('');
-                    }
-                    resetForm($('#create-category-form'));
-                } else if (responseJSON.error) {
-                    show_alert_error(responseJSON.error);
-                }
-                $('a#qq-cancel-link')[0].click();
-            }
-        }
-    });
-}
-
-/*-------------------------------------------
- Function for Product upload page
- ---------------------------------------------*/
-function ProductUpload() {
-    var uploader = new qq.FineUploader({
-        autoUpload: false,
-        multiple: false,
-        element: document.getElementById('product-qq-uploader'),
-        template: 'product-qq-template',
-        form: {
-            element: 'create-product-form'
-        },
-        classes: {
-            success: 'alert alert-success',
-            fail: 'alert alert-error'
-        },
-        validation: {
-            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-            sizeLimit: 5120000
-        },
-        showMessage: function (message) {
-            show_alert_error(message);
-        },
-        request: {
-            inputName: 'main_photo'
-        },
-        callbacks: {
-            onSubmitted: function () {
-                $('#main-icon').hide();
-            },
-            onCancel: function () {
-                $('#main-icon').show();
-            },
-            onComplete: function (id, name, responseJSON, xhr) {
-                if (responseJSON.success) {
-                    show_alert_success(responseJSON.error);
-
-                    location = '/admin/product';
-                } else if (responseJSON.error) {
-                    show_alert_error(responseJSON.error);
-                }
-                $('a#qq-cancel-link')[0].click();
-            }
-        }
-    });
-}
-
-/*-------------------------------------------
- Function for Product upload page
+ Function for Form upload page
  ---------------------------------------------*/
 function FormUpload(option) {
-    var uploader = new qq.FineUploader({
+    $('#' + option.el).fineUploader({
         autoUpload: false,
         multiple: false,
-        element: document.getElementById(option.el),
+        //element: document.getElementById(option.el),
         template: option.template,
         form: {
-            element: option.form
+            element: option.form,
+            interceptSubmit: (typeof option.interceptSubmit === 'undefined' ? true : false)
         },
         classes: {
             success: 'alert alert-success',
@@ -630,7 +448,44 @@ function FormUpload(option) {
             sizeLimit: 5120000
         },
         showMessage: function (message) {
-            show_alert_error(message);
+            if (typeof option.type !== 'undefined' && option.type === 'create-category-photo') {
+                var form = $('#' + option.form);
+                var id = form.find('input[name="id"]').val();
+                if (id !== '' && message === 'No files to upload.') {
+                    formData = form.serialize();
+                    url = form.attr('action');
+                    var posting = $.post(url, formData);
+                    posting.done(function (responseJSON) {
+                        if (responseJSON.errors) {
+                            var msg = '';
+                            $.each(responseJSON.errors, function (index, value) {
+                                msg += value + '\n\r';
+                            });
+                            show_alert_error(msg);
+                        } else if (responseJSON.success) {
+                            show_alert_success(responseJSON.msg);
+                            $('#add-category .box-content').fadeOut();
+                            $('#add-category .collapse-link > i').attr('class', 'fa fa-chevron-down');
+
+                            var block = $('#category-list').find('tr#category-' + responseJSON.category.id);
+                            block.attr('data-parent-id', responseJSON.category.parent_category_id);
+                            block.attr('data-category-name', responseJSON.category.category_name);
+                            block.find('td.category_name > span').html(responseJSON.category.category_name_display);
+                            $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
+                            $('#create-category-form').find('div#main-icon > img').attr('src', responseJSON.category.no_image);
+                            $('#create-category-form').find('input[name="id"]').val('');
+
+                            resetForm($('#create-category-form'));
+                        } else {
+                            show_alert_error(responseJSON.error);
+                        }
+                    });
+                } else {
+                    show_alert_error(message);
+                }
+            } else {
+                show_alert_error(message);
+            }
         },
         request: {
             inputName: option.inputName
@@ -656,6 +511,44 @@ function FormUpload(option) {
                     if (typeof option.type !== 'undefined' && option.type === 'create-product-photo') {
                         location = '/admin/product';
                     }
+                    if (typeof option.type !== 'undefined' && option.type === 'create-category-photo') {
+                        $('#add-category .box-content').fadeOut();
+                        $('#add-category .collapse-link > i').attr('class', 'fa fa-chevron-down');
+                        show_alert_success(responseJSON.msg);
+                        if (responseJSON.category.type === 'new') {
+                            var html = '<tr id="category-' + responseJSON.category.id +
+                                    '" data-id="' + responseJSON.category.id +
+                                    '" data-parent-id="' + responseJSON.category.parent_category_id +
+                                    '" data-category-name="' + responseJSON.category.category_name + '"> \
+                                        <td class="category_name">\n\
+                                            <img class="img-rounded" src="' + responseJSON.category.category_photo_display + '"> \
+                                            <span>' + responseJSON.category.category_name_display + '</span> \
+                                        </td> \
+                                        <td class="text-center"> \
+                                            <div class="toggle-switch-status toggle-switch-primary-status"> \
+                                                <label> \
+                                                    <input type="checkbox" name="status"> \
+                                                    <div class="toggle-switch-inner-status"></div> \
+                                                    <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div> \
+                                                </label> \
+                                            </div> \
+                                        </td> \
+                                        <td class="text-center"><button type="button" class="btn btn-danger edit">Edit</button></td> \
+                                    </tr>';
+                            $('#category-list').append(html);
+                            $('select[name="parent_category_id"]').append('<option value="' + responseJSON.category.id + '">' + responseJSON.category.category_name_display + '</option>');
+                        } else {
+                            var block = $('#category-list').find('tr#category-' + responseJSON.category.id);
+                            block.attr('data-parent-id', responseJSON.category.parent_category_id);
+                            block.attr('data-category-name', responseJSON.category.category_name);
+                            block.find('img').attr('src', responseJSON.category.category_photo_display);
+                            block.find('td.category_name > span').html(responseJSON.category.category_name_display);
+                            $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
+                            $('#create-category-form').find('div#main-icon > img').attr('src', responseJSON.category.no_image);
+                            $('#create-category-form').find('input[name="id"]').val('');
+                        }
+                        resetForm($('#create-category-form'));
+                    }
                     show_alert_success(responseJSON.msg);
                 } else {
                     show_alert_error(responseJSON.error);
@@ -663,49 +556,6 @@ function FormUpload(option) {
                 $('a#qq-cancel-link')[0].click();
             }
         }
-    });
-}
-
-//
-// Function for table, located in element with id = datatable
-//
-function DataTable() {
-    $.extend($.fn.dataTable.defaults, {
-        bInfo: false,
-        bSort: false,
-        bPaginate: false
-    });
-    var asInitVals = [];
-    var oTable = $('#datatable').dataTable({
-        "aaSorting": [[0, "asc"]],
-        "sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
-        "sPaginationType": "bootstrap",
-        "oLanguage": {
-            "sSearch": "",
-            "sLengthMenu": '_MENU_'
-        },
-        "bAutoWidth": false
-    });
-    var header_inputs = $("#datatable thead input");
-    header_inputs.on('keyup', function () {
-        /* Filter on the column (the index) of this element */
-        oTable.fnFilter(this.value, header_inputs.index(this));
-    }).on('focus', function () {
-        if (this.className === "search_init") {
-            this.className = "";
-            this.value = "";
-        }
-    }).on('blur', function (i) {
-        if (this.value === "") {
-            this.className = "search_init";
-            this.value = asInitVals[header_inputs.index(this)];
-        }
-    });
-    header_inputs.each(function (i) {
-        asInitVals[i] = this.value;
-    });
-    $('.dataTables_filter').each(function () {
-        $(this).find('label input[type=text]').attr('placeholder', 'Search');
     });
 }
 
@@ -764,7 +614,6 @@ function SubmitForm($form) {
         }
         $form.find('button').removeAttr('disabled');
     });
-
 }
 
 function resetForm(form, value) {
