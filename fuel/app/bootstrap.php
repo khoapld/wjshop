@@ -22,3 +22,4 @@ require COREPATH.'bootstrap.php';
 
 // Initialize the framework with the config file.
 \Fuel::init('config.php');
+require_once COREPATH . '../app/config/define.php';

@@ -5,6 +5,7 @@ use Fuel\Core\Log;
 use Fuel\Core\View;
 use Fuel\Core\Validation;
 use Fuel\Core\Response;
+use Fuel\Core\Input;
 
 class Controller_Admin_Product extends Controller_Base_Admin
 {
@@ -23,6 +24,8 @@ class Controller_Admin_Product extends Controller_Base_Admin
 
     public function action_index()
     {
+        $total_page = ceil(Model_Base_Product::count_all() / _DEFAULT_LIMIT_);
+        View::set_global('total_page', $total_page);
         $this->data['product'] = Model_Base_Product::get_all();
         $this->template->title = 'Product Page';
         $this->template->content = View::forge($this->layout . '/product/index', $this->data);
@@ -45,6 +48,18 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $this->data['product']['category'] = Model_Base_ProductCategory::get_by('product_id', $id);
         $this->template->title = 'Edit Product Page';
         $this->template->content = View::forge($this->layout . '/product/edit', $this->data);
+    }
+
+    public function post_list()
+    {
+        $total = Model_Base_Product::count_all();
+        $page = (int) Input::post('page') !== 0 ? (int) Input::post('page') : 1;
+        $limit = _DEFAULT_LIMIT_;
+        $offset = ($page * $limit - $limit < $total) ? $page * $limit - $limit : _DEFAULT_OFFSET_;
+
+        View::set_global('total_product', $total);
+        $this->data['product'] = Model_Base_Product::get_all($offset, $limit);
+        return $this->response($this->data);
     }
 
     public function post_create()

@@ -78,7 +78,50 @@ echo Asset::js(['admin.js']);
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Admin_Product' && $action === 'index'): ?>
+    <script src="/plugins/jQuery-pagination/jquery.pagination.js"></script>
     <script>
+        $('#pagination').jqueryPagination({
+            totalPages: <?php echo $total_page; ?>,
+            visiblePages: <?php echo _DEFAULT_VISIBLE_PAGES_; ?>,
+            prev: '←',
+            next: '→',
+            onPageClick: function (event, page) {
+                var posting = $.post('/admin/product/list', {page: page});
+                posting.done(function (data) {
+                    if (data.product) {
+                        var html = '';
+                        $.each(data.product, function (index, value) {
+                            var check = '';
+                            if (parseInt(value.status) === 1) {
+                                check = 'checked';
+                            }
+                            html += ' \
+                                <tr data-id="' + value.id + '"> \
+                                    <td> \
+                                        <img class="img-rounded" src="' + value.product_photo_display + '"> \
+                                        <span>' + value.product_name + '</span> \
+                                    </td> \
+                                    <td class="text-center"> \
+                                        <div class="toggle-switch-status toggle-switch-primary-status"> \
+                                            <label> \
+                                                <input type="checkbox" name="status" ' + check + '> \
+                                                <div class="toggle-switch-inner-status"></div> \
+                                                <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div> \
+                                            </label> \
+                                        </div> \
+                                    </td> \
+                                    <td class="text-center"> \
+                                        <a class="btn btn-danger" href="/admin/product/' + value.id + '">Edit</a> \
+                                    </td> \
+                                </tr> \
+                            ';
+                        });
+                        $('#product-list').html(html);
+                    }
+                });
+            }
+        });
+
         // Change status
         $(document).on('change', 'input[name="status"]', function () {
             var status = $(this).prop('checked') ? 1 : 2;

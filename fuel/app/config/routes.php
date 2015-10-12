@@ -10,6 +10,7 @@ return array(
     'admin/signout' => 'admin/auth/signout',
     'admin' => 'admin/dashboard',
     'admin/product' => 'admin/product/index',
+    'admin/product/list' => 'admin/product/list',
     'admin/product/new' => 'admin/product/new',
     'admin/product/create' => 'admin/product/create',
     'admin/product/update' => 'admin/product/update',

@@ -40,14 +40,21 @@ class Model_Base_Product
         return true;
     }
 
-    public static function get_all()
+    public static function get_all($offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
     {
         $product = Model_Product::find('all', array(
                 'select' => array('product_name', 'product_description', 'product_photo', 'status'),
-                'order_by' => array('id' => 'desc')
+                'order_by' => array('id' => 'desc'),
+                'offset' => $offset,
+                'limit' => $limit
         ));
 
         return self::map_product($product);
+    }
+
+    public static function count_all()
+    {
+        return Model_Product::query()->count();
     }
 
     public static function get_by($field, $val)

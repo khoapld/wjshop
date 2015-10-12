@@ -62,6 +62,11 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php if ($total_page > 1): ?>
+                    <div class="form-group text-right">
+                        <ul id="pagination" class="pagination-sm"></ul>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
