@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
-<link href="/plugins/bootstrap/bootstrap.css" rel="stylesheet">
+<link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
