@@ -503,6 +503,12 @@ function FormUpload(option) {
                 form.find('.main-icon').show();
             },
             onComplete: function (id, name, responseJSON, xhr) {
+                if (typeof option.type !== 'undefined' && option.type === 'create-sub-product-photo') {
+                    show_alert_success(responseJSON.msg, 500);
+                } else {
+                    show_alert_success(responseJSON.msg);
+                }
+
                 if (responseJSON.errors) {
                     var msg = '';
                     $.each(responseJSON.errors, function (index, value) {
@@ -510,7 +516,6 @@ function FormUpload(option) {
                     });
                     show_alert_error(msg);
                 } else if (responseJSON.success) {
-                    show_alert_success(responseJSON.msg);
                     if (typeof option.type !== 'undefined' && option.type === 'update-user-icon') {
                         $('div.avatar > img, div.main-icon > img').attr('src', responseJSON.photo_name);
                     } else if (typeof option.type !== 'undefined' && option.type === 'create-category-photo') {
@@ -636,25 +641,27 @@ function resetForm(form, value) {
         value = '';
     }
     form.bootstrapValidator('resetForm', true);
-    LoadSelect2Script($('select').select2('val', value));
+    LoadSelect2Script(form.find('select').select2('val', value));
 }
 
-function show_alert_success(msg) {
+function show_alert_success(msg, time) {
+    $('#alert div.modal-content').html('<div class="alert alert-success text-center">' + msg + '</div>');
     $('#alert').modal('show');
-    $('#alert').on('shown.bs.modal', function () {
-        $('#alert div.modal-content').html('<div class="alert alert-success text-center">' + msg + '</div>');
-    });
-    $('#alert').on('hidden.bs.modal', function () {
-        $('#alert div.modal-content').html('');
-    });
+    if (typeof time === 'undefined') {
+        time = 1000;
+    }
+    setTimeout(function () {
+        $('#alert').modal('hide');
+    }, time);
 }
 
-function show_alert_error(msg) {
+function show_alert_error(msg, time) {
+    $('#alert div.modal-content').html('<div class="alert alert-danger text-center">' + msg + '</div>');
     $('#alert').modal('show');
-    $('#alert').on('shown.bs.modal', function () {
-        $('#alert div.modal-content').html('<div class="alert alert-danger text-center">' + msg + '</div>');
-    });
-    $('#alert').on('hidden.bs.modal', function () {
-        $('#alert div.modal-content').html('');
-    });
+    if (typeof time === 'undefined') {
+        time = 1000;
+    }
+    setTimeout(function () {
+        $('#alert').modal('hide');
+    }, time);
 }

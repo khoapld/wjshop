@@ -41,7 +41,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
                 Log::write('NOTICE', 'Update username success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update username success';
             } else {
-                $this->data['errors']['update_username'] = 'Update username error';
+                $this->data['error'] = 'Update username error';
             }
         } else {
             $this->data['errors'] = $val->error_message();
@@ -63,7 +63,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
                 Log::write('NOTICE', 'Update email success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update email success';
             } else {
-                $this->data['errors']['update_email'] = 'Update email error';
+                $this->data['error'] = 'Update email error';
             }
         } else {
             $this->data['errors'] = $val->error_message();
@@ -93,7 +93,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
                 Log::write('NOTICE', 'Update info success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update info success';
             } else {
-                $this->data['errors']['update_info'] = 'Update info error';
+                $this->data['error'] = 'Update info error';
             }
         } else {
             $this->data['errors'] = $val->error_message();
@@ -116,7 +116,7 @@ class Controller_Admin_Profile extends Controller_Base_Admin
                 Log::write('NOTICE', 'Update password success: ' . $this->user_info['email'], static::$method);
                 $this->data['success'] = 'Update password success';
             } else {
-                $this->data['errors']['update_password'] = 'Update password error';
+                $this->data['error'] = 'Update password error';
             }
         } else {
             $this->data['errors'] = $val->error_message();

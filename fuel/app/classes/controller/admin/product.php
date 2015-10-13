@@ -199,6 +199,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $val->add_field('product_id', 'Product', 'required|valid_product');
         if ($val->run()) {
             Model_Base_Product::update($val->validated('product_id'), array('status' => $val->validated('status')));
+            $this->data['success'] = true;
         } else {
             $this->data['errors'] = $val->error_message();
         }
@@ -217,6 +218,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
             $photo_name = Model_Photo::find($photo_id)->photo_name;
             if (Model_Base_Photo::delete($photo_id)) {
                 Model_Service_Upload::delete_photo('photo', $photo_name);
+                $this->data['success'] = true;
             }
         } else {
             $this->data['errors'] = $val->error_message();

@@ -110,6 +110,7 @@ class Controller_Admin_Category extends Controller_Base_Admin
         $val->add_field('category_id', 'Category', 'required|valid_category');
         if ($val->run()) {
             Model_Base_Category::update($val->validated('category_id'), array('status' => $val->validated('status')));
+            $this->data['success'] = true;
         } else {
             $this->data['errors'] = $val->error_message();
         }
