@@ -19,18 +19,14 @@ class Model_Migrate_Photo extends Model_Migrate_Migratebase
             self::$_table_name, [
             'id' => ['constraint' => 11, 'type' => 'int', 'auto_increment' => true],
             'product_id' => ['constraint' => 11, 'type' => 'int', 'default' => 0],
-            'photo_name' => ['constraint' => 32, 'type' => 'varchar'],
-            'main_flg' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 0],
+            'photo_name' => ['constraint' => 50, 'type' => 'varchar'],
             'rank' => ['constraint' => 11, 'type' => 'int', 'default' => 0],
-            'del_flg' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 0],
             'created_at' => ['type' => 'timestamp', 'default' => DB::expr('CURRENT_TIMESTAMP')],
             'updated_at' => ['type' => 'timestamp', 'default' => '0000-00-00 00:00:00']
             ], ['id'], true, 'InnoDB', 'utf8_general_ci'
         );
 
         DBUtil::create_index(self::$_table_name, 'product_id', 'product_id');
-        DBUtil::create_index(self::$_table_name, 'main_flg', 'main_flg');
-        DBUtil::create_index(self::$_table_name, 'del_flg', 'del_flg');
     }
 
     public static function down()

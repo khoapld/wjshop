@@ -55,20 +55,29 @@ class Model_Service_Upload
                     }
                     break;
                 case 'product':
-                    if ($options['type'] === 'main_photo') {
-                        $old_photo = $file['saved_to'] . $type . '/' . Model_Product::find($options['product_id'])->product_photo;
-                        if (Model_Base_Product::update($options['product_id'], array('product_photo' => $photo_name[0]))) {
-                            if (File::exists($old_photo)) {
-                                File::delete($old_photo);
-                            }
-                            $data['photo_name'] = _PATH_PRODUCT_ . $photo_name[0];
-                        } else {
-                            $data['error'] = 'Save product photo to database error';
+                    $old_photo = $file['saved_to'] . $type . '/' . Model_Product::find($options['product_id'])->product_photo;
+                    if (Model_Base_Product::update($options['product_id'], array('product_photo' => $photo_name[0]))) {
+                        if (File::exists($old_photo)) {
+                            File::delete($old_photo);
                         }
-                    } elseif ($options['type'] === 'sub_photo') {
-                        //
+                        $data['photo_name'] = _PATH_PRODUCT_ . $photo_name[0];
+                    } else {
+                        $data['error'] = 'Save product photo to database error';
                     }
-
+                    break;
+                case 'photo':
+                    if ($options['type'] === 'sub_product_photo') {
+                        $photo_props = array(
+                            'product_id' => $options['product_id'],
+                            'photo_name' => $photo_name[0]
+                        );
+                        if ($photo_id = Model_Base_Photo::insert($photo_props)) {
+                            $data['photo_id'] = $photo_id;
+                            $data['photo_name'] = _PATH_PHOTO_ . $photo_name[0];
+                        } else {
+                            $data['error'] = 'Save sub product photo to database error';
+                        }
+                    }
                     break;
                 default:
                     $data['error'] = 'No type';
@@ -104,6 +113,17 @@ class Model_Service_Upload
                             ->resize($image_config[$type], null, true)
                             ->save($path . $type . '/' . $photo);
                     break;
+                case 'photo':
+                    foreach ($image_config[$type] as $version => $size) {
+                        if (!is_dir($path . $type . '/' . $version)) {
+                            mkdir($path . $type . '/' . $version, 0700);
+                        }
+                        @Fuel\Core\Image::load($path . $photo)
+                                ->rotate($rotate_number)
+                                ->resize($size, null, true)
+                                ->save($path . $type . '/' . $version . '/' . $photo);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -133,6 +153,24 @@ class Model_Service_Upload
                 return '-90';
             default:
                 return '360';
+        }
+    }
+
+    public static function delete_photo($type, $photo_name)
+    {
+
+        $image_config = Config::get('app.image');
+        switch ($type) {
+            case 'photo':
+                $path = Config::get('app.path.root_photo');
+                foreach ($image_config[$type] as $version => $size) {
+                    if (File::exists($path . $version . '/' . $photo_name)) {
+                        File::delete($path . $version . '/' . $photo_name);
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 

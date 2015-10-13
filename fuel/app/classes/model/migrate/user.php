@@ -54,7 +54,7 @@ class Model_Migrate_User extends Model_Migrate_Migratebase
         $user_props = [
             'username' => 'wjshop',
             'email' => 'wjshop@gmail.com',
-            'password' => Model_Service_Util::hash_password('123456789'),
+            'password' => Model_Service_Util::hash_password('11111111'),
             'group' => 100,
             'customer_name' => 'wjshop',
             'created_at' => date('Y-m-d H:i:s', Date::forge()->get_timestamp())

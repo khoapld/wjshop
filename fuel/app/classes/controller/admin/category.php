@@ -94,6 +94,7 @@ class Controller_Admin_Category extends Controller_Base_Admin
             foreach ($val->validated('category') as $value) {
                 Model_Base_Category::update($value, array('rank' => $rank++));
             }
+            $this->data['success'] = true;
         } else {
             $this->data['errors'] = $val->error_message();
         }

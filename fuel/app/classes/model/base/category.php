@@ -12,7 +12,7 @@ class Model_Base_Category
             $props = [
                 'parent_category_id' => !empty($data['parent_category_id']) ? $data['parent_category_id'] : 0,
                 'category_name' => $data['category_name'],
-                'rank' => Model_Category::count() + 1,
+                'rank' => Model_Category::query()->max('rank') + 1,
                 'level' => $data['level'],
                 'created_at' => date('Y-m-d H:i:s', Date::forge()->get_timestamp())
             ];

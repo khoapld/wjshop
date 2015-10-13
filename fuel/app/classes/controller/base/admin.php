@@ -86,6 +86,7 @@ class Controller_Base_Admin extends Controller_Hybrid
             define('_PATH_ICON_', $base_url . $path_config['icon']);
             define('_PATH_CATEGORY_', $base_url . $path_config['category']);
             define('_PATH_PRODUCT_', $base_url . $path_config['product']);
+            define('_PATH_ROOT_PHOTO_', $base_url . $path_config['root_photo']);
             define('_PATH_PHOTO_', $base_url . $path_config['photo']);
         }
     }

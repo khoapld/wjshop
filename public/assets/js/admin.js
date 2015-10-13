@@ -430,9 +430,10 @@ function FormValidator() {
  Function for Form upload page
  ---------------------------------------------*/
 function FormUpload(option) {
+    var form = $('#' + option.form);
     $('#' + option.el).fineUploader({
         autoUpload: false,
-        multiple: false,
+        multiple: (typeof option.multiple === 'undefined' ? false : true),
         //element: document.getElementById(option.el),
         template: option.template,
         form: {
@@ -449,7 +450,6 @@ function FormUpload(option) {
         },
         showMessage: function (message) {
             if (typeof option.type !== 'undefined' && option.type === 'create-category-photo') {
-                var form = $('#' + option.form);
                 var id = form.find('input[name="id"]').val();
                 if (id !== '' && message === 'No files to upload.') {
                     formData = form.serialize();
@@ -472,7 +472,7 @@ function FormUpload(option) {
                             block.attr('data-category-name', responseJSON.category.category_name);
                             block.find('td.category_name > span').html(responseJSON.category.category_name_display);
                             $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
-                            $('#create-category-form').find('div#main-icon > img').attr('src', responseJSON.category.no_image);
+                            $('#create-category-form').find('div.main-icon > img').attr('src', responseJSON.category.no_image);
                             $('#create-category-form').find('input[name="id"]').val('');
 
                             resetForm($('#create-category-form'));
@@ -491,11 +491,16 @@ function FormUpload(option) {
             inputName: option.inputName
         },
         callbacks: {
+            onUpload: function () {
+                if (typeof option.type !== 'undefined' && option.type === 'create-product-photo') {
+                    form.find('textarea[name="product_description"]').val(tinyMCE.activeEditor.getContent());
+                }
+            },
             onSubmitted: function () {
-                $('#main-icon').hide();
+                form.find('.main-icon').hide();
             },
             onCancel: function () {
-                $('#main-icon').show();
+                form.find('.main-icon').show();
             },
             onComplete: function (id, name, responseJSON, xhr) {
                 if (responseJSON.errors) {
@@ -505,13 +510,10 @@ function FormUpload(option) {
                     });
                     show_alert_error(msg);
                 } else if (responseJSON.success) {
+                    show_alert_success(responseJSON.msg);
                     if (typeof option.type !== 'undefined' && option.type === 'update-user-icon') {
-                        $('div.avatar > img, div#main-icon > img').attr('src', responseJSON.photo_name);
-                    }
-                    if (typeof option.type !== 'undefined' && option.type === 'create-product-photo') {
-                        location = '/admin/product';
-                    }
-                    if (typeof option.type !== 'undefined' && option.type === 'create-category-photo') {
+                        $('div.avatar > img, div.main-icon > img').attr('src', responseJSON.photo_name);
+                    } else if (typeof option.type !== 'undefined' && option.type === 'create-category-photo') {
                         $('#add-category .box-content').fadeOut();
                         $('#add-category .collapse-link > i').attr('class', 'fa fa-chevron-down');
                         show_alert_success(responseJSON.msg);
@@ -520,7 +522,7 @@ function FormUpload(option) {
                                     '" data-id="' + responseJSON.category.id +
                                     '" data-parent-id="' + responseJSON.category.parent_category_id +
                                     '" data-category-name="' + responseJSON.category.category_name + '"> \
-                                        <td class="category_name">\n\
+                                        <td class="category_name"> \
                                             <img class="img-rounded" src="' + responseJSON.category.category_photo_display + '"> \
                                             <span>' + responseJSON.category.category_name_display + '</span> \
                                         </td> \
@@ -544,16 +546,27 @@ function FormUpload(option) {
                             block.find('img').attr('src', responseJSON.category.category_photo_display);
                             block.find('td.category_name > span').html(responseJSON.category.category_name_display);
                             $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
-                            $('#create-category-form').find('div#main-icon > img').attr('src', responseJSON.category.no_image);
-                            $('#create-category-form').find('input[name="id"]').val('');
+                            form.find('div.main-icon > img').attr('src', responseJSON.category.no_image);
+                            form.find('input[name="id"]').val('');
                         }
-                        resetForm($('#create-category-form'));
+                        resetForm(form);
+                    } else if (typeof option.type !== 'undefined' && option.type === 'create-product-photo') {
+                        location = '/admin/product';
+                    } else if (typeof option.type !== 'undefined' && option.type === 'update-product-photo') {
+                        form.find('div.main-icon > img').attr('src', responseJSON.photo_name);
+                    } else if (typeof option.type !== 'undefined' && option.type === 'create-sub-product-photo') {
+                        var html = '<tr id="photo-' + responseJSON.photo_id + '" data-id="' + responseJSON.photo_id + '"> \
+                                        <td class="text-center"> \
+                                            <img class="img-rounded" src="' + responseJSON.photo_name + '"> \
+                                        </td> \
+                                        <td class="text-center"><button type="button" class="btn btn-danger delete-btn">Delete</button></td> \
+                                    </tr>';
+                        $('#sub-photo-list').append(html);
                     }
-                    show_alert_success(responseJSON.msg);
                 } else {
                     show_alert_error(responseJSON.error);
                 }
-                $('a#qq-cancel-link')[0].click();
+                $('li.qq-file-id-' + id).find('a#qq-cancel-link')[0].click();
             }
         }
     });
@@ -583,8 +596,10 @@ function TinyMCEStart(elem, mode) {
 // Submit Form function
 //
 function SubmitForm($form) {
-    var $form = $form,
-            fName = $form.attr('id'),
+    if ($form.attr('id') === 'update-product-form') {
+        $form.find('textarea[name="product_description"]').val(tinyMCE.activeEditor.getContent());
+    }
+    var fName = $form.attr('id'),
             formData = $form.serialize(),
             url = $form.attr('action');
     if (typeof url === 'undefined') {

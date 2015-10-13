@@ -1,8 +1,10 @@
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="/admin">Dashboard</a></li>
-            <li><a href="/admin/product">Product</a></li>
+            <?php foreach (\Fuel\Core\Uri::segments() as $k => $segment): ?>
+                <?php $url = empty($url) ? 'admin' : $url . '/' . $segment; ?>
+                <li><a href="/<?php echo $url; ?>"><?php echo \Fuel\Core\Str::ucfirst($segment); ?></a></li>
+            <?php endforeach; ?>
         </ol>
     </div>
 </div>
@@ -62,11 +64,9 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php if ($total_page > 1): ?>
-                    <div class="form-group text-right">
-                        <ul id="pagination" class="pagination-sm"></ul>
-                    </div>
-                <?php endif; ?>
+                <div class="form-group text-right">
+                    <ul id="pagination" class="pagination-sm"></ul>
+                </div>
             </div>
         </div>
     </div>

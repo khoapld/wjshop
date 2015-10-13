@@ -104,6 +104,14 @@ class MyRules
         return array_key_exists($val, $_config['status']);
     }
 
+    public static function _validation_valid_photo($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        return Model_Base_Photo::valid_field('id', $val);
+    }
+
 //    public static function _validation_required($val)
 //    {
 //        $val = Model_Service_Util::mb_trim($val);

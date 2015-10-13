@@ -1,8 +1,10 @@
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="/admin">Dashboard</a></li>
-            <li><a href="/admin/profile">Profile</a></li>
+            <?php foreach (\Fuel\Core\Uri::segments() as $k => $segment): ?>
+                <?php $url = empty($url) ? 'admin' : $url . '/' . $segment; ?>
+                <li><a href="/<?php echo $url; ?>"><?php echo \Fuel\Core\Str::ucfirst($segment); ?></a></li>
+            <?php endforeach; ?>
         </ol>
     </div>
 </div>
@@ -198,7 +200,7 @@
     <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
     <div><i class="fa fa-upload icon-white"></i> Select file</div>
     </div>
-    <div class="col-sm-12" id="main-icon">
+    <div class="col-sm-12 main-icon">
     <br>
     <img src="<?php echo $user['user_photo_display']; ?>" alt="icon" class="img-thumbnail">
     </div>

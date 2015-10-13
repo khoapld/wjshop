@@ -40,7 +40,7 @@
             cursor: 'move'
         });
         ul_sortable.disableSelection();
-        ul_sortable.on("sortupdate", function (event, ui) {
+        ul_sortable.on('sortupdate', function (event, ui) {
             var sortable_data = $('.sortable').sortable('serialize');
             $.post('/admin/category/sort', sortable_data);
         });
@@ -56,7 +56,7 @@
         $('button#reset').on('click', function () {
             resetForm(form);
             form.find('input[name="id"]').val('');
-            form.find('div#main-icon > img').attr('src', '<?php echo _PATH_NO_IMAGE_; ?>');
+            form.find('div.main-icon > img').attr('src', '<?php echo _PATH_NO_IMAGE_; ?>');
             if ($('a#qq-cancel-link').length === 1) {
                 $('a#qq-cancel-link')[0].click();
             }
@@ -76,13 +76,13 @@
             }
             resetForm(form, parent_category_id);
             form.find('input[name="category_name"]').val(category_name);
-            form.find('div#main-icon > img').attr('src', category_photo);
+            form.find('div.main-icon > img').attr('src', category_photo);
             form.find('input[name="id"]').val(category_id);
         });
     </script>
 <?php endif; ?>
 
-<?php if ($controller === 'Controller_Admin_Product' && $action === 'index'): ?>
+<?php if ($controller === 'Controller_Admin_Product' && $action === 'index' && !empty($total_page)): ?>
     <script src="/plugins/jQuery-pagination/jquery.pagination.js"></script>
     <script>
         $('#pagination').jqueryPagination({
@@ -160,7 +160,7 @@
             resetForm(form);
             tinymce.activeEditor.setContent('');
             form.find('input[name="id"]').val('');
-            form.find('div#main-icon > img').attr('src', '<?php echo _PATH_NO_IMAGE_; ?>');
+            form.find('div.main-icon > img').attr('src', '<?php echo _PATH_NO_IMAGE_; ?>');
             if ($('a#qq-cancel-link').length === 1) {
                 $('a#qq-cancel-link')[0].click();
             }
@@ -174,6 +174,30 @@
     <script src="/plugins/tinymce/jquery.tinymce.min.js"></script>
     <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
     <script>
+        // Load and run Uploader
+        var option = {
+            el: 'product-photo-uploader',
+            template: 'product-photo-template',
+            form: 'update-product-photo-form',
+            inputName: 'product_photo',
+            type: 'update-product-photo'
+        };
+        FormUpload(option);
+
+        // Load and run Uploader
+        var sub_option = {
+            el: 'sub-product-photo-uploader',
+            template: 'sub-product-photo-template',
+            multiple: true,
+            form: 'sub-product-photo-form',
+            inputName: 'sub_product_photo',
+            type: 'create-sub-product-photo'
+        };
+        FormUpload(sub_option);
+
+        // Create Wysiwig editor for textare
+        TinyMCEStart('#product_description', 'basic');
+
         // Change status
         $(document).on('change', 'input[name="status"]', function () {
             var status = $(this).prop('checked') ? 1 : 2;
@@ -181,16 +205,25 @@
             $.post('/admin/product/status', {product_id: product_id, status: status});
         });
 
-        // Load and run Uploader
-        var option = {
-            el: 'product-photo-uploader',
-            template: 'product-photo-template',
-            form: 'update-product-photo-form',
-            inputName: 'product_photo'
-        };
-        FormUpload(option);
+        // Delete sub photo
+        $(document).on('click', 'button.delete-btn', function () {
+            var product_id = $(this).parents('tbody').attr('data-id');
+            var photo_id = $(this).parents('tr').attr('data-id');
+            $.post('/admin/product/delete_sub_photo', {product_id: product_id, photo_id: photo_id});
+            $(this).parents('tr').remove();
+        });
 
-        // Create Wysiwig editor for textare
-        TinyMCEStart('#product_description', 'basic');
+        // Sort sub photo
+        var ul_sortable = $('.sortable');
+        ul_sortable.sortable({
+            placeholder: 'ui-state-highlight',
+            cursor: 'move'
+        });
+        ul_sortable.disableSelection();
+        ul_sortable.on('sortupdate', function (event, ui) {
+            var sortable_data = $('.sortable').sortable('serialize');
+            console.log(sortable_data);
+            $.post('/admin/product/sort_sub_photo', sortable_data);
+        });
     </script>
 <?php endif; ?>

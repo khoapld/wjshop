@@ -46,6 +46,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $this->data['category'] = Model_Base_Category::get_all();
         $this->data['product'] = Model_Base_Product::get_by('id', $id);
         $this->data['product']['category'] = Model_Base_ProductCategory::get_by('product_id', $id);
+        $this->data['product']['sub_photo'] = Model_Base_Product::get_sub_photo($id);
         $this->template->title = 'Edit Product Page';
         $this->template->content = View::forge($this->layout . '/product/edit', $this->data);
     }
@@ -164,14 +165,77 @@ class Controller_Admin_Product extends Controller_Base_Admin
         return $this->response($this->data);
     }
 
+    public function post_sub_photo()
+    {
+        $val = Validation::forge();
+        $val->add_callable('MyRules');
+        $val->add_field('id', 'Product', 'required|valid_product');
+        if ($val->run()) {
+            $props = array(
+                'type' => 'sub_product_photo',
+                'product_id' => $val->validated('id')
+            );
+            $upload = Model_Service_Upload::run('photo', $props);
+            if (empty($upload['error'])) {
+                $this->data['success'] = true;
+                $this->data['msg'] = 'Update photo success';
+                $this->data['photo_id'] = $upload['photo_id'];
+                $this->data['photo_name'] = $upload['photo_name'];
+            } else {
+                $this->data['msg'] = $upload['error'];
+            }
+        } else {
+            $this->data['errors'] = $val->error_message();
+        }
+
+        return $this->response($this->data);
+    }
+
     public function post_status()
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
         $val->add_field('status', 'Status', 'required|valid_product_status');
-        $val->add_field('product_id', 'Category', 'required|valid_product');
+        $val->add_field('product_id', 'Product', 'required|valid_product');
         if ($val->run()) {
             Model_Base_Product::update($val->validated('product_id'), array('status' => $val->validated('status')));
+        } else {
+            $this->data['errors'] = $val->error_message();
+        }
+
+        return $this->response($this->data);
+    }
+
+    public function post_delete_sub_photo()
+    {
+        $val = Validation::forge();
+        $val->add_callable('MyRules');
+        $val->add_field('photo_id', 'Photo', 'required|valid_photo');
+        $val->add_field('product_id', 'Product', 'required|valid_product');
+        if ($val->run()) {
+            $photo_id = $val->validated('photo_id');
+            $photo_name = Model_Photo::find($photo_id)->photo_name;
+            if (Model_Base_Photo::delete($photo_id)) {
+                Model_Service_Upload::delete_photo('photo', $photo_name);
+            }
+        } else {
+            $this->data['errors'] = $val->error_message();
+        }
+
+        return $this->response($this->data);
+    }
+
+    public function post_sort_sub_photo()
+    {
+        $val = Validation::forge();
+        $val->add_callable('MyRules');
+        $val->add_field('photo', 'Photo', 'required');
+        if ($val->run()) {
+            $rank = 1;
+            foreach ($val->validated('photo') as $value) {
+                Model_Base_Photo::update($value, array('rank' => $rank++));
+            }
+            $this->data['success'] = true;
         } else {
             $this->data['errors'] = $val->error_message();
         }

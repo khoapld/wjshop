@@ -29,4 +29,5 @@ return [
     'valid_category_status' => 'The filed :label is not correct.',
     'valid_product' => 'The field :label is exist.',
     'valid_product_status' => 'The filed :label is not correct.',
+    'valid_photo' => 'The filed :label is not correct.',
 ];

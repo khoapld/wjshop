@@ -63,6 +63,19 @@ class Model_Base_Product
         return self::map_product($product)[$val];
     }
 
+    public static function get_sub_photo($id)
+    {
+        $data = array();
+        $sub_photo = Model_Photo::query()->select('photo_name')->where(array('product_id' => $id))->order_by(array('rank' => 'asc'))->get();
+        foreach ($sub_photo as $photo) {
+            $data[$photo->id]['l'] = _PATH_ROOT_PHOTO_ . 'l/' . $photo->photo_name;
+            $data[$photo->id]['m'] = _PATH_ROOT_PHOTO_ . 'm/' . $photo->photo_name;
+            $data[$photo->id]['s'] = _PATH_ROOT_PHOTO_ . 's/' . $photo->photo_name;
+        }
+
+        return $data;
+    }
+
     public static function map_product($product)
     {
         $data = array();

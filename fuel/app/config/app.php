@@ -13,7 +13,8 @@ return array(
         'icon' => 'upload/icon/',
         'category' => 'upload/category/',
         'product' => 'upload/product/',
-        'photo' => 'upload/photo/m/',
+        'root_photo' => 'upload/photo/',
+        'photo' => 'upload/photo/s/',
     ),
     'user' => array(
         'group' => array(

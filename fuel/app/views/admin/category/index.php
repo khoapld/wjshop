@@ -130,7 +130,7 @@
     <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
     <div><i class="fa fa-upload icon-white"></i> Select file</div>
     </div>
-    <div class="col-sm-12" id="main-icon">
+    <div class="col-sm-12 main-icon">
     <br>
     <img src="<?php echo _PATH_NO_IMAGE_; ?>" alt="icon" class="img-thumbnail">
     </div>
