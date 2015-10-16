@@ -23,13 +23,15 @@ class Model_Migrate_Product extends Model_Migrate_Migratebase
             'product_info' => ['type' => 'text', 'null' => true],
             'note' => ['type' => 'text', 'null' => true],
             'product_photo' => ['constraint' => 50, 'type' => 'varchar', 'null' => true],
-            'status' => ['constraint' => 1, 'type' => 'int', 'default' => 2],
+            'status' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 2],
+            'hightlight' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 0],
             'created_at' => ['type' => 'timestamp', 'default' => DB::expr('CURRENT_TIMESTAMP')],
             'updated_at' => ['type' => 'timestamp', 'default' => '0000-00-00 00:00:00']
             ], ['id'], true, 'InnoDB', 'utf8_general_ci'
         );
 
         DBUtil::create_index(self::$_table_name, 'status', 'status');
+        DBUtil::create_index(self::$_table_name, 'hightlight', 'hightlight');
     }
 
     public static function down()

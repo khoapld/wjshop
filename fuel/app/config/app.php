@@ -40,5 +40,9 @@ return array(
             1 => 'Show',
             2 => 'Hide'
         ),
+        'highlight' => array(
+            1 => 'Show',
+            0 => 'Hide'
+        ),
     ),
 );

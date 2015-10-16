@@ -52,7 +52,13 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="form-styles">Description</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="10" id="product_description" name="product_description"></textarea>
+                            <textarea class="form-control" rows="10" name="product_description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="form-styles">Information</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="10" id="product_info" name="product_info"></textarea>
                         </div>
                     </div>
                     <div class="form-group">

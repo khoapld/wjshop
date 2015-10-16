@@ -104,6 +104,15 @@ class MyRules
         return array_key_exists($val, $_config['status']);
     }
 
+    public static function _validation_valid_product_highlight($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        $_config = Model_Service_Util::get_app_config('product', array('highlight'));
+        return array_key_exists($val, $_config['highlight']);
+    }
+
     public static function _validation_valid_photo($val)
     {
         if (self::_empty($val)) {

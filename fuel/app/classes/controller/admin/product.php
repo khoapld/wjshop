@@ -85,15 +85,18 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $val->add_callable('MyRules');
         $val->add_field('category_ids', 'Category list', 'required');
         $val->add_field('product_name', 'Product name', 'required|max_length[255]');
-        $val->add_field('product_description', 'Product Description', 'trim|max_length[10000]');
+        $val->add_field('product_description', 'Product Description', 'trim|max_length[1024]');
+        $val->add_field('product_info', 'Product Info', 'trim|max_length[10000]');
         if ($val->run()) {
             DB::start_transaction();
             $category_ids = $val->validated('category_ids');
             $category_name = Model_Service_Util::mb_trim($val->validated('product_name'));
-            $product_description = $val->validated('product_description');
+            $product_description = Model_Service_Util::mb_trim($val->validated('product_description'));
+            $product_info = $val->validated('product_info');
             $product_props = array(
                 'product_name' => $category_name,
-                'product_description' => $product_description
+                'product_description' => $product_description,
+                'product_info' => $product_info
             );
             $product_id = Model_Base_Product::insert($product_props);
             if ($product_id && Model_Base_ProductCategory::insert($product_id, $category_ids)) {
@@ -106,6 +109,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
                     DB::commit_transaction();
                     Log::write('NOTICE', 'Create product success', static::$method);
                     $this->data['success'] = true;
+                    $this->data['product']['id'] = $product_id;
                     $this->data['msg'] = 'Update photo success';
                 } else {
                     DB::rollback_transaction();
@@ -129,16 +133,19 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $val->add_field('id', 'Product', 'required|valid_product');
         $val->add_field('category_ids', 'Category list', 'required');
         $val->add_field('product_name', 'Product name', 'required|max_length[255]');
-        $val->add_field('product_description', 'Product Description', 'trim|max_length[10000]');
+        $val->add_field('product_description', 'Product Description', 'trim|max_length[1024]');
+        $val->add_field('product_info', 'Product Info', 'trim|max_length[10000]');
         if ($val->run()) {
             DB::start_transaction();
             $product_id = $val->validated('id');
             $category_ids = implode(',', $val->validated('category_ids'));
             $category_name = Model_Service_Util::mb_trim($val->validated('product_name'));
-            $product_description = $val->validated('product_description');
+            $product_description = Model_Service_Util::mb_trim($val->validated('product_description'));
+            $product_info = $val->validated('product_info');
             $product_props = array(
                 'product_name' => $category_name,
-                'product_description' => $product_description
+                'product_description' => $product_description,
+                'product_info' => $product_info
             );
             if (Model_Base_Product::update($product_id, $product_props) &&
                 Model_Base_ProductCategory::update($product_id, $category_ids)) {
@@ -215,6 +222,22 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $val->add_field('product_id', 'Product', 'required|valid_product');
         if ($val->run()) {
             Model_Base_Product::update($val->validated('product_id'), array('status' => $val->validated('status')));
+            $this->data['success'] = true;
+        } else {
+            $this->data['errors'] = $val->error_message();
+        }
+
+        return $this->response($this->data);
+    }
+
+    public function post_highlight()
+    {
+        $val = Validation::forge();
+        $val->add_callable('MyRules');
+        $val->add_field('highlight', 'Highlight', 'required|valid_product_highlight');
+        $val->add_field('product_id', 'Product', 'required|valid_product');
+        if ($val->run()) {
+            Model_Base_Product::update($val->validated('product_id'), array('highlight' => $val->validated('highlight')));
             $this->data['success'] = true;
         } else {
             $this->data['errors'] = $val->error_message();

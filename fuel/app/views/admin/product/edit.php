@@ -47,6 +47,19 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">Highlight</label>
+                        <div class="col-sm-4">
+                            <label class="switch-light well" data-id="<?php echo $product['id']; ?>">
+                                <input type="checkbox" name="highlight" <?php echo $product['highlight'] === 1 ? 'checked' : ''; ?>>
+                                <span>
+                                    <span>Hide</span>
+                                    <span>Show</span>
+                                </span>
+                                <a class="btn btn-warning"></a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">Category</label>
                         <div class="col-sm-9">
                             <select multiple="multiple" class="populate placeholder"
@@ -70,10 +83,18 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="form-styles">Description</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="10" id="product_description"
-                                      name="product_description">
-                                          <?php echo $product['product_description']; ?>
-                            </textarea>
+                            <textarea class="form-control"
+                                      rows="10"
+                                      name="product_description"><?php echo $product['product_description']; ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="form-styles">Description</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control"
+                                      rows="10"
+                                      id="product_info"
+                                      name="product_info"><?php echo $product['product_info']; ?></textarea>
                         </div>
                     </div>
                     <div class="form-group text-center panel-heading">

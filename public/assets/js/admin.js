@@ -383,6 +383,15 @@ function FormValidator() {
                         message: 'The product name must be less than 255 characters long'
                     }
                 }
+            },
+            product_description: {
+                message: 'The product description is not valid',
+                validators: {
+                    stringLength: {
+                        max: 1024,
+                        message: 'The product description must be less than 1024 characters long'
+                    }
+                }
             }
         }
     }).on('success.form.bv', function (e, data) {
@@ -413,6 +422,15 @@ function FormValidator() {
                     stringLength: {
                         max: 255,
                         message: 'The product name must be less than 255 characters long'
+                    }
+                }
+            },
+            product_description: {
+                message: 'The product description is not valid',
+                validators: {
+                    stringLength: {
+                        max: 1024,
+                        message: 'The product description must be less than 1024 characters long'
                     }
                 }
             }
@@ -493,7 +511,7 @@ function FormUpload(option) {
         callbacks: {
             onUpload: function () {
                 if (typeof option.type !== 'undefined' && option.type === 'create-product-photo') {
-                    form.find('textarea[name="product_description"]').val(tinyMCE.activeEditor.getContent());
+                    form.find('textarea[name="product_info"]').val(tinyMCE.activeEditor.getContent());
                 }
             },
             onSubmitted: function () {
@@ -558,7 +576,7 @@ function FormUpload(option) {
                         }
                         resetForm(form);
                     } else if (typeof option.type !== 'undefined' && option.type === 'create-product-photo') {
-                        location = '/admin/product';
+                        location = '/admin/product/' + responseJSON.product.id;
                     } else if (typeof option.type !== 'undefined' && option.type === 'update-product-photo') {
                         form.find('div.main-icon > img').attr('src', responseJSON.photo_name);
                     } else if (typeof option.type !== 'undefined' && option.type === 'create-sub-product-photo') {
@@ -604,7 +622,7 @@ function TinyMCEStart(elem, mode) {
 //
 function SubmitForm($form) {
     if ($form.attr('id') === 'update-product-form') {
-        $form.find('textarea[name="product_description"]').val(tinyMCE.activeEditor.getContent());
+        $form.find('textarea[name="product_info"]').val(tinyMCE.activeEditor.getContent());
     }
     var fName = $form.attr('id'),
             formData = $form.serialize(),

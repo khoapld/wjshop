@@ -19,6 +19,7 @@ return array(
     'admin/product/main_photo' => 'admin/product/main_photo',
     'admin/product/sub_photo' => 'admin/product/sub_photo',
     'admin/product/status' => 'admin/product/status',
+    'admin/product/highlight' => 'admin/product/highlight',
     'admin/product/sort_sub_photo' => 'admin/product/sort_sub_photo',
     'admin/product/delete_sub_photo' => 'admin/product/delete_sub_photo',
     'admin/product/(:any)' => 'admin/product/edit/$1',
