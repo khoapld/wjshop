@@ -31,6 +31,19 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $this->template->content = View::forge($this->layout . '/product/index', $this->data);
     }
 
+    public function action_category($category_id = null)
+    {
+        if (empty($category_id) || !Model_Base_Category::valid_field('id', $category_id)) {
+            Response::redirect('/admin/category');
+        }
+
+        $total_page = ceil(Model_Base_Product::count_by_category($category_id) / _DEFAULT_LIMIT_);
+        View::set_global('total_page', $total_page);
+        $this->data['product'] = Model_Base_Product::get_by_category($category_id);
+        $this->template->title = 'Product Page';
+        $this->template->content = View::forge($this->layout . '/product/index', $this->data);
+    }
+
     public function action_new()
     {
         $this->data['category'] = Model_Base_Category::get_all();
@@ -53,13 +66,16 @@ class Controller_Admin_Product extends Controller_Base_Admin
 
     public function post_list()
     {
-        $total = Model_Base_Product::count_all();
         $page = (int) Input::post('page') !== 0 ? (int) Input::post('page') : 1;
+        $category_id = Input::post('category_id');
+        $type = (!empty($category_id) && Model_Base_Category::valid_field('id', $category_id)) ? true : false;
+        $total = $type ? Model_Base_Product::count_by_category($category_id) : Model_Base_Product::count_all();
         $limit = _DEFAULT_LIMIT_;
         $offset = ($page * $limit - $limit < $total) ? $page * $limit - $limit : _DEFAULT_OFFSET_;
-
+        $this->data['product'] = $type ? Model_Base_Product::get_by_category($category_id, $offset, $limit) : Model_Base_Product::get_all($offset, $limit);
         View::set_global('total_product', $total);
-        $this->data['product'] = Model_Base_Product::get_all($offset, $limit);
+        $this->data['success'] = true;
+
         return $this->response($this->data);
     }
 

@@ -470,7 +470,7 @@ function FormUpload(option) {
                             var block = $('#category-list').find('tr#category-' + responseJSON.category.id);
                             block.attr('data-parent-id', responseJSON.category.parent_category_id);
                             block.attr('data-category-name', responseJSON.category.category_name);
-                            block.find('td.category_name > span').html(responseJSON.category.category_name_display);
+                            block.find('td.category_name > a > span').html(responseJSON.category.category_name_display);
                             $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
                             $('#create-category-form').find('div.main-icon > img').attr('src', responseJSON.category.no_image);
                             $('#create-category-form').find('input[name="id"]').val('');
@@ -528,8 +528,10 @@ function FormUpload(option) {
                                     '" data-parent-id="' + responseJSON.category.parent_category_id +
                                     '" data-category-name="' + responseJSON.category.category_name + '"> \
                                         <td class="category_name"> \
-                                            <img class="img-rounded" src="' + responseJSON.category.category_photo_display + '"> \
-                                            <span>' + responseJSON.category.category_name_display + '</span> \
+                                            <a href="/admin/product/category/' + responseJSON.category.id + '"> \
+                                                <img class="img-rounded" src="' + responseJSON.category.category_photo_display + '"> \
+                                                <span>' + responseJSON.category.category_name_display + '</span> \
+                                            </a> \
                                         </td> \
                                         <td class="text-center"> \
                                             <div class="toggle-switch-status toggle-switch-primary-status"> \
@@ -549,7 +551,7 @@ function FormUpload(option) {
                             block.attr('data-parent-id', responseJSON.category.parent_category_id);
                             block.attr('data-category-name', responseJSON.category.category_name);
                             block.find('img').attr('src', responseJSON.category.category_photo_display);
-                            block.find('td.category_name > span').html(responseJSON.category.category_name_display);
+                            block.find('td.category_name > a > span').html(responseJSON.category.category_name_display);
                             $('select[name="parent_category_id"]').find('option[value="' + responseJSON.category.id + '"]').text(responseJSON.category.category_name_display);
                             form.find('div.main-icon > img').attr('src', responseJSON.category.no_image);
                             form.find('input[name="id"]').val('');

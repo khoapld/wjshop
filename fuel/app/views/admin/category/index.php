@@ -100,8 +100,10 @@
                                 data-parent-id="<?php echo $value['parent_category_id']; ?>"
                                 data-category-name="<?php echo $value['category_name']; ?>">
                                 <td class="category_name">
-                                    <img class="img-rounded" src="<?php echo $value['category_photo_display']; ?>">
-                                    <span><?php echo $value['category_name_display']; ?></span>
+                                    <a href="/admin/product/category/<?php echo $value['id']; ?>">
+                                        <img class="img-rounded" src="<?php echo $value['category_photo_display']; ?>">
+                                        <span><?php echo $value['category_name_display']; ?></span>
+                                    </a>
                                 </td>
                                 <td class="text-center">
                                     <div class="toggle-switch-status toggle-switch-primary-status">
@@ -112,7 +114,9 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td class="text-center"><button type="button" class="btn btn-danger edit">Edit</button></td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-danger edit">Edit</button>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

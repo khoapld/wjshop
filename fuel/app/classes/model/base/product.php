@@ -63,6 +63,32 @@ class Model_Base_Product
         return self::map_product($product)[$val];
     }
 
+    public static function get_by_category($category_id, $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    {
+        $sql = "
+                SELECT `p`.`id`, `p`.`product_name`, `p`.`product_description`,`p`.`product_photo`,`p`.`status`
+                FROM `product_categories` `pc`
+                LEFT JOIN `products` `p` ON `pc`.`product_id` = `p`.`id`
+                WHERE `pc`.`category_id` = $category_id
+                ORDER BY `p`.`id` DESC
+                LIMIT $offset, $limit
+            ";
+        $product = DB::query($sql)->as_object()->execute();
+
+        return self::map_product($product);
+    }
+
+    public static function count_by_category($category_id)
+    {
+        $sql = "
+                SELECT count(`pc`.`category_id`) as `total`
+                FROM `product_categories` `pc`
+                WHERE `pc`.`category_id` = $category_id
+            ";
+        $query = DB::query($sql)->execute()->as_array();
+        return $query[0]['total'];
+    }
+
     public static function get_sub_photo($id)
     {
         $data = array();

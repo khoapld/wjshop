@@ -11,6 +11,8 @@ return array(
     'admin' => 'admin/dashboard',
     'admin/product' => 'admin/product/index',
     'admin/product/list' => 'admin/product/list',
+    'admin/product/category' => 'admin/product/category',
+    'admin/product/category/(:any)' => 'admin/product/category/$1',
     'admin/product/new' => 'admin/product/new',
     'admin/product/create' => 'admin/product/create',
     'admin/product/update' => 'admin/product/update',
@@ -21,7 +23,4 @@ return array(
     'admin/product/delete_sub_photo' => 'admin/product/delete_sub_photo',
     'admin/product/(:any)' => 'admin/product/edit/$1',
     // client
-    'signin' => 'auth/signin',
-    'signup' => 'auth/signup',
-    'signout' => 'auth/signout',
 );

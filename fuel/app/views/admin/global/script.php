@@ -93,16 +93,17 @@
     </script>
 <?php endif; ?>
 
-<?php if ($controller === 'Controller_Admin_Product' && $action === 'index' && !empty($total_page)): ?>
+<?php if ($controller === 'Controller_Admin_Product' && in_array($action, array('index', 'category')) && !empty($total_page)): ?>
     <script src="/plugins/jQuery-pagination/jquery.pagination.js"></script>
     <script>
+        var category_id = "<?php echo Fuel\Core\Uri::segment(4); ?>";
         $('#pagination').jqueryPagination({
             totalPages: <?php echo $total_page; ?>,
             visiblePages: <?php echo _DEFAULT_VISIBLE_PAGES_; ?>,
             prev: '←',
             next: '→',
             onPageClick: function (event, page) {
-                var posting = $.post('/admin/product/list', {page: page});
+                var posting = $.post('/admin/product/list', {page: page, category_id: category_id});
                 posting.done(function (data) {
                     if (data.product) {
                         var html = '';

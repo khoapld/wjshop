@@ -1,6 +1,6 @@
 <meta charset="utf-8">
-<meta name="description" content="description">
-<meta name="author" content="khoapld">
+<meta name="description" content="wjshop">
+<meta name="author" content="wjshop">
 <meta name="keywords" content="wjshop">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
