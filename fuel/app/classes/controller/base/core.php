@@ -5,18 +5,15 @@ use Fuel\Core\Config;
 use Fuel\Core\Request;
 use Fuel\Core\Response;
 use Fuel\Core\View;
-use Auth\Auth;
 
 class Controller_Base_Core extends Controller_Hybrid
 {
 
     protected $format = 'json';
     protected $layout = 'default';
-    protected $user_id;
-    protected $email;
-    protected $user_info;
     public $controller;
     public $action;
+    public $data = array();
     public static $method;
 
     public function before()
@@ -25,10 +22,11 @@ class Controller_Base_Core extends Controller_Hybrid
         $this->controller = Request::active()->controller;
         $this->action = Request::active()->action;
         static::$method = $this->controller . '/' . $this->action;
+        $this->render_template();
         parent::before();
+        $this->set_path();
         $this->check_maintenance();
         $this->init();
-        $this->render_template();
     }
 
     public function after($response)
@@ -39,42 +37,58 @@ class Controller_Base_Core extends Controller_Hybrid
 
     public function check_maintenance()
     {
-        $maintenance = Config::get('app.app_config.maintenance');
-        if ($this->controller == 'Controller_Home' && $this->action == 'maintenance' && $maintenance !== true) {
+        $maintenance = (int) Model_Config::find('first')->maintenance;
+        if ($this->action === 'maintenance' && $maintenance !== 1) {
             Response::redirect('/');
         }
-        if (!in_array($this->action, ['maintenance']) && $maintenance === true) {
+        if (!in_array($this->action, ['maintenance']) && $maintenance === 1) {
             Response::redirect('/maintenance');
+        }
+    }
+
+    public function render_template()
+    {
+        switch ($this->action) {
+            case 'not_found':
+                $this->template = $this->layout . '/home/not_found';
+                break;
+            case 'maintenance':
+                $this->template = $this->layout . '/home/maintenance';
+                break;
+            default:
+                $this->template = $this->layout . '/template';
+                break;
         }
     }
 
     public function init()
     {
-        if (Auth::check()) {
-            list(, $auth_id) = Auth::get_user_id();
-            $this->user_id = $auth_id;
-            $this->email = Auth::get_email();
-            $this->user_info = Model_User::find($auth_id);
-        }
-        View::set_global('base_url', Config::get('base_url'), false);
-        View::set_global('controller', $this->controller, false);
-        View::set_global('action', $this->action, false);
-        View::set_global('user_id', $this->user_id, false);
-        View::set_global('email', $this->email, false);
-        View::set_global('user_info', $this->user_info, false);
-    }
+        View::set_global('base_url', Config::get('base_url'));
+        View::set_global('controller', Request::active()->controller);
+        View::set_global('action', Request::active()->action);
 
-    public function render_template()
-    {
+        View::set_global('category', Model_Base_Category::get_all(array(
+                'where' => array(array('status', '=', 1))
+        )));
+
+        View::set_global('head', View::forge($this->layout . '/global/head'));
         View::set_global('header', View::forge($this->layout . '/global/header'));
         View::set_global('footer', View::forge($this->layout . '/global/footer'));
         View::set_global('script', View::forge($this->layout . '/global/script'));
     }
 
-    public function is_login()
+    public function set_path()
     {
-        if (!Model_Base_User::is_login() && !in_array($this->action, ['maintenance', 'signin', 'signup', 'logout'])) {
-            Response::redirect('/signin');
+        $path_config = Config::get('app.path');
+        $base_url = Config::get('base_url');
+        if (!defined('_PATH_NO_ICON_')) {
+            define('_PATH_NO_ICON_', $base_url . $path_config['no_icon']);
+            define('_PATH_NO_IMAGE_', $base_url . $path_config['no_image']);
+            define('_PATH_ICON_', $base_url . $path_config['icon']);
+            define('_PATH_CATEGORY_', $base_url . $path_config['category']);
+            define('_PATH_PRODUCT_', $base_url . $path_config['product']);
+            define('_PATH_ROOT_PHOTO_', $base_url . $path_config['root_photo']);
+            define('_PATH_PHOTO_', $base_url . $path_config['photo']);
         }
     }
 

@@ -77,7 +77,7 @@ class Model_Base_Category
     {
         $data = array();
         $new_category = self::get_parent();
-        foreach ($category as $k => $v) {
+        foreach ($category as $v) {
             $data[$v->id]['id'] = $v->id;
             $data[$v->id]['parent_category_id'] = $v->parent_category_id;
             $data[$v->id]['category_name'] = $v->category_name;

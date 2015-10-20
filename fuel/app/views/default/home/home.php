@@ -1,40 +1,108 @@
-<div class="row">
-    <div class="col-md-12 header-btns">
-        <button class="btn btn-primary pull-right" id="create-expense" >Create expense</button>
-    </div>
-</div>
-<br>
-<div class="row">
-    <div class="col-md-12" id="create-expense-form"></div>
-</div>
-<br>
-<div class="jumbotron" id="expense-list">
-    <?php if (!empty($expenses)): ?>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="col-md-1">#</th>
-                    <th class="col-md-2">Date</th>
-                    <th class="col-md-6">Expense Name</th>
-                    <th class="col-md-3 text-right">Expense Price (VND)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($expenses as $k => $expense): ?>
-                    <tr>
-                        <th scope="row"><?php echo $k + 1; ?></th>
-                        <td><?php echo date('Y-m-d', strtotime($expense->created_at)); ?></td>
-                        <td id="name<?php echo $k + 1; ?>"><?php echo $expense->expense_name; ?></td>
-                        <td id="price<?php echo $k + 1; ?>" class="text-right"><?php echo number_format($expense->expense_price); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-                <tr>
-                    <td colspan="3" class="text-right">Total: </td>
-                    <td class="text-right"><?php echo number_format($expense_total); ?></td>
-                </tr>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>You don't have any expense in <?php echo date('F'); ?>.</p>
-    <?php endif; ?>
-</div>
+<?php if (!empty($highlight_product)): ?>
+    <?php $i = 0; ?>
+    <?php $j = 0; ?>
+    <section id="slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <?php foreach ($highlight_product as $product): ?>
+                                <li class="<?php echo $i === 0 ? 'active' : ''; ?>" data-target="#slider-carousel" data-slide-to="<?php echo $i++; ?>"></li>
+                            <?php endforeach; ?>
+                        </ol>
+                        <div class="carousel-inner">
+                            <?php foreach ($highlight_product as $product): ?>
+                                <div class="item <?php echo $j === 0 ? 'active' : ''; ?>">
+                                    <a href="/product/<?php echo $product['id']; ?>">
+                                        <div class="col-sm-7">
+                                            <h1><span>WJ</span>-SHOP</h1>
+                                            <h2><?php echo $product['product_name']; ?></h2>
+                                            <p><?php echo \Fuel\Core\Str::truncate($product['product_description'], 150); ?></p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <img src="<?php echo $product['product_photo_display']; ?>" class="girl img-responsive" alt="<?php echo $j++; ?>" />
+                                        </div>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php if (!empty($new_product)): ?>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="features_items">
+                        <h2 class="title text-center">New Product</h2>
+                        <?php foreach ($new_product as $product): ?>
+                            <div class="col-sm-4">
+                                <a href="/product/<?php echo $product['id']; ?>">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo">
+                                                <img src="<?php echo $product['product_photo_display']; ?>" alt="" />
+                                                <h4><?php echo $product['product_name']; ?></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <?php if (!empty($product_category)): ?>
+                        <?php $i = 0; ?>
+                        <?php $j = 0; ?>
+                        <div class="category-tab">
+                            <div class="col-sm-12">
+                                <ul class="nav nav-tabs">
+                                    <?php foreach ($product_category as $v): ?>
+                                        <li class="<?php echo $i === 0 ? 'active' : ''; ?>"><a href="#<?php echo $v['id']; ?>" data-toggle="tab"><?php echo $v['category_name']; ?></a></li>
+                                        <?php $i++; ?>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <?php foreach ($product_category as $v): ?>
+                                    <div class="tab-pane fade <?php echo $j === 0 ? 'active in' : ''; ?>" id="<?php echo $v['id'] ?>" >
+                                        <?php foreach ($v['product'] as $product): ?>
+                                            <div class="col-sm-3">
+                                                <a href="/product/<?php echo $product['id']; ?>">
+                                                    <div class="product-image-wrapper">
+                                                        <div class="single-products">
+                                                            <div class="productinfo text-center">
+                                                                <img src="<?php echo $product['product_photo_display']; ?>" alt="" />
+                                                                <h4><?php echo $product['product_name']; ?></h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <?php $j++; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

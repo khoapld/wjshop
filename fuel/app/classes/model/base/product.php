@@ -41,7 +41,7 @@ class Model_Base_Product
         return true;
     }
 
-    public static function get_all($option = array(), $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    public static function get_all($offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
     {
         $product = Model_Product::find('all', array(
                 'order_by' => array('id' => 'desc'),
@@ -57,15 +57,15 @@ class Model_Base_Product
         return Model_Product::query()->count();
     }
 
-    public static function get_by($option = array(), $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    public static function get_by($option = array())
     {
         try {
             $product = Model_Product::find('all', array(
                     'select' => !empty($option['select']) ? $option['select'] : array(),
                     'where' => !empty($option['where']) ? $option['where'] : array(),
                     'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc'),
-                    'offset' => $offset,
-                    'limit' => $limit
+                    'offset' => !empty($option['offset']) ? $option['offset'] : _DEFAULT_OFFSET_,
+                    'limit' => !empty($option['limit']) ? $option['limit'] : _DEFAULT_LIMIT_
             ));
             return self::map_product($product);
         } catch (Exception $e) {
@@ -89,28 +89,10 @@ class Model_Base_Product
         try {
             $product = Model_Product::find('all', array(
                     'select' => !empty($option['all']) ? $option['select'] : array(),
-                    'where' => array('id' => $id),
+                    'where' => !empty($option['where']) ? array_merge(array(array('id' => $id)), $option['where']) : array('id' => $id),
                     'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc')
             ));
             return self::map_product($product)[$id];
-        } catch (Exception $e) {
-            Log::write('ERROR', $e->getMessage());
-        }
-
-        return false;
-    }
-
-    public static function get_list($option = array())
-    {
-        try {
-            $product = Model_Product::find('all', array(
-                    'select' => !empty($option['select']) ? $option['select'] : array(),
-                    'where' => !empty($option['where']) ? $option['where'] : array(),
-                    'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc'),
-                    'offset' => !empty($option['offset']) ? $option['offset'] : _DEFAULT_OFFSET_,
-                    'limit' => !empty($option['limit']) ? $option['limit'] : _DEFAULT_LIMIT_
-            ));
-            return self::map_product($product);
         } catch (Exception $e) {
             Log::write('ERROR', $e->getMessage());
         }
@@ -141,7 +123,7 @@ class Model_Base_Product
         return false;
     }
 
-    public static function admin_count_by_category($category_id, $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    public static function admin_count_by_category($category_id)
     {
         $category_ids = Model_Base_Category::get_all_child_category_id($category_id);
         $ids = join(',', $category_ids);
@@ -224,7 +206,7 @@ class Model_Base_Product
     public static function map_product($product)
     {
         $data = array();
-        foreach ($product as $k => $v) {
+        foreach ($product as $v) {
             $data[$v->id]['id'] = $v->id;
             $data[$v->id]['product_name'] = $v->product_name;
             $data[$v->id]['product_description'] = !empty($v->product_description) ? $v->product_description : '';
@@ -234,7 +216,6 @@ class Model_Base_Product
             $data[$v->id]['status'] = !empty($v->status) ? (int) $v->status : 2;
             $data[$v->id]['highlight'] = !empty($v->highlight) ? (int) $v->highlight : 0;
         }
-
         return $data;
     }
 

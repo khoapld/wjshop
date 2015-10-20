@@ -1,11 +1,12 @@
-<?php
+<script src="/plugins/wjshop/js/jquery.js"></script>
+<script src="/plugins/wjshop/js/bootstrap.min.js"></script>
+<script src="/plugins/wjshop/js/jquery.scrollUp.min.js"></script>
+<!--<script src="/plugins/wjshop/js/jquery.prettyPhoto.js"></script>-->
+<script src="/plugins/smoothproducts/js/smoothproducts.min.js"></script>
+<script src="/plugins/wjshop/js/main.js"></script>
 
-echo Asset::js([
-    '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js',
-    '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
-//    '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js',
-//    '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/i18n/jquery.ui.datepicker-ja.js',
-]);
-
-//echo Asset::js('bootstrap.min.js');
-echo Asset::js('app.js');
+<?php if ($controller === 'Controller_Product'): ?>
+    <script>
+        $('.sp-wrap').smoothproducts();
+    </script>
+<?php endif; ?>
