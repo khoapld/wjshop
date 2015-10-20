@@ -41,7 +41,7 @@ class Model_Base_Product
         return true;
     }
 
-    public static function get_all($offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    public static function get_all($option = array(), $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
     {
         $product = Model_Product::find('all', array(
                 'order_by' => array('id' => 'desc'),
@@ -57,11 +57,42 @@ class Model_Base_Product
         return Model_Product::query()->count();
     }
 
-    public static function get_by($field, $val)
+    public static function get_by($option = array(), $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
     {
         try {
-            $product = Model_Product::query()->where(array($field => $val))->get();
-            return self::map_product($product)[$val];
+            $product = Model_Product::find('all', array(
+                    'select' => !empty($option['select']) ? $option['select'] : array(),
+                    'where' => !empty($option['where']) ? $option['where'] : array(),
+                    'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc'),
+                    'offset' => $offset,
+                    'limit' => $limit
+            ));
+            return self::map_product($product);
+        } catch (Exception $e) {
+            Log::write('ERROR', $e->getMessage());
+        }
+
+        return false;
+    }
+
+    public static function count_by($option = array())
+    {
+        $select = !empty($option['select']) ? $option['select'] : array();
+        $where = !empty($option['where']) ? $option['where'] : array();
+        $order_by = !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc');
+        $query = Model_Product::query()->select($select)->where($where)->order_by($order_by);
+        return $query->count();
+    }
+
+    public static function get_one($id, $option = array())
+    {
+        try {
+            $product = Model_Product::find('all', array(
+                    'select' => !empty($option['all']) ? $option['select'] : array(),
+                    'where' => array('id' => $id),
+                    'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc')
+            ));
+            return self::map_product($product)[$id];
         } catch (Exception $e) {
             Log::write('ERROR', $e->getMessage());
         }
@@ -87,13 +118,61 @@ class Model_Base_Product
         return false;
     }
 
-    public static function get_by_category($category_id, $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    public static function admin_get_by_category($category_id, $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
     {
+        $category_ids = Model_Base_Category::get_all_child_category_id($category_id);
+        $ids = join(',', $category_ids);
         $sql = "
                 SELECT `p`.*
                 FROM `product_categories` `pc`
                 LEFT JOIN `products` `p` ON `pc`.`product_id` = `p`.`id`
-                WHERE `pc`.`category_id` = $category_id
+                WHERE `pc`.`category_id` IN ($ids)
+                GROUP BY `p`.`id`
+                ORDER BY `p`.`id` DESC
+                LIMIT $offset, $limit
+            ";
+        try {
+            $product = DB::query($sql)->as_object()->execute();
+            return self::map_product($product);
+        } catch (Exception $e) {
+            Log::write('ERROR', $e->getMessage());
+        }
+
+        return false;
+    }
+
+    public static function admin_count_by_category($category_id, $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    {
+        $category_ids = Model_Base_Category::get_all_child_category_id($category_id);
+        $ids = join(',', $category_ids);
+        $sql = "
+                SELECT `pc`.`product_id`
+                FROM `product_categories` `pc`
+                WHERE `pc`.`category_id` IN ($ids)
+                GROUP BY `pc`.`product_id`
+                ORDER BY `pc`.`product_id` DESC
+            ";
+        try {
+            $query = DB::query($sql)->execute()->as_array();
+            return count($query);
+        } catch (Exception $e) {
+            Log::write('ERROR', $e->getMessage());
+        }
+
+        return false;
+    }
+
+    public static function get_by_category($category_id, $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    {
+        $category_ids = Model_Base_Category::get_all_child_category_id($category_id);
+        $ids = join(',', $category_ids);
+        $sql = "
+                SELECT `p`.*
+                FROM `product_categories` `pc`
+                LEFT JOIN `products` `p` ON `pc`.`product_id` = `p`.`id`
+                WHERE `pc`.`category_id` IN ($ids)
+                AND `p`.`status` = 1
+                GROUP BY `p`.`id`
                 ORDER BY `p`.`id` DESC
                 LIMIT $offset, $limit
             ";
@@ -109,14 +188,19 @@ class Model_Base_Product
 
     public static function count_by_category($category_id)
     {
+        $category_ids = Model_Base_Category::get_all_child_category_id($category_id);
+        $ids = join(',', $category_ids);
         $sql = "
-                SELECT count(`pc`.`category_id`) as `total`
+                SELECT `p`.`id`
                 FROM `product_categories` `pc`
-                WHERE `pc`.`category_id` = $category_id
+                LEFT JOIN `products` `p` ON `pc`.`product_id` = `p`.`id`
+                WHERE `pc`.`category_id` IN ($ids)
+                AND `p`.`status` = 1
+                GROUP BY `p`.`id`
             ";
         try {
             $query = DB::query($sql)->execute()->as_array();
-            return $query[0]['total'];
+            return count($query);
         } catch (Exception $e) {
             Log::write('ERROR', $e->getMessage());
         }

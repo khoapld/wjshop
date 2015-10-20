@@ -37,9 +37,9 @@ class Controller_Admin_Product extends Controller_Base_Admin
             Response::redirect('/admin/category');
         }
 
-        $total_page = ceil(Model_Base_Product::count_by_category($category_id) / _DEFAULT_LIMIT_);
+        $total_page = ceil(Model_Base_Product::admin_count_by_category($category_id) / _DEFAULT_LIMIT_);
         View::set_global('total_page', $total_page);
-        $this->data['product'] = Model_Base_Product::get_by_category($category_id);
+        $this->data['product'] = Model_Base_Product::admin_get_by_category($category_id);
         $this->template->title = 'Product Page';
         $this->template->content = View::forge($this->layout . '/product/index', $this->data);
     }
@@ -57,7 +57,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
             Response::redirect('/admin/product');
         }
         $this->data['category'] = Model_Base_Category::get_all();
-        $this->data['product'] = Model_Base_Product::get_by('id', $id);
+        $this->data['product'] = Model_Base_Product::get_one($id);
         $this->data['product']['category'] = Model_Base_ProductCategory::get_by('product_id', $id);
         $this->data['product']['sub_photo'] = Model_Base_Product::get_sub_photo($id);
         $this->template->title = 'Edit Product Page';
@@ -69,10 +69,10 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $page = (int) Input::post('page') !== 0 ? (int) Input::post('page') : 1;
         $category_id = Input::post('category_id');
         $type = (!empty($category_id) && Model_Base_Category::valid_field('id', $category_id)) ? true : false;
-        $total = $type ? Model_Base_Product::count_by_category($category_id) : Model_Base_Product::count_all();
+        $total = $type ? Model_Base_Product::admin_count_by_category($category_id) : Model_Base_Product::count_all();
         $limit = _DEFAULT_LIMIT_;
         $offset = ($page * $limit - $limit < $total) ? $page * $limit - $limit : _DEFAULT_OFFSET_;
-        $this->data['product'] = $type ? Model_Base_Product::get_by_category($category_id, $offset, $limit) : Model_Base_Product::get_all($offset, $limit);
+        $this->data['product'] = $type ? Model_Base_Product::admin_get_by_category($category_id, $offset, $limit) : Model_Base_Product::get_all($offset, $limit);
         View::set_global('total_product', $total);
         $this->data['success'] = true;
 

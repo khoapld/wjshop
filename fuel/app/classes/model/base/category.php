@@ -41,21 +41,26 @@ class Model_Base_Category
         return true;
     }
 
-    public static function get_all()
+    public static function get_all($option = array())
     {
-        $category = Model_Category::find('all', array(
-                'select' => array('parent_category_id', 'category_name', 'category_photo', 'status'),
-                'order_by' => array('rank' => 'asc')
-        ));
+        try {
+            $category = Model_Category::find('all', array(
+                    'select' => !empty($option['select']) ? $option['select'] : array(),
+                    'where' => !empty($option['where']) ? $option['where'] : array(),
+                    'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('rank' => 'asc')
+            ));
+            return self::map_category($category);
+        } catch (Exception $e) {
+            Log::write('ERROR', $e->getMessage());
+        }
 
-        return self::map_category($category);
+        return false;
     }
 
     public static function get_parent($parent_category_id = null)
     {
         $data = array();
         $category = Model_Category::query()
-                ->from_cache(false)
                 ->select('parent_category_id', 'category_name', 'level')
                 ->order_by('level', 'asc')->get();
         foreach ($category as $v) {
@@ -80,6 +85,37 @@ class Model_Base_Category
             $data[$v->id]['category_photo'] = $v->category_photo;
             $data[$v->id]['category_photo_display'] = empty($v->category_photo) ? _PATH_NO_IMAGE_ : _PATH_CATEGORY_ . $v->category_photo;
             $data[$v->id]['status'] = (int) $v->status;
+        }
+
+        return $data;
+    }
+
+    public static function get_id_by_parent_id($parent_category_id)
+    {
+        $data = array();
+        $categories = Model_Category::find('all', array('where' => array(array('parent_category_id', '=', $parent_category_id))));
+        foreach ($categories as $category) {
+            $data[] = $category->id;
+        }
+
+        return $data;
+    }
+
+    public static function get_all_child_category_id($category_id)
+    {
+        $data = array();
+        if (self::valid_field('id', $category_id)) {
+            $ids = self::get_id_by_parent_id($category_id);
+            $data = array_merge(array($category_id), $ids);
+            while (!empty($ids)) {
+                foreach ($ids as $k => $id) {
+                    if ($k === 0) {
+                        $ids = array();
+                    }
+                    $ids = array_merge($ids, self::get_id_by_parent_id($id));
+                }
+                $data = array_merge($data, $ids);
+            }
         }
 
         return $data;

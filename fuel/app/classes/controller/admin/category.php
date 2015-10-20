@@ -68,7 +68,7 @@ class Controller_Admin_Category extends Controller_Base_Admin
                         'no_image' => _PATH_NO_IMAGE_
                     );
                     $this->data['success'] = true;
-                    $this->data['msg'] = 'Update photo success';
+                    $this->data['msg'] = 'Create category success';
                 } else {
                     DB::rollback_transaction();
                     $this->data['msg'] = $upload['error'];
