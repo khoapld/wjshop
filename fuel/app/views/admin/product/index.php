@@ -38,7 +38,6 @@
                         <tr>
                             <th class="text-center">Product</th>
                             <th class="col-sm-1 text-center">Status</th>
-                            <th class="col-sm-1 text-center">Highlight</th>
                             <th class="col-sm-1 text-center">Action</th>
                         </tr>
                     </thead>
@@ -53,15 +52,6 @@
                                     <div class="toggle-switch-status toggle-switch-primary-status">
                                         <label>
                                             <input type="checkbox" name="status" <?php echo $value['status'] === 1 ? 'checked' : ''; ?>>
-                                            <div class="toggle-switch-inner-status"></div>
-                                            <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="toggle-switch-status toggle-switch-warning-status">
-                                        <label>
-                                            <input type="checkbox" name="highlight" <?php echo $value['highlight'] === 1 ? 'checked' : ''; ?>>
                                             <div class="toggle-switch-inner-status"></div>
                                             <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div>
                                         </label>

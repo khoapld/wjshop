@@ -127,4 +127,10 @@ class Model_Base_Category
         return ($result->count() > 0);
     }
 
+    public static function valid_by($where = array())
+    {
+        $result = Model_Category::query()->where($where);
+        return ($result->count() > 0);
+    }
+
 }

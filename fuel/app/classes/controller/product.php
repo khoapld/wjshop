@@ -22,7 +22,7 @@ class Controller_Product extends Controller_Base_Core
         return $response;
     }
 
-    public function action_list()
+    public function action_index()
     {
         $this->data['product'] = Model_Base_Product::get_by(array(
                 'where' => array(array('status', '=', 1))
@@ -45,6 +45,12 @@ class Controller_Product extends Controller_Base_Core
             Response::redirect('/');
         }
         $this->data['product']['sub_photo'] = Model_Base_Product::get_sub_photo($id);
+
+        $category_ids = Model_Base_ProductCategory::get_by('category_id', 'product_id', $id);
+        if (!empty($category_ids)) {
+            $this->data['products'] = Model_Base_Product::get_by_category_ids($category_ids, 0, 4);
+        }
+
         $this->template->title = 'Product List';
         $this->template->content = View::forge($this->layout . '/product/detail', $this->data);
     }

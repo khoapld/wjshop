@@ -190,6 +190,29 @@ class Model_Base_Product
         return false;
     }
 
+    public static function get_by_category_ids($category_ids, $offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    {
+        $ids = join(',', $category_ids);
+        $sql = "
+                SELECT `p`.*
+                FROM `product_categories` `pc`
+                LEFT JOIN `products` `p` ON `pc`.`product_id` = `p`.`id`
+                WHERE `pc`.`category_id` IN ($ids)
+                AND `p`.`status` = 1
+                GROUP BY `p`.`id`
+                ORDER BY `p`.`id` DESC
+                LIMIT $offset, $limit
+            ";
+        try {
+            $product = DB::query($sql)->as_object()->execute();
+            return self::map_product($product);
+        } catch (Exception $e) {
+            Log::write('ERROR', $e->getMessage());
+        }
+
+        return false;
+    }
+
     public static function get_sub_photo($id)
     {
         $data = array();

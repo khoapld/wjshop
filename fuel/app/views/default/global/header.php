@@ -56,7 +56,7 @@
                                     <ul role="menu" class="sub-menu">
                                         <?php foreach ($category as $k => $v): ?>
                                             <li>
-                                                <a href="/category/<?php echo $k; ?>" class="<?php echo Fuel\Core\Uri::segment(2) == $k ? 'active' : ''; ?>">
+                                                <a href="/category/<?php echo $k; ?>" class="<?php echo $controller === 'Controller_Category' && Fuel\Core\Uri::segment(2) == $k ? 'active' : ''; ?>">
                                                     <?php echo $v['category_name_display']; ?>
                                                 </a>
                                             </li>

@@ -93,7 +93,7 @@
     </script>
 <?php endif; ?>
 
-<?php if ($controller === 'Controller_Admin_Product' && in_array($action, array('index', 'category')) && !empty($total_page)): ?>
+<?php if ($controller === 'Controller_Admin_Product' && in_array($action, array('index', 'category')) && $total_page > 1): ?>
     <script src="/plugins/jQuery-pagination/jquery.pagination.js"></script>
     <script>
         var category_id = "<?php echo Fuel\Core\Uri::segment(4); ?>";
@@ -109,12 +109,8 @@
                         var html = '';
                         $.each(data.product, function (index, value) {
                             var status = '';
-                            var highlight = '';
                             if (parseInt(value.status) === 1) {
                                 status = 'checked';
-                            }
-                            if (parseInt(value.highlight) === 1) {
-                                highlight = 'checked';
                             }
                             html += ' \
                                 <tr data-id="' + value.id + '"> \
@@ -126,15 +122,6 @@
                                         <div class="toggle-switch-status toggle-switch-primary-status"> \
                                             <label> \
                                                 <input type="checkbox" name="status" ' + status + '> \
-                                                <div class="toggle-switch-inner-status"></div> \
-                                                <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div> \
-                                            </label> \
-                                        </div> \
-                                    </td> \
-                                    <td class="text-center"> \
-                                        <div class="toggle-switch-status toggle-switch-warning-status"> \
-                                            <label> \
-                                                <input type="checkbox" name="highlight" ' + highlight + '> \
                                                 <div class="toggle-switch-inner-status"></div> \
                                                 <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div> \
                                             </label> \
@@ -157,13 +144,6 @@
             var status = $(this).prop('checked') ? 1 : 2;
             var product_id = $(this).parents('tr').attr('data-id');
             $.post('/admin/product/status', {product_id: product_id, status: status});
-        });
-
-        // Change highlight
-        $(document).on('change', 'input[name="highlight"]', function () {
-            var highlight = $(this).prop('checked') ? 1 : 0;
-            var product_id = $(this).parents('tr').attr('data-id');
-            $.post('/admin/product/highlight', {product_id: product_id, highlight: highlight});
         });
     </script>
 <?php endif; ?>

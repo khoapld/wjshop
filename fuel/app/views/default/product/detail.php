@@ -1,7 +1,7 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 padding-right">
+            <div class="col-sm-12">
                 <div class="product-details">
                     <div class="col-sm-5">
                         <?php if (!empty($product['sub_photo'])): ?>
@@ -18,7 +18,6 @@
                     </div>
                     <div class="col-sm-7">
                         <div class="product-information">
-                            <img src="/plugins/wjshop/images/product-details/new.jpg" class="newarrival" alt="" />
                             <h2><?php echo $product['product_name']; ?></h2>
                             <p><?php echo $product['product_description']; ?></p>
                             <?php echo nl2br(htmlspecialchars_decode($product['product_info'])); ?>
@@ -26,41 +25,28 @@
                     </div>
                 </div>
 
-                <?php if (!empty($product_category)): ?>
-                    <?php $i = 0; ?>
-                    <?php $j = 0; ?>
-                    <div class="category-tab">
-                        <div class="col-sm-12">
-                            <ul class="nav nav-tabs">
-                                <?php foreach ($category as $v): ?>
-                                    <li class="<?php echo $i === 0 ? 'active' : ''; ?>"><a href="#<?php echo $v['id']; ?>" data-toggle="tab"><?php echo $v['category_name']; ?></a></li>
-                                    <?php $i++; ?>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <div class="tab-content">
-                            <?php foreach ($product_category as $v): ?>
-                                <div class="tab-pane fade <?php echo $j === 0 ? 'active in' : ''; ?>" id="<?php echo $v['id'] ?>" >
-                                    <?php foreach ($v['product'] as $product): ?>
-                                        <div class="col-sm-3">
-                                            <a href="/product/<?php echo $product['id']; ?>">
-                                                <div class="product-image-wrapper">
-                                                    <div class="single-products">
-                                                        <div class="productinfo text-center">
-                                                            <img src="<?php echo $product['product_photo_display']; ?>" alt="" />
-                                                            <h4><?php echo $product['product_name']; ?></h4>
-                                                        </div>
-                                                    </div>
+                <?php if (!empty($products)): ?>
+                    <div class="features_items">
+                        <h2 class="title text-center">Category Product</h2>
+                        <?php foreach ($products as $p): ?>
+                            <?php if ($p['id'] != $product['id']): ?>
+                                <div class="col-sm-3">
+                                    <a href="/product/<?php echo $p['id']; ?>">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo">
+                                                    <img src="<?php echo $p['product_photo_display']; ?>" alt="" />
+                                                    <h4><?php echo $p['product_name']; ?></h4>
                                                 </div>
-                                            </a>
+                                            </div>
                                         </div>
-                                    <?php endforeach; ?>
+                                    </a>
                                 </div>
-                                <?php $j++; ?>
-                            <?php endforeach; ?>
-                        </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
+
             </div>
         </div>
     </div>

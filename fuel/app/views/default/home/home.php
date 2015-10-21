@@ -58,6 +58,7 @@
                                                 <img src="<?php echo $product['product_photo_display']; ?>" alt="" />
                                                 <h4><?php echo $product['product_name']; ?></h4>
                                             </div>
+                                            <img src="/assets/img/new.png" class="new" alt="" />
                                         </div>
                                     </div>
                                 </a>

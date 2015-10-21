@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
-        <link href="/plugins/wjshop/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
         <link href="/plugins/wjshop/css/main.css" rel="stylesheet">
         <link href="/plugins/wjshop/css/responsive.css" rel="stylesheet">
         <!--[if lt IE 9]>

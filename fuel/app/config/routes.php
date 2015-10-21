@@ -6,9 +6,10 @@ return array(
     '_404_' => 'home/not_found',
     '_500_' => 'home/not_found',
     'maintenance' => 'home/maintenance',
-    'category/(:any)' => '/category/list/$1',
-    'product' => '/product/list',
-    'product/(:any)' => '/product/detail/$1',
+    'category/list' => 'category/list',
+    'category/(:any)' => 'category/index/$1',
+    'product' => 'product/index',
+    'product/(:any)' => 'product/detail/$1',
     // admin
     'admin/signin' => 'admin/auth/signin',
     'admin/signout' => 'admin/auth/signout',

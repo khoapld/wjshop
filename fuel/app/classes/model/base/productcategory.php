@@ -44,12 +44,12 @@ class Model_Base_ProductCategory
         }
     }
 
-    public static function get_by($field, $val)
+    public static function get_by($column, $field, $val)
     {
         $data = array();
-        $product_categories = Model_ProductCategory::query()->select('category_id')->where(array($field => $val))->get();
+        $product_categories = Model_ProductCategory::query()->select($column)->where(array($field => $val))->get();
         foreach ($product_categories as $product_category) {
-            $data[] = $product_category->category_id;
+            $data[] = $product_category->{$column};
         }
 
         return $data;

@@ -58,7 +58,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
         }
         $this->data['category'] = Model_Base_Category::get_all();
         $this->data['product'] = Model_Base_Product::get_one($id);
-        $this->data['product']['category'] = Model_Base_ProductCategory::get_by('product_id', $id);
+        $this->data['product']['category'] = Model_Base_ProductCategory::get_by('category_id', 'product_id', $id);
         $this->data['product']['sub_photo'] = Model_Base_Product::get_sub_photo($id);
         $this->template->title = 'Edit Product Page';
         $this->template->content = View::forge($this->layout . '/product/edit', $this->data);
@@ -73,7 +73,6 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $limit = _DEFAULT_LIMIT_;
         $offset = ($page * $limit - $limit < $total) ? $page * $limit - $limit : _DEFAULT_OFFSET_;
         $this->data['product'] = $type ? Model_Base_Product::admin_get_by_category($category_id, $offset, $limit) : Model_Base_Product::get_all($offset, $limit);
-        View::set_global('total_product', $total);
         $this->data['success'] = true;
 
         return $this->response($this->data);
