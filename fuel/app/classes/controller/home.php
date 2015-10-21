@@ -42,6 +42,12 @@ class Controller_Home extends Controller_Base_Core
         $this->template->content = View::forge($this->layout . '/home/home', $this->data);
     }
 
+    public function action_contact()
+    {
+        $this->template->title = 'Contact Page';
+        $this->template->content = View::forge($this->layout . '/home/contact');
+    }
+
     public function action_not_found()
     {
         $this->template->title = 'Page not found';

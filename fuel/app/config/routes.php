@@ -6,6 +6,7 @@ return array(
     '_404_' => 'home/not_found',
     '_500_' => 'home/not_found',
     'maintenance' => 'home/maintenance',
+    'contact' => 'home/contact',
     'category/list' => 'category/list',
     'category/(:any)' => 'category/index/$1',
     'product' => 'product/index',

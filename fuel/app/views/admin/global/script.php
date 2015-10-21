@@ -100,8 +100,10 @@
         $('#pagination').jqueryPagination({
             totalPages: <?php echo $total_page; ?>,
             visiblePages: <?php echo _DEFAULT_VISIBLE_PAGES_; ?>,
-            prev: '←',
-            next: '→',
+            prev: '&laquo;',
+            next: '&raquo;',
+            first: false,
+            last: false,
             onPageClick: function (event, page) {
                 var posting = $.post('/admin/product/list', {page: page, category_id: category_id});
                 posting.done(function (data) {

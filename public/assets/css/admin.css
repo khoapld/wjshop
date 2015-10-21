@@ -379,6 +379,7 @@ a.show-sidebar:hover {
     border-radius: 0 0 3px 3px;
     padding: 15px;
     background: #FCFCFC;
+    overflow-x: auto;
 }
 .box-content.dropbox, .box-content.sortablebox {
     overflow: hidden;
@@ -506,7 +507,6 @@ table.no-border-bottom tr:last-child td {
     vertical-align: middle !important;
 }
 .table-datatable img {
-    margin-right: 10px;
     border: 1px solid #F8F8F8;
     width: 40px;
 }
