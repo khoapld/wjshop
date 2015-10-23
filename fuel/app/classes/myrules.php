@@ -121,6 +121,14 @@ class MyRules
         return Model_Base_Photo::valid_field('id', $val);
     }
 
+    public static function _validation_valid_group_fb($val)
+    {
+        if (self::_empty($val)) {
+            return true;
+        }
+        return Model_Base_GroupFb::valid_field('id', $val);
+    }
+
 //    public static function _validation_required($val)
 //    {
 //        $val = Model_Service_Util::mb_trim($val);

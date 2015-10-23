@@ -228,10 +228,13 @@
 
         // Delete sub photo
         $(document).on('click', 'button.delete-btn', function () {
-            var product_id = $(this).parents('tbody').attr('data-id');
-            var photo_id = $(this).parents('tr').attr('data-id');
-            $.post('/admin/product/delete_sub_photo', {product_id: product_id, photo_id: photo_id});
-            $(this).parents('tr').remove();
+            if (confirm("Are you want to delete?")) {
+                var product_id = $(this).parents('tbody').attr('data-id');
+                var photo_id = $(this).parents('tr').attr('data-id');
+                $.post('/admin/product/delete_sub_photo', {product_id: product_id, photo_id: photo_id});
+                $(this).parents('tr').remove();
+            }
+            return false;
         });
 
         // Sort sub photo
@@ -243,8 +246,36 @@
         ul_sortable.disableSelection();
         ul_sortable.on('sortupdate', function (event, ui) {
             var sortable_data = $('.sortable').sortable('serialize');
-            console.log(sortable_data);
             $.post('/admin/product/sort_sub_photo', sortable_data);
+        });
+    </script>
+<?php endif; ?>
+
+<?php if ($controller === 'Controller_Admin_Facebook' && in_array($action, array('index'))): ?>
+    <script>
+        $('#group-fb').autocomplete({
+            source: function (request, response) {
+                var group = $('#group-fb').val();
+                var posting = $.post('/admin/facebook/check_group', {group: group});
+                posting.done(function (data) {
+                    if (data.success) {
+                        response(data.group);
+                    } else {
+                        response();
+                    }
+                });
+            },
+            minLength: 3
+        });
+
+        // Delete group
+        $(document).on('click', 'button.delete-btn', function () {
+            if (confirm("Are you want to delete?")) {
+                var group_id = $(this).parents('tr').attr('data-id');
+                $.post('/admin/facebook/delete_group', {group: group_id});
+                $(this).parents('tr').remove();
+            }
+            return false;
         });
     </script>
 <?php endif; ?>

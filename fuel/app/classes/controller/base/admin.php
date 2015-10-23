@@ -70,8 +70,10 @@ class Controller_Base_Admin extends Controller_Hybrid
             list(, $auth_id) = Auth::get_user_id();
             $this->user_id = $auth_id;
             $this->user_info = Model_Base_User::get_user_info($auth_id);
+            $this->user_fb = Model_Base_User::get_user_fb($auth_id);
 
             View::set_global('user', $this->user_info);
+            View::set_global('user_fb', $this->user_fb);
             View::set_global('base_url', Config::get('base_url'));
         }
     }

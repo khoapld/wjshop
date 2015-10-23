@@ -179,18 +179,18 @@ return array(
 	/**
 	 * Cookie settings
 	 */
-	// 'cookie' => array(
+	'cookie' => array(
 		// Number of seconds before the cookie expires
 		// 'expiration'  => 0,
 		// Restrict the path that the cookie is available to
-		// 'path'        => '/',
+		'path'        => '/',
 		// Restrict the domain that the cookie is available to
 		// 'domain'      => null,
 		// Only transmit cookies over secure connections
 		// 'secure'      => false,
 		// Only transmit cookies over HTTP, disabling Javascript access
-		// 'http_only'   => false,
-	// ),
+		'http_only'   => false,
+	),
 
 	/**
 	 * Validation settings
@@ -290,7 +290,7 @@ return array(
 		 * add it like 'session' => 'auth'.
 		 * If you don't want the config in a group use null as groupname.
 		 */
-		'config' => array('auth', 'app'),
+		'config' => array('app', 'auth', 'opauth'),
 
 		/**
 		 * Language files to autoload

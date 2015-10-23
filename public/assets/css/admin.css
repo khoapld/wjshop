@@ -2452,3 +2452,10 @@ td.beauty-hover {
     line-height: 1.5;
 }
 /************************************************************************************/
+
+.mce-window {
+    max-width: 100% !important;
+}
+.mce-window .mce-container-body {
+    max-width: 100% !important;
+}

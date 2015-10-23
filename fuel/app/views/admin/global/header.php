@@ -26,6 +26,12 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a href="<?php echo Uri::base(); ?>admin/facebook">
+                                            <i class="fa fa-facebook"></i>
+                                            <span>Facebook</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="<?php echo Uri::base(); ?>admin/profile">
                                             <i class="fa fa-user"></i>
                                             <span>Profile</span>

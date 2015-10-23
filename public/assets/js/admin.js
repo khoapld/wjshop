@@ -57,11 +57,15 @@ $(function () {
     $(document).on('click', 'a', function () {
         $(this).attr('disabled', true);
     });
+    $(document).on('click', 'a[target="_blank"]', function () {
+        $(this).attr('disabled', false);
+    });
 
     // submit form
     var formName = [
         'update-username-form', 'update-email-form', 'update-user-form', 'update-password-form',
-        'update-product-form'
+        'update-product-form',
+        'create-group-fb-form'
     ];
     for (var i = 0; i < formName.length; i++) {
         $('#' + formName[i]).on('submit', function (event) {
@@ -402,7 +406,7 @@ function FormValidator() {
         data.bv.disableSubmitButtons(false);
     });
 
-    // Create product form validator
+    // Update product form validator
     $('#update-product-form').bootstrapValidator({
         fields: {
             'category_ids[]': {
@@ -638,6 +642,15 @@ function SubmitForm($form) {
         if (data.success) {
             if (fName === 'update-password-form') {
                 resetForm($form);
+            } else if (fName === 'create-group-fb-form') {
+                $form.find('input').val('');
+                var html = '<tr data-id="' + data.group.id + '">\
+                                <td>' + data.group.name + '</td>\
+                                <td class="text-center">\
+                                    <button type="button" class="btn btn-danger delete-btn">Delete</button>\
+                                </td>\
+                            </tr>';
+                $('#group-fb-list').append(html);
             }
             $form.find('div').removeClass('has-success');
             show_alert_success(data.success);

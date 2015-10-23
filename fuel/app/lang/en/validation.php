@@ -31,4 +31,5 @@ return [
     'valid_product_status' => 'The filed :label is not correct.',
     'valid_product_highlight' => 'The filed :label is not correct.',
     'valid_photo' => 'The filed :label is not correct.',
+    'valid_group_fb' => 'The filed :label is not correct.',
 ];
