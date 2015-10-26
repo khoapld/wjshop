@@ -46,12 +46,14 @@ class Controller_Admin_Dashboard extends Controller_Base_Admin
         $val->add_callable('MyRules');
         $val->add_field('email', 'Email', 'required|valid_email|max_length[255]');
         $val->add_field('telephone', 'Telephone', 'trim|valid_numeric|max_length[12]');
+        $val->add_field('address', 'Address', 'trim|max_length[255]');
         $val->add_field('fb_url', 'FB URL', 'required|valid_url');
         $val->add_field('shop_name', 'Shop Name', 'required|max_length[255]');
         if ($val->run()) {
             $props = array(
                 'email' => $val->validated('email'),
                 'telephone' => $val->validated('telephone'),
+                'address' => $val->validated('address'),
                 'fb_url' => $val->validated('fb_url'),
                 'shop_name' => $val->validated('shop_name'),
             );

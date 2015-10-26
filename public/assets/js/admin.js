@@ -227,6 +227,15 @@ function FormValidator() {
                     }
                 }
             },
+            address: {
+                message: 'The address is not valid',
+                validators: {
+                    stringLength: {
+                        max: 255,
+                        message: 'The address must be less than 255 characters long'
+                    }
+                }
+            },
             fb_url: {
                 message: 'The FB URL is not valid',
                 validators: {

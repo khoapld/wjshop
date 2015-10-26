@@ -21,6 +21,7 @@ class Model_Migrate_Config extends Model_Migrate_Migratebase
             'maintenance' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 0],
             'email' => ['constraint' => 255, 'type' => 'varchar', 'null' => true],
             'telephone' => ['constraint' => 12, 'type' => 'varchar', 'null' => true],
+            'address' => ['constraint' => 255, 'type' => 'varchar', 'null' => true],
             'fb_url' => ['constraint' => 255, 'type' => 'varchar', 'null' => true],
             'shop_name' => ['constraint' => 255, 'type' => 'varchar', 'null' => true],
             'created_at' => ['type' => 'timestamp', 'default' => DB::expr('CURRENT_TIMESTAMP')],

@@ -45,6 +45,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-4 control-label">Shop name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="shop_name" value="<?php echo $config->shop_name; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">FB URL</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="fb_url" value="<?php echo $config->fb_url; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-4 control-label">Email</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="email" value="<?php echo $config->email; ?>" />
@@ -57,15 +69,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">FB URL</label>
+                        <label class="col-sm-4 control-label">Address</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="fb_url" value="<?php echo $config->fb_url; ?>" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Shop name</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="shop_name" value="<?php echo $config->shop_name; ?>" />
+                            <input type="text" class="form-control" name="address" value="<?php echo $config->address; ?>" />
                         </div>
                     </div>
                     <div class="form-group text-center">
