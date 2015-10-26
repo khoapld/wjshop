@@ -10,8 +10,8 @@
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
         <link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
-        <link href="/plugins/wjshop/css/main.css" rel="stylesheet">
-        <link href="/plugins/wjshop/css/responsive.css" rel="stylesheet">
+        <?php echo Asset::css(['main.css']); ?>
+        <?php echo Asset::css(['responsive.css']); ?>
         <!--[if lt IE 9]>
             <script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
             <script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
@@ -19,13 +19,13 @@
     </head>
     <body>
         <div class="container text-center">
-            <div class="logo-404">
-                <a href="/"><img src="/plugins/wjshop/images/home/logo.png" alt="" /></a>
+            <div class="companyinfo text-center">
+                <h2><span><?php echo $config->shop_name; ?></span>-Shop</h2>
             </div>
             <div class="content-404">
-                <img src="/plugins/wjshop/images/404/404.png" class="img-responsive" alt="" />
-                <h1><b>OPPS!</b> We Couldn’t Find this Page</h1>
-                <h2><a href="/">Bring me back Home</a></h2>
+                <img src="/assets/img/404.png" class="img-responsive" alt="" />
+                <h1><b>OPPS!</b> Maintenence</h1>
+                <h2><a href="/">Bring me back later</a></h2>
             </div>
         </div>
     </body>

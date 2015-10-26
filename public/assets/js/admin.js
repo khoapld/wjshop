@@ -63,6 +63,7 @@ $(function () {
 
     // submit form
     var formName = [
+        'update-config-form',
         'update-username-form', 'update-email-form', 'update-user-form', 'update-password-form',
         'update-product-form',
         'create-group-fb-form', 'feed-fb-form'
@@ -185,6 +186,62 @@ function FormValidator() {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         }
+    });
+
+    // Update config form validator
+    $('#update-config-form').bootstrapValidator({
+        fields: {
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'The email address is required and can\'t be empty'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    }
+                }
+            },
+            shop_name: {
+                message: 'The shop name is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The shop name is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        max: 255,
+                        message: 'The shop name must be less than 255 characters long'
+                    }
+                }
+            },
+            telephone: {
+                validators: {
+                    notEmpty: {
+                        message: 'The telephone is required and can\'t be empty'
+                    },
+                    digits: {
+                        message: 'The value can contain only digits'
+                    },
+                    stringLength: {
+                        max: 12,
+                        message: 'The telephone must be less than 12 characters long'
+                    }
+                }
+            },
+            fb_url: {
+                message: 'The FB URL is not valid',
+                validators: {
+                    uri: {
+                        message: 'The FB URL is not a valid URL'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function (e, data) {
+        e.preventDefault();
+    }).on('error.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    }).on('success.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
     });
 
     // Update username form validator

@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-12">
+    <div class="col-xs-12 col-sm-8">
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
@@ -30,31 +30,48 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Name</th>
-                            <th class="col-sm-2 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Maintenance</td>
-                            <td class="text-center">
-                                <div class="toggle-switch-status toggle-switch-danger-status">
-                                    <label>
-                                        <input type="checkbox" name="maintenance" <?php echo $config->maintenance !== 1 ? : 'checked'; ?>>
-                                        <div class="toggle-switch-inner-status"></div>
-                                        <div class="toggle-switch-switch-status"><i class="fa fa-check"></i></div>
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="form-group text-right">
-                    <ul id="pagination" class="pagination-sm"></ul>
-                </div>
+                <form id="update-config-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/dashboard/update_config', [], []); ?>" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Maintenance</label>
+                        <div class="col-sm-4">
+                            <label class="switch-light well">
+                                <input type="checkbox" name="maintenance" <?php echo $config->maintenance !== 1 ? : 'checked'; ?>>
+                                <span>
+                                    <span>OFF</span>
+                                    <span>ON</span>
+                                </span>
+                                <a class="btn btn-danger"></a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Email</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="email" value="<?php echo $config->email; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Telephone</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="telephone" value="<?php echo $config->telephone; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">FB URL</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="fb_url" value="<?php echo $config->fb_url; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Shop name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="shop_name" value="<?php echo $config->shop_name; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

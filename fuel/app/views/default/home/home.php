@@ -16,7 +16,6 @@
                                 <div class="item <?php echo $j === 0 ? 'active' : ''; ?>">
                                     <a href="/product/<?php echo $product['id']; ?>">
                                         <div class="col-sm-7">
-                                            <h1><span>WJ</span>-SHOP</h1>
                                             <h2><?php echo $product['product_name']; ?></h2>
                                             <p><?php echo nl2br(\Fuel\Core\Str::truncate($product['product_description'], 150)); ?></p>
                                         </div>

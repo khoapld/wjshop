@@ -5,6 +5,7 @@
 <?php echo Asset::js(['admin.js']); ?>
 
 <?php if ($controller === 'Controller_Admin_Dashboard'): ?>
+    <link href="/plugins/bootstrap-toggle-switch/toggle-switch.css" rel="stylesheet">
     <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
     <script>
         // Change status

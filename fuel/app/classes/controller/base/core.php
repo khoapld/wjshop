@@ -37,11 +37,12 @@ class Controller_Base_Core extends Controller_Hybrid
 
     public function check_maintenance()
     {
-        $maintenance = (int) Model_Config::find('first')->maintenance;
-        if ($this->action === 'maintenance' && $maintenance !== 1) {
+        $config = Model_Config::find('first');
+        View::set_global('config', $config);
+        if ($this->action === 'maintenance' && (int) $config->maintenance !== 1) {
             Response::redirect('/');
         }
-        if (!in_array($this->action, ['maintenance']) && $maintenance === 1) {
+        if (!in_array($this->action, ['maintenance']) && (int) $config->maintenance === 1) {
             Response::redirect('/maintenance');
         }
     }

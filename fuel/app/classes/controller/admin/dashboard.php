@@ -40,4 +40,28 @@ class Controller_Admin_Dashboard extends Controller_Base_Admin
         return $this->response($this->data);
     }
 
+    public function post_update_config()
+    {
+        $val = Validation::forge();
+        $val->add_callable('MyRules');
+        $val->add_field('email', 'Email', 'required|valid_email|max_length[255]');
+        $val->add_field('telephone', 'Telephone', 'trim|valid_numeric|max_length[12]');
+        $val->add_field('fb_url', 'FB URL', 'required|valid_url');
+        $val->add_field('shop_name', 'Shop Name', 'required|max_length[255]');
+        if ($val->run()) {
+            $props = array(
+                'email' => $val->validated('email'),
+                'telephone' => $val->validated('telephone'),
+                'fb_url' => $val->validated('fb_url'),
+                'shop_name' => $val->validated('shop_name'),
+            );
+            Model_Base_Config::update($props);
+            $this->data['success'] = 'Update config success';
+        } else {
+            $this->data['errors'] = $val->error_message();
+        }
+
+        return $this->response($this->data);
+    }
+
 }

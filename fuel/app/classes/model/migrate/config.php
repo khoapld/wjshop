@@ -19,6 +19,10 @@ class Model_Migrate_Config extends Model_Migrate_Migratebase
             self::$_table_name, [
             'id' => ['constraint' => 11, 'type' => 'int', 'auto_increment' => true],
             'maintenance' => ['constraint' => 1, 'type' => 'tinyint', 'default' => 0],
+            'email' => ['constraint' => 255, 'type' => 'varchar', 'null' => true],
+            'telephone' => ['constraint' => 12, 'type' => 'varchar', 'null' => true],
+            'fb_url' => ['constraint' => 255, 'type' => 'varchar', 'null' => true],
+            'shop_name' => ['constraint' => 255, 'type' => 'varchar', 'null' => true],
             'created_at' => ['type' => 'timestamp', 'default' => DB::expr('CURRENT_TIMESTAMP')],
             'updated_at' => ['type' => 'timestamp', 'default' => '0000-00-00 00:00:00']
             ], ['id'], true, 'InnoDB', 'utf8_general_ci'
