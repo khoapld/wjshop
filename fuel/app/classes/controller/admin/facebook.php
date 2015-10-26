@@ -1,11 +1,10 @@
 <?php
 
-use Fuel\Core\Log;
 use Fuel\Core\View;
 use Fuel\Core\Response;
 use Fuel\Core\Validation;
+use Fuel\Core\Uri;
 use Fuel\Core\Session;
-use Auth\Auth;
 use Auth\Auth_Opauth;
 
 class Controller_Admin_Facebook extends Controller_Base_Admin
@@ -58,21 +57,57 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
 
     public function post_feed()
     {
-        // group_id/feed
-        // group_id/photos
-        OpauthStrategy::serverPost(
-            'https://graph.facebook.com/v2.5/' . '835713479875346/feed', array(
-            'access_token' => $this->user_fb['access_token'],
-            'message' => "test \n\r test \r\n test",
-            //"url" => 'http://www.phpgang.com/wp-content/themes/PHPGang_v2/img/logo.png'
-            //'from' => '720949771381958', // app id
-            //'to' => '835713479875346', // group id
-            'caption' => 'caption',
-            'name' => 'name',
-            'link' => 'http://google.com',
-            'picture' => 'http://www.phpgang.com/wp-content/themes/PHPGang_v2/img/logo.png',
-            'description' => 'description'
-            ), null, $headers);
+        $val = Validation::forge();
+        $val->add_callable('MyRules');
+        $val->add_field('message', 'Message', 'required|max_length[10000]');
+        $val->add_field('link', 'Link', 'required|valid_url');
+        if ($val->run()) {
+            $message = $val->validated('message');
+            $link = $val->validated('link');
+            $groups = Model_Base_GroupFb::get_all();
+            foreach ($groups as $group) {
+                OpauthStrategy::serverPost(
+                    'https://graph.facebook.com/v2.5/' . $group['group_id'] . '/feed', array(
+                    'access_token' => $this->user_fb['access_token'],
+                    'message' => html_entity_decode($message, ENT_QUOTES),
+                    'link' => $link
+                    ), null, $headers);
+            }
+            $this->data['success'] = 'Feed FB success';
+        } else {
+            $this->data['errors'] = $val->error_message();
+        }
+
+        return $this->response($this->data);
+    }
+
+    public function post_feed_product()
+    {
+        $val = Validation::forge();
+        $val->add_callable('MyRules');
+        $val->add_field('id', 'Product', 'required|valid_product');
+        if ($val->run()) {
+            $product = Model_Base_Product::get_one($val->validated('id'));
+            $tmp = "\r\n\r\n--------------------------------------------------\r\n\r\n";
+            $message = $product['product_name'] . $tmp . $product['product_description'] . $tmp . $product['product_info'];
+            $groups = Model_Base_GroupFb::get_all();
+            foreach ($groups as $group) {
+                OpauthStrategy::serverPost(
+                    'https://graph.facebook.com/v2.5/' . $group['group_id'] . '/feed', array(
+                    'access_token' => $this->user_fb['access_token'],
+                    'message' => strip_tags(html_entity_decode($message, ENT_QUOTES)),
+                    'link' => Uri::create('/product/' . $product['id']),
+                    'caption' => 'WJ-SHOP',
+                    'name' => html_entity_decode($product['product_name'], ENT_QUOTES),
+                    'description' => html_entity_decode($product['product_description'], ENT_QUOTES),
+                    'picture' => _PATH_PRODUCT_ . $product['product_photo'],
+                    ), null, $headers);
+            }
+            $this->data['success'] = 'Feed FB success';
+        } else {
+            $this->data['error'] = $val->error_message('id');
+        }
+
         return $this->response($this->data);
     }
 
@@ -171,7 +206,7 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
     {
         if (!empty($this->user_fb['access_token'])) {
             try {
-                $data = OpauthStrategy::serverGet('https://graph.facebook.com/v2.5/search', array('access_token' => $this->user_fb['access_token'], 'q' => html_entity_decode($group_name), 'type' => 'group'), null, $headers);
+                $data = OpauthStrategy::serverGet('https://graph.facebook.com/v2.5/search', array('access_token' => $this->user_fb['access_token'], 'q' => html_entity_decode($group_name, ENT_QUOTES), 'type' => 'group'), null, $headers);
                 if (!empty($data)) {
                     $group = json_decode($data);
                     return !empty($group->data[0]->id) ? $group->data : false;

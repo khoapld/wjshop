@@ -34,13 +34,25 @@
                     <?php if ($is_login_fb == true): ?>
                         <a class="btn btn-lg btn-primary" href="/admin/facebook/login/facebook">Login</a>
                     <?php else: ?>
-                        <a class="btn btn-lg btn-primary" href="https://facebook.com/<?php echo $user_fb['uid']; ?>" target="_blank">Go to Facebook page</a>
+                        <a class="btn btn-lg btn-primary" href="https://facebook.com/<?php echo $user_fb['uid']; ?>" target="_blank">Go to Facebook</a>
                     <?php endif; ?>
                 </div>
                 <?php if (!empty($user_fb)): ?>
-                    <form id="post-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/feed', [], []); ?>" class="form-horizontal">
+                    <form id="feed-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/feed', [], []); ?>" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="form-styles">Message</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="6" name="message"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Link</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="link" />
+                            </div>
+                        </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Feed to FB</button>
                         </div>
                     </form>
                 <?php endif; ?>
@@ -80,26 +92,28 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
-                <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="col-sm-1 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="group-fb-list">
-                        <?php if (!empty($group)): ?>
-                            <?php foreach ($group as $k => $v): ?>
-                                <tr data-id="<?php echo $v['id']; ?>">
-                                    <td><?php echo $v['group_name']; ?></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-danger delete-btn">Delete</button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                <div class="form-group" id="group-fb-container">
+                    <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="col-sm-1 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="group-fb-list">
+                            <?php if (!empty($group)): ?>
+                                <?php foreach ($group as $k => $v): ?>
+                                    <tr data-id="<?php echo $v['id']; ?>">
+                                        <td><?php echo $v['group_name']; ?></td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-danger delete-btn">Delete</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

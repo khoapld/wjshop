@@ -33,6 +33,12 @@
                 <form id="update-product-form" method="post"
                       action="<?php echo \Fuel\Core\Uri::create('/admin/product/update', [], []); ?>"
                       class="form-horizontal">
+                    <div class="form-group text-center">
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary <?php echo $product['status'] === 1 ? '' : 'disabled'; ?>"
+                                    type="button" id="feed-fb-btn" data-id="<?php echo $product['id']; ?>">Feed FB</button>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Status</label>
                         <div class="col-sm-4">

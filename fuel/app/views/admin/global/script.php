@@ -216,7 +216,15 @@
         $(document).on('change', 'input[name="status"]', function () {
             var status = $(this).prop('checked') ? 1 : 2;
             var product_id = $(this).parents('label').attr('data-id');
-            $.post('/admin/product/status', {product_id: product_id, status: status});
+            $.post('/admin/product/status', {product_id: product_id, status: status})
+                    .done(function (data) {
+                        if (status === 1) {
+                            $('button#feed-fb-btn').removeClass('disabled');
+                        } else {
+                            $('button#feed-fb-btn').addClass('disabled');
+                        }
+                    });
+
         });
 
         // Change highlight
@@ -247,6 +255,22 @@
         ul_sortable.on('sortupdate', function (event, ui) {
             var sortable_data = $('.sortable').sortable('serialize');
             $.post('/admin/product/sort_sub_photo', sortable_data);
+        });
+
+        // Fedd FB
+        $(document).on('click', 'button#feed-fb-btn', function () {
+            if (confirm("Are you want to feed?")) {
+                var product_id = $(this).attr('data-id');
+                var posting = $.post('/admin/facebook/feed_product', {id: product_id});
+                posting.done(function (data) {
+                    if (data.success) {
+                        show_alert_success(data.success);
+                    } else {
+                        show_alert_error(data.error);
+                    }
+                });
+            }
+            return false;
         });
     </script>
 <?php endif; ?>

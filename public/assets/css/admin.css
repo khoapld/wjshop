@@ -2459,3 +2459,9 @@ td.beauty-hover {
 .mce-window .mce-container-body {
     max-width: 100% !important;
 }
+
+#group-fb-container {
+    display: block;
+    max-height: 320px;
+    overflow-y: auto;
+}

@@ -92,7 +92,7 @@ class Model_Base_Product
                     'where' => !empty($option['where']) ? array_merge(array(array('id' => $id)), $option['where']) : array('id' => $id),
                     'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc')
             ));
-            return self::map_product($product)[$id];
+            return self::map_product($product)[0];
         } catch (Exception $e) {
             Log::write('ERROR', $e->getMessage());
         }
@@ -239,7 +239,8 @@ class Model_Base_Product
             $data[$v->id]['status'] = !empty($v->status) ? (int) $v->status : 2;
             $data[$v->id]['highlight'] = !empty($v->highlight) ? (int) $v->highlight : 0;
         }
-        return $data;
+
+        return array_values($data);
     }
 
     public static function valid_field($field, $val)

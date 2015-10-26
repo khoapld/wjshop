@@ -87,7 +87,7 @@ class Model_Base_Category
             $data[$v->id]['status'] = (int) $v->status;
         }
 
-        return $data;
+        return array_values($data);
     }
 
     public static function get_id_by_parent_id($parent_category_id)

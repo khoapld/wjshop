@@ -57,8 +57,8 @@ class Model_Base_GroupFb
     {
         $data = Model_GroupFb::find('all', array(
                 'order_by' => array('id' => 'desc'),
-            //    'offset' => $offset,
-            //    'limit' => $limit
+                //    'offset' => $offset,
+                //    'limit' => $limit
         ));
 
         return self::map_data($data);
@@ -104,7 +104,7 @@ class Model_Base_GroupFb
                     'where' => !empty($option['where']) ? array_merge(array(array('id' => $id)), $option['where']) : array('id' => $id),
                     'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc')
             ));
-            return self::map_data($data)[$id];
+            return self::map_data($data)[0];
         } catch (Exception $e) {
             Log::write('ERROR', $e->getMessage());
         }
@@ -121,7 +121,8 @@ class Model_Base_GroupFb
             $data[$v->id]['group_name'] = $v->group_name;
             $data[$v->id]['privacy'] = $v->privacy;
         }
-        return $data;
+
+        return array_values($data);
     }
 
     public static function valid_field($field, $val)

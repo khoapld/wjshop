@@ -19,8 +19,9 @@
                     <div class="col-sm-7">
                         <div class="product-information">
                             <h2><?php echo $product['product_name']; ?></h2>
-                            <p><?php echo $product['product_description']; ?></p>
-                            <?php echo nl2br(htmlspecialchars_decode($product['product_info'])); ?>
+                            <p><?php echo nl2br($product['product_description']); ?></p>
+                            <hr>
+                            <?php echo html_entity_decode($product['product_info'], ENT_QUOTES); ?>
                         </div>
                     </div>
                 </div>

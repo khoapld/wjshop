@@ -65,7 +65,7 @@ $(function () {
     var formName = [
         'update-username-form', 'update-email-form', 'update-user-form', 'update-password-form',
         'update-product-form',
-        'create-group-fb-form'
+        'create-group-fb-form', 'feed-fb-form'
     ];
     for (var i = 0; i < formName.length; i++) {
         $('#' + formName[i]).on('submit', function (event) {
@@ -446,6 +446,38 @@ function FormValidator() {
     }).on('success.field.bv', function (e, data) {
         data.bv.disableSubmitButtons(false);
     });
+
+    // Feed FB form validator
+    $('#feed-fb-form').bootstrapValidator({
+        fields: {
+            message: {
+                message: 'The message is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The message is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        max: 10000,
+                        message: 'The message must be less than 10000 characters long'
+                    }
+                }
+            },
+            link: {
+                message: 'The link is not valid',
+                validators: {
+                    uri: {
+                        message: 'The link is not a valid URL'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function (e, data) {
+        e.preventDefault();
+    }).on('error.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    }).on('success.field.bv', function (e, data) {
+        data.bv.disableSubmitButtons(false);
+    });
 }
 
 /*-------------------------------------------
@@ -650,11 +682,14 @@ function SubmitForm($form) {
                                     <button type="button" class="btn btn-danger delete-btn">Delete</button>\
                                 </td>\
                             </tr>';
-                $('#group-fb-list').append(html);
+                $('#group-fb-list').prepend(html);
             }
             $form.find('div').removeClass('has-success');
             show_alert_success(data.success);
         } else if (data.error) {
+            if (fName === 'create-group-fb-form') {
+                $form.find('input').val('');
+            }
             show_alert_error(data.error);
         } else if (data.errors) {
             var msg = '';

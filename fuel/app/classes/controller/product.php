@@ -50,6 +50,7 @@ class Controller_Product extends Controller_Base_Core
         if (!empty($category_ids)) {
             $this->data['products'] = Model_Base_Product::get_by_category_ids($category_ids, 0, 4);
         }
+        View::set_global('product', $this->data['product']);
 
         $this->template->title = 'Product List';
         $this->template->content = View::forge($this->layout . '/product/detail', $this->data);
