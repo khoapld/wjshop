@@ -36,17 +36,17 @@ class Controller_Product extends Controller_Base_Core
         $this->template->content = View::forge($this->layout . '/product/list', $this->data);
     }
 
-    public function action_detail($id = null)
+    public function action_detail($code = null)
     {
-        $this->data['product'] = Model_Base_Product::get_one($id, array(
+        $this->data['product'] = Model_Base_Product::get_by_code($code, array(
                 'where' => array(array('status', '=', 1))
         ));
         if (empty($this->data['product']['id'])) {
             Response::redirect('/');
         }
-        $this->data['product']['sub_photo'] = Model_Base_Product::get_sub_photo($id);
+        $this->data['product']['sub_photo'] = Model_Base_Product::get_sub_photo($this->data['product']['id']);
 
-        $category_ids = Model_Base_ProductCategory::get_by('category_id', 'product_id', $id);
+        $category_ids = Model_Base_ProductCategory::get_by('category_id', 'product_id', $this->data['product']['id']);
         if (!empty($category_ids)) {
             $this->data['products'] = Model_Base_Product::get_by_category_ids($category_ids, 0, 4);
         }

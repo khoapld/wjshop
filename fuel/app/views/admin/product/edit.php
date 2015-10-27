@@ -71,7 +71,7 @@
                             <select multiple="multiple" class="populate placeholder"
                                     id="category_id" name="category_ids[]">
                                         <?php foreach ($category as $k => $v): ?>
-                                    <option value="<?php echo $k; ?>" <?php echo!in_array($k, $product['category'])? : 'selected'; ?>>
+                                    <option value="<?php echo $v['id']; ?>" <?php echo!in_array($v['id'], $product['category'])? : 'selected'; ?>>
                                         <?php echo $v['category_name_display']; ?>
                                     </option>
                                 <?php endforeach; ?>

@@ -1,5 +1,5 @@
-<header id="header"><!--header-->
-    <div class="header_top"><!--header_top-->
+<header id="header">
+    <div class="header_top">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -13,9 +13,9 @@
                 </div>
             </div>
         </div>
-    </div><!--/header_top-->
+    </div>
 
-    <div class="header-middle"><!--header-middle-->
+    <div class="header-middle">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
@@ -34,9 +34,9 @@
                                 </div>-->
             </div>
         </div>
-    </div><!--/header-middle-->
+    </div>
 
-    <div class="header-bottom"><!--header-bottom-->
+    <div class="header-bottom">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -56,7 +56,7 @@
                                     <ul role="menu" class="sub-menu">
                                         <?php foreach ($category as $v): ?>
                                             <li>
-                                                <a href="/category/<?php echo $v['id']; ?>" class="<?php echo $controller === 'Controller_Category' && Fuel\Core\Uri::segment(2) == $v['id'] ? 'active' : ''; ?>">
+                                                <a href="/category/<?php echo $v['code']; ?>" class="<?php echo $controller === 'Controller_Category' && Fuel\Core\Uri::segment(2) == $v['code'] ? 'active' : ''; ?>">
                                                     <?php echo $v['category_name_display']; ?>
                                                 </a>
                                             </li>
@@ -70,5 +70,5 @@
                 </div>
             </div>
         </div>
-    </div><!--/header-bottom-->
-</header><!--/header-->
+    </div>
+</header>

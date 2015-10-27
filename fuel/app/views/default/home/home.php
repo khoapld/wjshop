@@ -14,7 +14,7 @@
                         <div class="carousel-inner">
                             <?php foreach ($highlight_product as $product): ?>
                                 <div class="item <?php echo $j === 0 ? 'active' : ''; ?>">
-                                    <a href="/product/<?php echo $product['id']; ?>">
+                                    <a href="/product/<?php echo $product['code']; ?>">
                                         <div class="col-sm-7">
                                             <h2><?php echo $product['product_name']; ?></h2>
                                             <p><?php echo nl2br(\Fuel\Core\Str::truncate($product['product_description'], 150)); ?></p>
@@ -50,7 +50,7 @@
                         <h2 class="title text-center">New Product</h2>
                         <?php foreach ($new_product as $product): ?>
                             <div class="col-sm-4">
-                                <a href="/product/<?php echo $product['id']; ?>">
+                                <a href="/product/<?php echo $product['code']; ?>">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo">
@@ -72,17 +72,17 @@
                             <div class="col-sm-12">
                                 <ul class="nav nav-tabs">
                                     <?php foreach ($product_category as $v): ?>
-                                        <li class="<?php echo $i === 0 ? 'active' : ''; ?>"><a href="#<?php echo $v['id']; ?>" data-toggle="tab"><?php echo $v['category_name']; ?></a></li>
+                                        <li class="<?php echo $i === 0 ? 'active' : ''; ?>"><a href="#<?php echo $v['code']; ?>" data-toggle="tab"><?php echo $v['category_name']; ?></a></li>
                                         <?php $i++; ?>
                                     <?php endforeach; ?>
                                 </ul>
                             </div>
                             <div class="tab-content">
                                 <?php foreach ($product_category as $v): ?>
-                                    <div class="tab-pane fade <?php echo $j === 0 ? 'active in' : ''; ?>" id="<?php echo $v['id'] ?>" >
+                                    <div class="tab-pane fade <?php echo $j === 0 ? 'active in' : ''; ?>" id="<?php echo $v['code'] ?>" >
                                         <?php foreach ($v['product'] as $product): ?>
                                             <div class="col-sm-3">
-                                                <a href="/product/<?php echo $product['id']; ?>">
+                                                <a href="/product/<?php echo $product['code']; ?>">
                                                     <div class="product-image-wrapper">
                                                         <div class="single-products">
                                                             <div class="productinfo text-center">

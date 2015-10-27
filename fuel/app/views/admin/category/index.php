@@ -37,7 +37,7 @@
                             <select class="populate placeholder" name="parent_category_id">
                                 <option value="" >--- Select category ---</option>
                                 <?php foreach ($category as $k => $v): ?>
-                                    <option value="<?php echo $k; ?>" ><?php echo $v['category_name_display']; ?></option>
+                                    <option value="<?php echo $v['id']; ?>" ><?php echo $v['category_name_display']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

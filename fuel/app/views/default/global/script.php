@@ -17,7 +17,7 @@ echo Asset::js(array(
 <?php if ($controller === 'Controller_Category' && in_array($action, array('index')) && $total_page > 1): ?>
     <?php echo Asset::js(array('../../plugins/jQuery-pagination/jquery.pagination.js')); ?>
     <script>
-        var category_id = "<?php echo Fuel\Core\Uri::segment(2); ?>";
+        var code = "<?php echo Fuel\Core\Uri::segment(2); ?>";
         $('.pagination').jqueryPagination({
             totalPages: <?php echo $total_page; ?>,
             visiblePages: <?php echo _DEFAULT_VISIBLE_PAGES_; ?>,
@@ -26,7 +26,7 @@ echo Asset::js(array(
             first: false,
             last: false,
             onPageClick: function (event, page) {
-                var posting = $.post('/category/list', {page: page, category_id: category_id});
+                var posting = $.post('/category/list', {page: page, code: code});
                 posting.done(function (data) {
                     if (data.products) {
                         var html = '';

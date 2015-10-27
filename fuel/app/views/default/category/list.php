@@ -13,7 +13,7 @@
                             <div class="row" id="product-list">
                                 <?php foreach ($products as $product): ?>
                                     <div class="col-sm-4">
-                                        <a href="/product/<?php echo $product['id']; ?>">
+                                        <a href="/product/<?php echo $product['code']; ?>">
                                             <div class="product-image-wrapper">
                                                 <div class="single-products">
                                                     <div class="productinfo">

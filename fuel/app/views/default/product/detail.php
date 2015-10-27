@@ -30,9 +30,9 @@
                     <div class="features_items">
                         <h2 class="title text-center">Category Product</h2>
                         <?php foreach ($products as $p): ?>
-                            <?php if ($p['id'] != $product['id']): ?>
+                            <?php if ($p['code'] != $product['code']): ?>
                                 <div class="col-sm-3">
-                                    <a href="/product/<?php echo $p['id']; ?>">
+                                    <a href="/product/<?php echo $p['code']; ?>">
                                         <div class="product-image-wrapper">
                                             <div class="single-products">
                                                 <div class="productinfo">

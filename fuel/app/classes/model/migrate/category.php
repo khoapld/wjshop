@@ -18,6 +18,7 @@ class Model_Migrate_Category extends Model_Migrate_Migratebase
         DBUtil::create_table(
             self::$_table_name, [
             'id' => ['constraint' => 11, 'type' => 'int', 'auto_increment' => true],
+            'code' => ['constraint' => 50, 'type' => 'varchar'],
             'parent_category_id' => ['constraint' => 11, 'type' => 'int', 'default' => 0],
             'category_name' => ['type' => 'text'],
             'category_photo' => ['constraint' => 50, 'type' => 'varchar', 'null' => true],
@@ -29,6 +30,7 @@ class Model_Migrate_Category extends Model_Migrate_Migratebase
             ], ['id'], true, 'InnoDB', 'utf8_general_ci'
         );
 
+        DBUtil::create_index(self::$_table_name, 'code', 'code');
         DBUtil::create_index(self::$_table_name, 'parent_category_id', 'parent_category_id');
         DBUtil::create_index(self::$_table_name, 'level', 'level');
         DBUtil::create_index(self::$_table_name, 'status', 'status');

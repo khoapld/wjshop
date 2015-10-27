@@ -40,7 +40,7 @@ class Model_Migrate_Config extends Model_Migrate_Migratebase
     public static function add_config()
     {
         $props = [
-            'maintenance' => 0,
+            'maintenance' => 1,
             'created_at' => date('Y-m-d H:i:s', Date::forge()->get_timestamp())
         ];
         $query = Model_Config::forge($props);

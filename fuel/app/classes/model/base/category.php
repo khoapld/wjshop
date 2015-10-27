@@ -10,6 +10,7 @@ class Model_Base_Category
     {
         try {
             $props = [
+                'code' => Model_Service_Util::gen_code(),
                 'parent_category_id' => !empty($data['parent_category_id']) ? $data['parent_category_id'] : 0,
                 'category_name' => $data['category_name'],
                 'rank' => Model_Category::query()->max('rank') + 1,
@@ -79,6 +80,7 @@ class Model_Base_Category
         $new_category = self::get_parent();
         foreach ($category as $v) {
             $data[$v->id]['id'] = $v->id;
+            $data[$v->id]['code'] = $v->code;
             $data[$v->id]['parent_category_id'] = $v->parent_category_id;
             $data[$v->id]['category_name'] = $v->category_name;
             $data[$v->id]['category_name_display'] = $new_category[$v->id];
@@ -88,6 +90,16 @@ class Model_Base_Category
         }
 
         return array_values($data);
+    }
+
+    public static function get_id_by_code($code)
+    {
+        $categories = Model_Category::find('all', array('where' => array(array('code', '=', $code))));
+        foreach ($categories as $category) {
+            return $category->id;
+        }
+
+        return false;
     }
 
     public static function get_id_by_parent_id($parent_category_id)

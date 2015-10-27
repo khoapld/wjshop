@@ -36,7 +36,7 @@
                         <div class="col-sm-6">
                             <select multiple="multiple" id="category_id" class="populate placeholder" name="category_ids">
                                 <?php foreach ($category as $k => $v): ?>
-                                    <option value="<?php echo $k; ?>">
+                                    <option value="<?php echo $v['id']; ?>">
                                         <?php echo $v['category_name_display']; ?>
                                     </option>
                                 <?php endforeach; ?>

@@ -35,7 +35,7 @@
                         <label class="col-sm-4 control-label">Maintenance</label>
                         <div class="col-sm-4">
                             <label class="switch-light well">
-                                <input type="checkbox" name="maintenance" <?php echo $config->maintenance !== 1 ? : 'checked'; ?>>
+                                <input type="checkbox" name="maintenance" <?php echo $config->maintenance != 1 ? '' : 'checked'; ?>>
                                 <span>
                                     <span>OFF</span>
                                     <span>ON</span>

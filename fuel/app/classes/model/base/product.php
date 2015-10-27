@@ -10,6 +10,7 @@ class Model_Base_Product
     {
         try {
             $props = [
+                'code' => Model_Service_Util::gen_code(),
                 'product_name' => $data['product_name'],
                 'product_description' => $data['product_description'],
                 'product_info' => $data['product_info'],
@@ -89,8 +90,22 @@ class Model_Base_Product
         try {
             $product = Model_Product::find('all', array(
                     'select' => !empty($option['all']) ? $option['select'] : array(),
-                    'where' => !empty($option['where']) ? array_merge(array(array('id' => $id)), $option['where']) : array('id' => $id),
-                    'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc')
+                    'where' => !empty($option['where']) ? array_merge(array(array('id' => $id)), $option['where']) : array('id' => $id)
+            ));
+            return self::map_product($product)[0];
+        } catch (Exception $e) {
+            Log::write('ERROR', $e->getMessage());
+        }
+
+        return false;
+    }
+
+    public static function get_by_code($code, $option = array())
+    {
+        try {
+            $product = Model_Product::find('all', array(
+                    'select' => !empty($option['all']) ? $option['select'] : array(),
+                    'where' => !empty($option['where']) ? array_merge(array(array('code' => $code)), $option['where']) : array('code' => $code)
             ));
             return self::map_product($product)[0];
         } catch (Exception $e) {
@@ -231,6 +246,7 @@ class Model_Base_Product
         $data = array();
         foreach ($product as $v) {
             $data[$v->id]['id'] = $v->id;
+            $data[$v->id]['code'] = $v->code;
             $data[$v->id]['product_name'] = $v->product_name;
             $data[$v->id]['product_description'] = !empty($v->product_description) ? $v->product_description : '';
             $data[$v->id]['product_info'] = !empty($v->product_info) ? $v->product_info : '';

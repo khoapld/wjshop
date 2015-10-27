@@ -10,7 +10,7 @@
     <meta property="og:type" content="article">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="WJ-SHOP"/>
-    <meta property="og:url" content="<?php echo \Fuel\Core\Uri::create('/product/' . $product['id']); ?>">
+    <meta property="og:url" content="<?php echo \Fuel\Core\Uri::create('/product/' . $product['code']); ?>">
     <meta property="og:title" content="<?php echo $product['product_name']; ?>">
     <meta property="og:description" content="<?php echo str_replace(["\r\n", "\n", "\r"], " \\", $product['product_description']); ?>">
     <meta property="og:image" content="<?php echo _PATH_PRODUCT_ . $product['product_photo']; ?>">

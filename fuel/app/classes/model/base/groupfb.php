@@ -53,14 +53,11 @@ class Model_Base_GroupFb
         return true;
     }
 
-    public static function get_all($offset = _DEFAULT_OFFSET_, $limit = _DEFAULT_LIMIT_)
+    public static function get_all()
     {
         $data = Model_GroupFb::find('all', array(
-                'order_by' => array('id' => 'desc'),
-                //    'offset' => $offset,
-                //    'limit' => $limit
+                'order_by' => array('id' => 'desc')
         ));
-
         return self::map_data($data);
     }
 
@@ -101,8 +98,7 @@ class Model_Base_GroupFb
         try {
             $data = Model_GroupFb::find('all', array(
                     'select' => !empty($option['all']) ? $option['select'] : array(),
-                    'where' => !empty($option['where']) ? array_merge(array(array('id' => $id)), $option['where']) : array('id' => $id),
-                    'order_by' => !empty($option['order_by']) ? $option['order_by'] : array('id' => 'desc')
+                    'where' => !empty($option['where']) ? array_merge(array(array('id' => $id)), $option['where']) : array('id' => $id)
             ));
             return self::map_data($data)[0];
         } catch (Exception $e) {
