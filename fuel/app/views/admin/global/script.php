@@ -158,7 +158,8 @@ echo Asset::js(array(
     <?php
     echo Asset::js(array(
         '../../plugins/tinymce/tinymce.min.js',
-        '../../plugins/tinymce/jquery.tinymce.min.js'
+        '../../plugins/tinymce/jquery.tinymce.min.js',
+        '../../plugins/fineuploader/jquery.fineuploader-5.0.1.min.js'
     ));
     ?>
     <script>

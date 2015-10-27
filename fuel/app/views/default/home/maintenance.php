@@ -9,9 +9,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
-        <link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
-        <?php echo Asset::css(['main.css']); ?>
-        <?php echo Asset::css(['responsive.css']); ?>
+        <?php echo Asset::css(array('../../plugins/bootstrap/css/bootstrap.min.css', 'main.min.css')); ?>
+
         <!--[if lt IE 9]>
             <script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
             <script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>

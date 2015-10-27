@@ -7,10 +7,10 @@
         <meta name="author" content="khoapld">
         <meta name="keywords" content="wjshop">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="/plugins/bootstrap/bootstrap.css" rel="stylesheet">
-        <?php echo Asset::css(['admin.css', 'admin_signin.css']); ?>
-        <script src="/plugins/jquery/jquery-2.1.0.min.js"></script>
-        <?php echo Asset::js(['admin_signin.js']); ?>
+
+        <?php echo Asset::css(array('../../plugins/bootstrap/css/bootstrap.min.css', 'admin.min.css', 'admin_signin.min.css')); ?>
+        <?php echo Asset::js(array('../../plugins/jquery/jquery-2.1.0.min.js', 'admin_signin.min.js')); ?>
+
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
                 <script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
