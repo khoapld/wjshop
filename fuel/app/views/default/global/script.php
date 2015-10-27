@@ -1,17 +1,21 @@
-<script src="/plugins/jquery/jquery-2.1.0.min.js"></script>
-<script src="/plugins/bootstrap/bootstrap.min.js"></script>
-<script src="/plugins/jquery-scrollup/jquery.scrollUp.min.js"></script>
-
-<?php echo Asset::js(['main.js']); ?>
+<?php
+echo Asset::js(array(
+    '../../plugins/jquery/jquery-2.1.0.min.js',
+    '../../plugins/bootstrap/js/bootstrap.min.js',
+    '../../plugins/jquery-scrollup/jquery.scrollUp.min.js',
+    'main.min.js'
+));
+?>
 
 <?php if ($controller === 'Controller_Product'): ?>
-    <script src="/plugins/smoothproducts/js/smoothproducts.min.js"></script>
+    <?php echo Asset::js(array('../../plugins/smoothproducts/js/smoothproducts.min.js')); ?>
     <script>
-        $('.sp-wrap').smoothproducts();</script>
+        $('.sp-wrap').smoothproducts();
+    </script>
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Category' && in_array($action, array('index')) && $total_page > 1): ?>
-    <script src="/plugins/jQuery-pagination/jquery.pagination.js"></script>
+    <?php echo Asset::js(array('../../plugins/jQuery-pagination/jquery.pagination.js')); ?>
     <script>
         var category_id = "<?php echo Fuel\Core\Uri::segment(2); ?>";
         $('.pagination').jqueryPagination({

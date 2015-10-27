@@ -1,3 +1,5 @@
+/*jshint multistr: true */
+
 $(function () {
     var height = window.innerHeight - 49;
     $('#main').css('min-height', height)
@@ -531,6 +533,9 @@ function FormValidator() {
             link: {
                 message: 'The link is not valid',
                 validators: {
+                    notEmpty: {
+                        message: 'The link is required and can\'t be empty'
+                    },
                     uri: {
                         message: 'The link is not a valid URL'
                     }
@@ -636,6 +641,7 @@ function FormUpload(option) {
                     });
                     show_alert_error(msg);
                 } else if (responseJSON.success) {
+                    var html = '';
                     if (typeof option.type !== 'undefined' && option.type === 'update-user-icon') {
                         $('div.avatar > img, div.main-icon > img').attr('src', responseJSON.photo_name);
                     } else if (typeof option.type !== 'undefined' && option.type === 'create-category-photo') {
@@ -643,7 +649,7 @@ function FormUpload(option) {
                         $('#add-category .collapse-link > i').attr('class', 'fa fa-chevron-down');
                         show_alert_success(responseJSON.msg);
                         if (responseJSON.category.type === 'new') {
-                            var html = '<tr id="category-' + responseJSON.category.id +
+                            html = '<tr id="category-' + responseJSON.category.id +
                                     '" data-id="' + responseJSON.category.id +
                                     '" data-parent-id="' + responseJSON.category.parent_category_id +
                                     '" data-category-name="' + responseJSON.category.category_name + '"> \
@@ -682,7 +688,7 @@ function FormUpload(option) {
                     } else if (typeof option.type !== 'undefined' && option.type === 'update-product-photo') {
                         form.find('div.main-icon > img').attr('src', responseJSON.photo_name);
                     } else if (typeof option.type !== 'undefined' && option.type === 'create-sub-product-photo') {
-                        var html = '<tr id="photo-' + responseJSON.photo_id + '" data-id="' + responseJSON.photo_id + '"> \
+                        html = '<tr id="photo-' + responseJSON.photo_id + '" data-id="' + responseJSON.photo_id + '"> \
                                         <td class="text-center"> \
                                             <img class="img-rounded" src="' + responseJSON.photo_name + '"> \
                                         </td> \
@@ -704,13 +710,14 @@ function FormUpload(option) {
 //
 function TinyMCEStart(elem, mode) {
     var plugins = [];
+    var toolbar = '';
     if (mode === 'basic') {
-        var plugins = [
+        plugins = [
             'advlist autolink lists link charmap preview anchor',
             'searchreplace visualblocks code',
             'insertdatetime media table contextmenu paste'
         ];
-        var toolbar = 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | preview';
+        toolbar = 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | preview';
     }
     tinymce.init({
         selector: elem,

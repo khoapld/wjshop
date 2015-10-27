@@ -1,12 +1,15 @@
-<script src="/plugins/jquery/jquery-2.1.0.min.js"></script>
-<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
-<script src="/plugins/bootstrap/bootstrap.min.js"></script>
-
-<?php echo Asset::js(['admin.js']); ?>
+<?php
+echo Asset::js(array(
+    '../../plugins/jquery/jquery-2.1.0.min.js',
+    '../../plugins/jquery-ui/jquery-ui.min.js',
+    '../../plugins/bootstrap/js/bootstrap.min.js',
+    'admin.min.js',
+));
+?>
 
 <?php if ($controller === 'Controller_Admin_Dashboard'): ?>
-    <link href="/plugins/bootstrap-toggle-switch/toggle-switch.css" rel="stylesheet">
-    <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
+    <?php echo Asset::css('../../plugins/bootstrap-toggle-switch/toggle-switch.css'); ?>
+    <?php echo Asset::js(array('../../plugins/fineuploader/jquery.fineuploader-5.0.1.min.js')); ?>
     <script>
         // Change status
         $(document).on('change', 'input[name="maintenance"]', function () {
@@ -17,7 +20,7 @@
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Admin_Profile'): ?>
-    <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
+    <?php echo Asset::js(array('../../plugins/fineuploader/jquery.fineuploader-5.0.1.min.js')); ?>
     <script>
         // Load and run Uploader
         var option = {
@@ -32,7 +35,7 @@
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Admin_Category'): ?>
-    <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
+    <?php echo Asset::js(array('../../plugins/fineuploader/jquery.fineuploader-5.0.1.min.js')); ?>
     <script>
         // Load and run Uploader
         var option = {
@@ -95,7 +98,7 @@
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Admin_Product' && in_array($action, array('index', 'category')) && $total_page > 1): ?>
-    <script src="/plugins/jQuery-pagination/jquery.pagination.js"></script>
+    <?php echo Asset::js(array('../../plugins/jQuery-pagination/jquery.pagination.js')); ?>
     <script>
         var category_id = "<?php echo Fuel\Core\Uri::segment(4); ?>";
         $('#pagination').jqueryPagination({
@@ -152,9 +155,12 @@
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Admin_Product' && in_array($action, array('new'))): ?>
-    <script src="/plugins/tinymce/tinymce.min.js"></script>
-    <script src="/plugins/tinymce/jquery.tinymce.min.js"></script>
-    <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
+    <?php
+    echo Asset::js(array(
+        '../../plugins/tinymce/tinymce.min.js',
+        '../../plugins/tinymce/jquery.tinymce.min.js'
+    ));
+    ?>
     <script>
         // Load and run Uploader
         var option = {
@@ -184,10 +190,14 @@
 <?php endif; ?>
 
 <?php if ($controller === 'Controller_Admin_Product' && in_array($action, array('edit'))): ?>
-    <link href="/plugins/bootstrap-toggle-switch/toggle-switch.css" rel="stylesheet">
-    <script src="/plugins/tinymce/tinymce.min.js"></script>
-    <script src="/plugins/tinymce/jquery.tinymce.min.js"></script>
-    <script src="/plugins/fineuploader/jquery.fineuploader-5.0.1.min.js"></script>
+    <?php echo Asset::css(array('../../plugins/bootstrap-toggle-switch/toggle-switch.css')); ?>
+    <?php
+    echo Asset::js(array(
+        '../../plugins/tinymce/tinymce.min.js',
+        '../../plugins/tinymce/jquery.tinymce.min.js',
+        '../../plugins/fineuploader/jquery.fineuploader-5.0.1.min.js'
+    ));
+    ?>
     <script>
         // Load and run Uploader
         var option = {

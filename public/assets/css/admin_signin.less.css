@@ -1,0 +1,18 @@
+#page-login {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+#page-login .logo {
+  position: absolute;
+}
+#page-login h3 {
+  font-size: 20px;
+  font-family: 'Righteous', cursive;
+}
+#page-login .text-right {
+  margin-top: 15px;
+}
+#page-login .box {
+  margin-top: 15%;
+}
