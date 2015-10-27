@@ -3,7 +3,6 @@
 use Fuel\Core\View;
 use Fuel\Core\Response;
 use Fuel\Core\Validation;
-use Fuel\Core\Uri;
 use Fuel\Core\Session;
 use Auth\Auth_Opauth;
 
@@ -62,17 +61,11 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
         $val->add_field('message', 'Message', 'required|max_length[10000]');
         $val->add_field('link', 'Link', 'required|valid_url');
         if ($val->run()) {
-            $message = $val->validated('message');
-            $link = $val->validated('link');
-            $groups = Model_Base_GroupFb::get_all();
-            foreach ($groups as $group) {
-                OpauthStrategy::serverPost(
-                    'https://graph.facebook.com/v2.5/' . $group['group_id'] . '/feed', array(
-                    'access_token' => $this->user_fb['access_token'],
-                    'message' => html_entity_decode($message, ENT_QUOTES),
-                    'link' => $link
-                    ), null, $headers);
-            }
+            $props = array(
+                'message' => $val->validated('message'),
+                'link' => $val->validated('link')
+            );
+            Model_Service_Util::feed_fb($this->user_fb['access_token'], $props);
             $this->data['success'] = 'Feed FB success';
         } else {
             $this->data['errors'] = $val->error_message();
@@ -87,22 +80,8 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
         $val->add_callable('MyRules');
         $val->add_field('id', 'Product', 'required|valid_product');
         if ($val->run()) {
-            $product = Model_Base_Product::get_one($val->validated('id'));
-            $tmp = "\r\n\r\n--------------------------------------------------\r\n\r\n";
-            $message = $product['product_name'] . $tmp . $product['product_description'] . $tmp . $product['product_info'];
-            $groups = Model_Base_GroupFb::get_all();
-            foreach ($groups as $group) {
-                OpauthStrategy::serverPost(
-                    'https://graph.facebook.com/v2.5/' . $group['group_id'] . '/feed', array(
-                    'access_token' => $this->user_fb['access_token'],
-                    'message' => strip_tags(html_entity_decode($message, ENT_QUOTES)),
-                    'link' => Uri::create('/product/' . $product['id']),
-                    'caption' => 'WJ-SHOP',
-                    'name' => html_entity_decode($product['product_name'], ENT_QUOTES),
-                    'description' => html_entity_decode($product['product_description'], ENT_QUOTES),
-                    'picture' => _PATH_PRODUCT_ . $product['product_photo'],
-                    ), null, $headers);
-            }
+            $props = array('id' => $val->validated('id'));
+            Model_Service_Util::feed_fb($this->user_fb['access_token'], $props);
             $this->data['success'] = 'Feed FB success';
         } else {
             $this->data['error'] = $val->error_message('id');
