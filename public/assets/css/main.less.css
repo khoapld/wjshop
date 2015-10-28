@@ -179,6 +179,9 @@ a#scrollUp i {
   padding-bottom: 30px;
   padding-top: 30px;
 }
+.navbar-collapse {
+  max-height: none;
+}
 .mainmenu ul li {
   padding-right: 15px;
   padding-left: 15px;

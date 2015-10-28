@@ -223,6 +223,10 @@ a#scrollUp i{
     padding-top: 30px;
 }
 
+.navbar-collapse {
+    max-height: none;
+}
+
 .navbar-collapse.collapse{
     //padding-left: 0;
 }
