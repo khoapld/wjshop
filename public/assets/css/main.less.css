@@ -59,9 +59,10 @@ a#scrollUp i {
   background: none repeat scroll 0 0 #F0F0E9;
 }
 .contactinfo ul li:first-child {
-  margin-left: -15px;
+  /*margin-left: -15px;*/
 }
 .contactinfo ul li a {
+  padding-right: 5px !important;
   font-size: 12px;
   color: #696763;
   font-family: 'Roboto', sans-serif;

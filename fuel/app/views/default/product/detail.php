@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <?php if (!empty($products)): ?>
+                <?php if (!empty($products) && count($products) > 1): ?>
                     <div class="features_items">
                         <h2 class="title text-center">Category Product</h2>
                         <?php foreach ($products as $p): ?>
