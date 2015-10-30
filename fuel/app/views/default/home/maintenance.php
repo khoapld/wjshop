@@ -23,7 +23,7 @@
             </div>
             <div class="content-404">
                 <img src="/assets/img/404.png" class="img-responsive" alt="" />
-                <h1><b>OPPS!</b> Maintenence</h1>
+                <h1><b>OPPS!</b> Maintenance</h1>
                 <h2><a href="/">Bring me back later</a></h2>
             </div>
         </div>
