@@ -32,3 +32,27 @@ echo Asset::css(array(
     <script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
     <script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
 <![endif]-->
+
+<!--Start of Zopim Live Chat Script-->
+<script type="text/javascript">
+    window.$zopim || (function (d, s) {
+        var z = $zopim = function (c) {
+            z._.push(c)
+        }, $ = z.s =
+                d.createElement(s), e = d.getElementsByTagName(s)[0];
+        z.set = function (o) {
+            z.set.
+                    _.push(o)
+        };
+        z._ = [];
+        z.set._ = [];
+        $.async = !0;
+        $.setAttribute("charset", "utf-8");
+        $.src = "//v2.zopim.com/?3QgvjM4t4B5Dt5a4Qh20nsJbs1JglE7g";
+        z.t = +new Date;
+        $.
+                type = "text/javascript";
+        e.parentNode.insertBefore($, e)
+    })(document, "script");
+</script>
+<!--End of Zopim Live Chat Script-->
