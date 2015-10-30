@@ -13,7 +13,7 @@ return array(
 	 *
 	 * Set this to null to have it automatically detected.
 	 */
-	'base_url'  => 'http://wj-shop.com/',
+	'base_url'  => 'http://wjshops.com/',
 
 	/**
 	 * url_suffix - Any suffix that needs to be added to

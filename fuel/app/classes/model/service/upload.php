@@ -97,7 +97,7 @@ class Model_Service_Upload
             $rotate_number = self::exifRotation($file);
             $image_config = Config::get('app.image');
             if (!is_dir($path . $type)) {
-                mkdir($path . $type, 0700);
+                mkdir($path . $type, 0755);
             }
             switch ($type) {
                 case 'icon':
