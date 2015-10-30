@@ -65,7 +65,7 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
                 'message' => $val->validated('message'),
                 'link' => $val->validated('link')
             );
-            Model_Service_Util::feed_fb($this->user_fb['access_token'], $props);
+            Model_Service_Facebook::feed_fb($this->user_fb['access_token'], $props);
             $this->data['success'] = 'Feed FB success';
         } else {
             $this->data['errors'] = $val->error_message();
@@ -81,7 +81,7 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
         $val->add_field('id', 'Product', 'required|valid_product');
         if ($val->run()) {
             $props = array('id' => $val->validated('id'));
-            Model_Service_Util::feed_fb($this->user_fb['access_token'], $props);
+            Model_Service_Facebook::feed_fb($this->user_fb['access_token'], $props);
             $this->data['success'] = 'Feed FB success';
         } else {
             $this->data['error'] = $val->error_message('id');
