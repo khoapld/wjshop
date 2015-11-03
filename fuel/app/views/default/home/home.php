@@ -49,7 +49,7 @@
                     <div class="features_items">
                         <h2 class="title text-center">New Product</h2>
                         <?php foreach ($new_product as $product): ?>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <a href="/product/<?php echo $product['code']; ?>">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">

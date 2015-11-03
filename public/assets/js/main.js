@@ -18,4 +18,29 @@ $(document).ready(function () {
             zIndex: 2147483647 // Z-Index for the overlay
         });
     });
+
+    $('#contact-form').on('submit', function (event) {
+        event.preventDefault();
+        var $form = $(this),
+                formData = $form.serialize(),
+                url = $form.attr('action');
+
+        $form.find('.error').empty();
+        $form.find('button').attr('disabled', 'disabled');
+        $form.find('.success').empty();
+
+        var posting = $.post(url, formData);
+        posting.done(function (data) {
+            if (typeof data.errors !== 'undefined') {
+                $.each(data.errors, function (index, value) {
+                    $form.find('.error.' + index).html(value);
+                });
+            } else {
+                $form.find('input').val('');
+                $form.find('textarea').val('');
+                $form.find('.success').html(data.success);
+            }
+            $form.find('button').removeAttr('disabled').removeClass('loading');
+        });
+    });
 });

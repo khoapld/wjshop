@@ -20,7 +20,7 @@
     <body>
         <div class="container-fluid">
             <div id="page-login" class="row">
-                <form id="signin-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/signin', [], []); ?>">
+                <form id="signin-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/signin', array(), array()); ?>">
                     <div class="col-xs-12 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
                         <div class="text-right">
                             <a href="/" class="txt-default">WJ Shop</a>

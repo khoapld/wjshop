@@ -24,7 +24,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content" style="display: none;">
-                <form id="create-category-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/category/create', [], []); ?>" class="form-horizontal">
+                <form id="create-category-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/category/create', array(), array()); ?>" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Parent category</label>
                         <div class="col-sm-6">

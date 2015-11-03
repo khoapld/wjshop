@@ -32,7 +32,7 @@
                     <?php endif; ?>
                 </div>
                 <?php if (!empty($user_fb)): ?>
-                    <form id="feed-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/feed', [], []); ?>" class="form-horizontal">
+                    <form id="feed-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/feed', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="form-styles">Message</label>
                             <div class="col-sm-8">
@@ -70,7 +70,7 @@
                     <div class="no-move"></div>
                 </div>
                 <div class="box-content">
-                    <form id="create-group-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/add_group', [], []); ?>" class="form-horizontal">
+                    <form id="create-group-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/add_group', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Name or ID</label>
                             <div class="col-sm-8">

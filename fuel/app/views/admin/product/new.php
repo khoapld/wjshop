@@ -24,7 +24,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="create-product-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/product/create', [], []); ?>" class="form-horizontal">
+                <form id="create-product-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/product/create', array(), array()); ?>" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Category</label>
                         <div class="col-sm-6">

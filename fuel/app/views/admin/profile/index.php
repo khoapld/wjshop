@@ -25,7 +25,7 @@
             <div class="box-content">
                 <fieldset>
                     <legend>Account Information</legend>
-                    <form id="update-username-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_username', [], []); ?>" class="form-horizontal">
+                    <form id="update-username-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_username', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Username</label>
                             <div class="col-sm-6">
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </form>
-                    <form id="update-email-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_email', [], []); ?>" class="form-horizontal">
+                    <form id="update-email-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_email', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-6">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </form>
-                    <form id="update-group-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_group', [], []); ?>" class="form-horizontal">
+                    <form id="update-group-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_group', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Group</label>
                             <div class="col-sm-6">
@@ -62,7 +62,7 @@
                 </fieldset>
                 <fieldset>
                     <legend></legend>
-                    <form id="update-user-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_info', [], []); ?>" class="form-horizontal">
+                    <form id="update-user-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_info', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Full name</label>
                             <div class="col-sm-6">
@@ -119,7 +119,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="update-password-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_password', [], []); ?>" class="form-horizontal">
+                <form id="update-password-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_password', array(), array()); ?>" class="form-horizontal">
                     <fieldset>
                         <legend>Change password</legend>
                         <div class="form-group">
@@ -158,7 +158,7 @@
             <div class="box-content">
                 <legend>Change icon photo</legend>
                 <form id="update-icon-form" class="form-horizontal" method="post"
-                      action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_icon', [], []); ?>">
+                      action="<?php echo \Fuel\Core\Uri::create('/admin/profile/update_icon', array(), array()); ?>">
                     <div class="form-group">
                         <div id="update-icon-uploader"></div>
                     </div>

@@ -24,7 +24,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="update-config-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/dashboard/update_config', [], []); ?>" class="form-horizontal">
+                <form id="update-config-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/dashboard/update_config', array(), array()); ?>" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Maintenance</label>
                         <div class="col-sm-4">

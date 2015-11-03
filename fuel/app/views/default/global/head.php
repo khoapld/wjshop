@@ -19,7 +19,7 @@
 <?php
 echo Asset::css(array(
     '../../plugins/bootstrap/css/bootstrap.min.css',
-    '../../plugins/bootstrap/css/font-awesome.min.css',
+    '//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css',
     'main.min.css'
 ));
 ?>

@@ -9,7 +9,7 @@
 echo Asset::css(array(
     '../../plugins/bootstrap/css/bootstrap.min.css',
     '../../plugins/jquery-ui/jquery-ui.min.css',
-    '../../plugins/bootstrap/css/font-awesome.min.css',
+    '//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css',
     '//fonts.googleapis.com/css?family=Righteous',
     '../../plugins/select2/select2.css',
     'admin.min.css'

@@ -25,7 +25,7 @@
             </div>
             <div class="box-content">
                 <form id="update-product-form" method="post"
-                      action="<?php echo \Fuel\Core\Uri::create('/admin/product/update', [], []); ?>"
+                      action="<?php echo \Fuel\Core\Uri::create('/admin/product/update', array(), array()); ?>"
                       class="form-horizontal">
                     <div class="form-group text-center">
                         <div class="col-sm-12">
@@ -121,7 +121,7 @@
             </div>
             <div class="box-content">
                 <form id="update-product-photo-form" method="post"
-                      action="<?php echo \Fuel\Core\Uri::create('/admin/product/main_photo', [], []); ?>"
+                      action="<?php echo \Fuel\Core\Uri::create('/admin/product/main_photo', array(), array()); ?>"
                       class="form-horizontal">
                     <div class="form-group">
                         <div id="product-photo-uploader"></div>
@@ -150,7 +150,7 @@
             </div>
             <div class="box-content">
                 <form id="sub-product-photo-form" method="post"
-                      action="<?php echo \Fuel\Core\Uri::create('/admin/product/sub_photo', [], []); ?>"
+                      action="<?php echo \Fuel\Core\Uri::create('/admin/product/sub_photo', array(), array()); ?>"
                       class="form-horizontal">
                     <div class="form-group">
                         <div id="sub-product-photo-uploader"></div>

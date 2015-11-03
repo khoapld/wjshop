@@ -35,7 +35,7 @@ class Tool
                 } catch (\Exception $e) {
                     Log::error($e->getMessage());
                 }
-                sleep(3);
+                sleep(5);
             }
         } elseif (!empty($data->message) && !empty($data->link)) {
             $groups = \Model_Base_GroupFb::get_all();
@@ -50,9 +50,15 @@ class Tool
                 } catch (\Exception $e) {
                     Log::error($e->getMessage());
                 }
-                sleep(3);
+                sleep(5);
             }
         }
+    }
+
+    public static function send_mail($option = null)
+    {
+        $option = json_decode(base64_decode($option));
+        \Model_Service_Mail::send($option);
     }
 
 }
