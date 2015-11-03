@@ -18,7 +18,7 @@
                                                 <div class="single-products">
                                                     <div class="productinfo">
                                                         <img src="<?php echo $product['product_photo_display']; ?>" alt="" />
-                                                        <h4><?php echo $product['product_name']; ?></h4>
+                                                        <h4><?php echo Fuel\Core\Str::truncate($product['product_name'], 60); ?></h4>
                                                     </div>
                                                 </div>
                                             </div>
