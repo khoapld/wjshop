@@ -64,6 +64,9 @@ a#scrollUp i{
 /*************************
 *******Header CSS******
 **************************/
+#header {
+    margin-bottom: 30px;
+}
 
 .header_top {
     background: none repeat scroll 0 0 #F0F0E9;
@@ -220,8 +223,9 @@ a#scrollUp i{
 
 
 .header-bottom {
-    padding-bottom: 30px;
-    padding-top: 30px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    background-color: #F0F0E9;
 }
 
 .navbar-collapse {
@@ -573,7 +577,7 @@ ul.sub-menu {
 
 
 #slider {
-    padding-bottom: 45px;
+    padding-bottom: 30px;
 }
 
 .carousel-indicators li {
@@ -833,7 +837,7 @@ h2.title:before{
     padding-right: 0;
 }
 
-.features_items{
+.features_items {
     overflow:hidden;
 }
 
@@ -849,7 +853,7 @@ h2.title {
     position: relative;
 }
 
-.product-image-wrapper{
+.product-image-wrapper {
     /*border:1px solid #F7F7F5;*/
     overflow: hidden;
     margin-bottom:30px;
@@ -865,7 +869,7 @@ h2.title {
     right: 0;
 }
 
-.productinfo h2{
+.productinfo h2 {
     color: #FE980F;
     font-family: 'Roboto', sans-serif;
     font-size: 24px;
@@ -2925,7 +2929,7 @@ h2.title {
     }
 
     .features_items{
-        margin-top: 30px;
+        /*margin-top: 30px;*/
     }
 
     .category-tab .nav-tabs li{

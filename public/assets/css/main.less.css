@@ -55,6 +55,9 @@ a#scrollUp i {
 /*************************
 *******Header CSS******
 **************************/
+#header {
+  margin-bottom: 30px;
+}
 .header_top {
   background: none repeat scroll 0 0 #F0F0E9;
 }
@@ -177,8 +180,9 @@ a#scrollUp i {
   background: #fff;
 }
 .header-bottom {
-  padding-bottom: 30px;
-  padding-top: 30px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  background-color: #F0F0E9;
 }
 .navbar-collapse {
   max-height: none;
@@ -465,7 +469,7 @@ ul.sub-menu {
 ******* Home ******
 **************************/
 #slider {
-  padding-bottom: 45px;
+  padding-bottom: 30px;
 }
 .carousel-indicators li {
   background: #C4C4BE;
@@ -2328,7 +2332,7 @@ textarea {
     padding-left: 0;
   }
   .features_items {
-    margin-top: 30px;
+    /*margin-top: 30px;*/
   }
   .category-tab .nav-tabs li {
     float: none;
