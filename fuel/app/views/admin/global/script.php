@@ -313,5 +313,15 @@ echo Asset::js(array(
             }
             return false;
         });
+
+        // Delete FB user
+        $(document).on('click', 'button#delete-fb-user', function () {
+            if (confirm("Are you want to delete this user?")) {
+                $.post('/admin/facebook/delete_user_fb', {data: true}).done(function () {
+                    location = '';
+                });
+            }
+            return false;
+        });
     </script>
 <?php endif; ?>

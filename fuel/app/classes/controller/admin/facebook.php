@@ -164,6 +164,14 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
         return $this->response($this->data);
     }
 
+    public function post_delete_user_fb()
+    {
+        if (Model_Base_User::delete_user_provider($this->user_id)) {
+            $this->data['success'] = true;
+        }
+        return $this->response($this->data);
+    }
+
     private function check_group_id($group_id)
     {
         if (!empty($this->user_fb['access_token'])) {

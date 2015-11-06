@@ -1,5 +1,6 @@
 <?php
 
+use Fuel\Core\DB;
 use Fuel\Core\Config;
 use Fuel\Core\Session;
 use Fuel\Core\Log;
@@ -159,6 +160,18 @@ class Model_Base_User
         }
 
         return false;
+    }
+
+    public static function delete_user_provider($parent_id)
+    {
+        try {
+            DB::delete('user_providers')->where('parent_id', '=', $parent_id)->execute();
+        } catch (Exception $e) {
+            Log::write('ERROR', $e->getMessage());
+            return false;
+        }
+
+        return true;
     }
 
 }

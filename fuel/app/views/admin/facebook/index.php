@@ -28,10 +28,11 @@
                     <?php if ($is_login_fb == true): ?>
                         <a class="btn btn-lg btn-primary" href="/admin/facebook/login/facebook">Login</a>
                     <?php else: ?>
+                        <button class="btn btn-lg btn-danger" href="#" target="_blank" id="delete-fb-user">Delete</button>
                         <a class="btn btn-lg btn-primary" href="https://facebook.com/<?php echo $user_fb['uid']; ?>" target="_blank">Go to Facebook</a>
                     <?php endif; ?>
                 </div>
-                <?php if (!empty($user_fb)): ?>
+                <?php if ($is_login_fb != true): ?>
                     <form id="feed-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/feed', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="form-styles">Message</label>
