@@ -48,7 +48,7 @@ class Controller_Product extends Controller_Base_Core
 
         $category_ids = Model_Base_ProductCategory::get_by('category_id', 'product_id', $this->data['product']['id']);
         if (!empty($category_ids)) {
-            $this->data['products'] = Model_Base_Product::get_by_category_ids($category_ids, 0, 4);
+            $this->data['products'] = Model_Base_Product::get_by_category_ids($category_ids, 0, 5);
         }
         View::set_global('product', $this->data['product']);
 

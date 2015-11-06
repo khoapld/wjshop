@@ -17,7 +17,7 @@
                                     <a href="/product/<?php echo $product['code']; ?>">
                                         <div class="col-sm-7">
                                             <h2><?php echo $product['product_name']; ?></h2>
-                                            <p><?php echo nl2br(\Fuel\Core\Str::truncate($product['product_description'], 150)); ?></p>
+                                            <p><?php echo nl2br($product['product_description']); ?></p>
                                         </div>
                                         <div class="col-sm-4">
                                             <img src="<?php echo $product['product_photo_display']; ?>" class="girl img-responsive" alt="<?php echo $j++; ?>" />
