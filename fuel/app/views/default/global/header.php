@@ -50,9 +50,9 @@
                     </div>
                     <div class="mainmenu pull-right">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="/" class="<?php echo $action === 'home' ? 'active' : ''; ?>">Home</a></li>
+                            <li><a href="/" class="<?php echo $action === 'home' ? 'active' : ''; ?>">WJSHOPS</a></li>
                             <?php if (!empty($category)): ?>
-                                <li class="dropdown"><a href="#" class="<?php echo $controller === 'Controller_Category' ? 'active' : ''; ?>">Category<i class="fa fa-angle-down"></i></a>
+                                <li class="dropdown"><a href="#" class="<?php echo $controller === 'Controller_Category' ? 'active' : ''; ?>">Danh Mục<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <?php foreach ($category as $v): ?>
                                             <li>
@@ -64,7 +64,7 @@
                                     </ul>
                                 </li>
                             <?php endif; ?>
-                            <li><a href="/contact" class="<?php echo $action === 'contact' ? 'active' : ''; ?>">Contact</a></li>
+                            <li><a href="/contact" class="<?php echo $action === 'contact' ? 'active' : ''; ?>">Liên Lạc</a></li>
                         </ul>
                     </div>
                 </div>

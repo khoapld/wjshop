@@ -601,6 +601,8 @@ ul.sub-menu {
 
 .girl {
     margin-left: 0;
+    float: right;
+    height: 320px;
 }
 
 .item h1 {

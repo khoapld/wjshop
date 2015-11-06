@@ -15,11 +15,11 @@
                             <?php foreach ($highlight_product as $product): ?>
                                 <div class="item <?php echo $j === 0 ? 'active' : ''; ?>">
                                     <a href="/product/<?php echo $product['code']; ?>">
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-8">
                                             <h2><?php echo $product['product_name']; ?></h2>
                                             <p><?php echo nl2br($product['product_description']); ?></p>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <img src="<?php echo $product['product_photo_display']; ?>" class="girl img-responsive" alt="<?php echo $j++; ?>" />
                                         </div>
                                     </a>
@@ -47,7 +47,7 @@
                 <div class="col-sm-12">
 
                     <div class="features_items">
-                        <h2 class="title text-center">New Product</h2>
+                        <h2 class="title text-center">Sản Phẩm Mới</h2>
                         <?php foreach ($new_product as $product): ?>
                             <div class="col-sm-3">
                                 <a href="/product/<?php echo $product['code']; ?>">

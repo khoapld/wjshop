@@ -79,7 +79,7 @@ class Controller_Home extends Controller_Base_Core
                 'view' => 'contact'
             );
             Model_Service_Mail::send_mail($props);
-            $this->data['success'] = 'Contact success';
+            $this->data['success'] = 'Gửi tin nhắn thành công';
         } else {
             $this->data['errors'] = $val->error_message();
         }

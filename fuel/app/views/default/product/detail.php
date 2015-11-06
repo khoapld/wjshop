@@ -28,7 +28,7 @@
 
                 <?php if (!empty($products) && count($products) > 1): ?>
                     <div class="features_items">
-                        <h2 class="title text-center">Category Product</h2>
+                        <h2 class="title text-center">Sản Phẩm Cùng Loại</h2>
                         <?php $i = 1; ?>
                         <?php foreach ($products as $p): ?>
                             <?php if ($p['code'] != $product['code'] && $i < 5): ?>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="features_items"><!--features_items-->
-                    <h2 class="title text-center">Products</h2>
+                    <h2 class="title text-center">Sản Phẩm</h2>
                     <?php if (!empty($products)): ?>
                         <div class="col-sm-12 text-right">
                             <ul class="pagination"></ul>
@@ -32,7 +32,7 @@
                             <ul class="pagination"></ul>
                         </div>
                     <?php else: ?>
-                        <h4 class="text-center">This category has not any product.</h4>
+                        <h4 class="text-center">Danh mục này chưa có sản phẩm. Vui lòng chọn danh mục khác.</h4>
                     <?php endif; ?>
                 </div>
             </div>
