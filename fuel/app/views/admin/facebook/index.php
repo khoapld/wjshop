@@ -14,7 +14,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Facebook</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.facebook'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -26,28 +26,28 @@
             <div class="box-content">
                 <div class="form-group text-right">
                     <?php if ($is_login_fb == true): ?>
-                        <a class="btn btn-lg btn-primary" href="/admin/facebook/login/facebook">Login</a>
+                        <a class="btn btn-lg btn-primary" href="/admin/facebook/login/facebook"><?php echo Fuel\Core\Lang::get('button.sign_in'); ?></a>
                     <?php else: ?>
-                        <button class="btn btn-lg btn-danger" href="#" target="_blank" id="delete-fb-user">Delete</button>
-                        <a class="btn btn-lg btn-primary" href="https://facebook.com/<?php echo $user_fb['uid']; ?>" target="_blank">Go to Facebook</a>
+                        <button class="btn btn-lg btn-danger" href="#" target="_blank" id="delete-fb-user"><?php echo Fuel\Core\Lang::get('button.delete'); ?></button>
+                        <a class="btn btn-lg btn-primary" href="https://facebook.com/<?php echo $user_fb['uid']; ?>" target="_blank"><?php echo Fuel\Core\Lang::get('button.go_to_fb'); ?></a>
                     <?php endif; ?>
                 </div>
                 <?php if ($is_login_fb != true): ?>
                     <form id="feed-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/feed', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="form-styles">Message</label>
+                            <label class="col-sm-2 control-label" for="form-styles"><?php echo Fuel\Core\Lang::get('label.message'); ?></label>
                             <div class="col-sm-8">
                                 <textarea class="form-control" rows="6" name="message"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Link</label>
+                            <label class="col-sm-2 control-label"><?php echo Fuel\Core\Lang::get('label.link'); ?></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="link" />
                             </div>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Feed to FB</button>
+                            <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.feed_fb'); ?></button>
                         </div>
                     </form>
                 <?php endif; ?>
@@ -61,7 +61,7 @@
                 <div class="box-header">
                     <div class="box-name">
                         <i class="fa fa-arrows"></i>
-                        <span>Group</span>
+                        <span><?php echo Fuel\Core\Lang::get('title.group'); ?></span>
                     </div>
                     <div class="box-icons">
                         <a class="collapse-link">
@@ -73,13 +73,13 @@
                 <div class="box-content">
                     <form id="create-group-fb-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/facebook/add_group', array(), array()); ?>" class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Name or ID</label>
+                            <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.name_or_id'); ?></label>
                             <div class="col-sm-8">
                                 <input type="text" id="group-fb" class="form-control" name="group" />
                             </div>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.submit'); ?></button>
                         </div>
                     </form>
                     <div class="form-group" id="group-fb-container">
@@ -87,7 +87,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th class="col-sm-1 text-center">Action</th>
+                                    <th class="col-sm-1 text-center"><?php echo Fuel\Core\Lang::get('title.action'); ?></th>
                                 </tr>
                             </thead>
                             <tbody id="group-fb-list">
@@ -96,7 +96,7 @@
                                         <tr data-id="<?php echo $v['id']; ?>">
                                             <td><?php echo $v['group_name']; ?></td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-danger delete-btn">Delete</button>
+                                                <button type="button" class="btn btn-danger delete-btn"><?php echo Fuel\Core\Lang::get('button.delete'); ?></button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

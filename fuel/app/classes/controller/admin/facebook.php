@@ -50,7 +50,6 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
     {
         $this->data['is_login_fb'] = !empty($this->user_fb) && ($this->user_fb['expires'] > (time() + 172800)) ? false : true;
         $this->data['group'] = Model_Base_GroupFb::get_all();
-        $this->template->title = 'Facebook Page';
         $this->template->content = View::forge($this->layout . '/facebook/index', $this->data);
     }
 
@@ -58,15 +57,15 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('message', 'Message', 'required|max_length[10000]');
-        $val->add_field('link', 'Link', 'required|valid_url');
+        $val->add_field('message', Lang::get('label.message'), 'required|max_length[10000]');
+        $val->add_field('link', Lang::get('label.link'), 'required|valid_url');
         if ($val->run()) {
             $props = array(
                 'message' => $val->validated('message'),
                 'link' => $val->validated('link')
             );
             Model_Service_Facebook::feed_fb($this->user_fb['access_token'], $props);
-            $this->data['success'] = 'Feed FB success';
+            $this->data['success'] = Lang::get($this->controller . '.' . $this->action . '.success');
         } else {
             $this->data['errors'] = $val->error_message();
         }
@@ -78,11 +77,11 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('id', 'Product', 'required|valid_product');
+        $val->add_field('id', Lang::get('label.product'), 'required|valid_product');
         if ($val->run()) {
             $props = array('id' => $val->validated('id'));
             Model_Service_Facebook::feed_fb($this->user_fb['access_token'], $props);
-            $this->data['success'] = 'Feed FB success';
+            $this->data['success'] = Lang::get($this->controller . '.' . $this->action . '.success');
         } else {
             $this->data['error'] = $val->error_message('id');
         }
@@ -94,13 +93,13 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('group', 'Group', 'required');
+        $val->add_field('group', Lang::get('label.group'), 'required');
         if ($val->run()) {
             $group = $val->validated('group');
             $group_data = $this->check_group_id($group);
             if (!empty($group_data)) {
                 if (Model_Base_GroupFb::valid_field('group_id', $group_data->id)) {
-                    $this->data['error'] = 'This group is exist';
+                    $this->data['error'] = Lang::get($this->controller . '.' . $this->action . '.error.exist');
                 } else {
                     $group_props = array(
                         'group_id' => $group_data->id,
@@ -108,17 +107,17 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
                         'privacy' => $group_data->privacy
                     );
                     if ($id = Model_Base_GroupFb::insert($group_props)) {
-                        $this->data['success'] = 'Add group fb success';
+                        $this->data['success'] = Lang::get($this->controller . '.' . $this->action . '.success');
                         $this->data['group'] = array(
                             'id' => $id,
                             'name' => $group_data->name
                         );
                     } else {
-                        $this->data['error'] = 'This group is exist';
+                        $this->data['error'] = Lang::get($this->controller . '.' . $this->action . '.error.exist');
                     }
                 }
             } else {
-                $this->data['error'] = 'Add group fb error';
+                $this->data['error'] = Lang::get($this->controller . '.' . $this->action . '.error.not_found');
             }
         } else {
             $this->data['errors'] = $val->error_message();
@@ -131,7 +130,7 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('group', 'Group', 'required');
+        $val->add_field('group', Lang::get('label.group'), 'required');
         if ($val->run()) {
             $group = $val->validated('group');
             $group_data = $this->check_group_name($group);
@@ -151,7 +150,7 @@ class Controller_Admin_Facebook extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('group', 'Group FB', 'required|valid_group_fb');
+        $val->add_field('group', Lang::get('label.group'), 'required|valid_group_fb');
         if ($val->run()) {
             $id = $val->validated('group');
             if (Model_Base_GroupFb::delete($id)) {

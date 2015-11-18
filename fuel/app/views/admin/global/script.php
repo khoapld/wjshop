@@ -1,3 +1,7 @@
+<script>
+    var locale = '<?php echo \Fuel\Core\Config::get('locale'); ?>';
+</script>
+
 <?php
 echo Asset::js(array(
     '../../plugins/jquery/jquery-2.1.0.min.js',
@@ -248,7 +252,7 @@ echo Asset::js(array(
 
         // Delete sub photo
         $(document).on('click', 'button.delete-btn', function () {
-            if (confirm("Are you want to delete?")) {
+            if (confirm("<?php echo Fuel\Core\Lang::get('text.confirm_delete_sub_photo'); ?>")) {
                 var product_id = $(this).parents('tbody').attr('data-id');
                 var photo_id = $(this).parents('tr').attr('data-id');
                 $.post('/admin/product/delete_sub_photo', {product_id: product_id, photo_id: photo_id});
@@ -271,7 +275,7 @@ echo Asset::js(array(
 
         // Fedd FB
         $(document).on('click', 'button#feed-fb-btn', function () {
-            if (confirm("Are you want to feed?")) {
+            if (confirm("<?php echo Fuel\Core\Lang::get('text.confirm_feed_to_fb'); ?>")) {
                 var product_id = $(this).attr('data-id');
                 var posting = $.post('/admin/facebook/feed_product', {id: product_id});
                 posting.done(function (data) {
@@ -306,7 +310,7 @@ echo Asset::js(array(
 
         // Delete group
         $(document).on('click', 'button.delete-btn', function () {
-            if (confirm("Are you want to delete?")) {
+            if (confirm("<?php echo Fuel\Core\Lang::get('text.confirm_detele_group'); ?>")) {
                 var group_id = $(this).parents('tr').attr('data-id');
                 $.post('/admin/facebook/delete_group', {group: group_id});
                 $(this).parents('tr').remove();
@@ -316,7 +320,7 @@ echo Asset::js(array(
 
         // Delete FB user
         $(document).on('click', 'button#delete-fb-user', function () {
-            if (confirm("Are you want to delete this user?")) {
+            if (confirm("<?php echo Fuel\Core\Lang::get('text.confirm_detele_user'); ?>")) {
                 $.post('/admin/facebook/delete_user_fb', {data: true}).done(function () {
                     location = '';
                 });

@@ -1,7 +1,8 @@
 <?php
 
+use Fuel\Core\Lang;
 use Fuel\Core\View;
-use Fuel\Core\Response;
+use Fuel\Core\Validation;
 
 class Controller_Admin_Dashboard extends Controller_Base_Admin
 {
@@ -21,7 +22,6 @@ class Controller_Admin_Dashboard extends Controller_Base_Admin
     public function action_index()
     {
         $this->data['config'] = Model_Config::find('first');
-        $this->template->title = 'Dashboard Page';
         $this->template->content = View::forge($this->layout . '/dashboard/index', $this->data);
     }
 
@@ -29,7 +29,7 @@ class Controller_Admin_Dashboard extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('maintenance', 'Maintenance', 'required');
+        $val->add_field('maintenance', Lang::get('label.maintenance'), 'required');
         if ($val->run()) {
             Model_Base_Config::update(array('maintenance' => $val->validated('maintenance')));
             $this->data['success'] = true;
@@ -44,11 +44,11 @@ class Controller_Admin_Dashboard extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('email', 'Email', 'required|valid_email|max_length[255]');
-        $val->add_field('telephone', 'Telephone', 'trim|valid_numeric|max_length[12]');
-        $val->add_field('address', 'Address', 'trim|max_length[255]');
-        $val->add_field('fb_url', 'FB URL', 'required|valid_url');
-        $val->add_field('shop_name', 'Shop Name', 'required|max_length[255]');
+        $val->add_field('email', Lang::get('label.email'), 'required|valid_email|max_length[255]');
+        $val->add_field('telephone', Lang::get('label.telephone'), 'trim|valid_numeric|max_length[12]');
+        $val->add_field('address', Lang::get('label.address'), 'trim|max_length[255]');
+        $val->add_field('fb_url', Lang::get('label.fb_url'), 'required|valid_url');
+        $val->add_field('shop_name', Lang::get('label.shop_name'), 'required|max_length[255]');
         if ($val->run()) {
             $props = array(
                 'email' => $val->validated('email'),
@@ -58,7 +58,7 @@ class Controller_Admin_Dashboard extends Controller_Base_Admin
                 'shop_name' => $val->validated('shop_name'),
             );
             Model_Base_Config::update($props);
-            $this->data['success'] = 'Update config success';
+            $this->data['success'] = Lang::get($this->controller . '.' . $this->action . '.success');
         } else {
             $this->data['errors'] = $val->error_message();
         }

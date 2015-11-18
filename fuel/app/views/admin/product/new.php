@@ -14,7 +14,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Add Product</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.add_product'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -26,7 +26,7 @@
             <div class="box-content">
                 <form id="create-product-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/product/create', array(), array()); ?>" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Category</label>
+                        <label class="col-sm-2 control-label"><?php echo Fuel\Core\Lang::get('label.category'); ?></label>
                         <div class="col-sm-6">
                             <select multiple="multiple" id="category_id" class="populate placeholder" name="category_ids">
                                 <?php foreach ($category as $k => $v): ?>
@@ -38,33 +38,33 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Product name</label>
+                        <label class="col-sm-2 control-label"><?php echo Fuel\Core\Lang::get('label.product_name'); ?></label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" name="product_name" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="form-styles">Description</label>
+                        <label class="col-sm-2 control-label" for="form-styles"><?php echo Fuel\Core\Lang::get('label.description'); ?></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" rows="10" name="product_description"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="form-styles">Information</label>
+                        <label class="col-sm-2 control-label" for="form-styles"><?php echo Fuel\Core\Lang::get('label.information'); ?></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" rows="10" id="product_info" name="product_info"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Main photo</label>
+                        <label class="col-sm-2 control-label"><?php echo Fuel\Core\Lang::get('label.main_photo'); ?></label>
                         <div class="col-sm-6">
                             <div id="product-photo-uploader"></div>
                         </div>
                     </div>
                     <div class="form-group text-center panel-heading">
                         <input type="hidden" name="id" />
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" id="reset" class="btn btn-default">Reset</button>
+                        <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.submit'); ?></button>
+                        <button type="button" id="reset" class="btn btn-default"><?php echo Fuel\Core\Lang::get('button.reset'); ?></button>
                     </div>
                 </form>
             </div>
@@ -78,7 +78,7 @@
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
     </div>
     <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
-    <div><i class="fa fa-upload icon-white"></i> Select file</div>
+    <div><i class="fa fa-upload icon-white"></i> <?php echo Fuel\Core\Lang::get('text.select_file'); ?></div>
     </div>
     <div class="col-sm-12 main-icon">
     <br>
@@ -87,7 +87,7 @@
     <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
     <li>
     <div class="qq-upload-settings">
-    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#"><?php echo Fuel\Core\Lang::get('text.cancel'); ?></a>
     </div>
     <div class="qq-progress-bar-container-selector">
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>

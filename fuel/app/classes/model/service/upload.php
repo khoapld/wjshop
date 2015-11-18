@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Config;
+use Fuel\Core\Lang;
 use Fuel\Core\Upload;
 use Fuel\Core\File;
 use Fuel\Core\Image;
@@ -16,7 +17,7 @@ class Model_Service_Upload
         try {
             Upload::process();
         } catch (Exception $e) {
-            $data['error'] = 'No file to upload';
+            $data['error'] = Lang::get('notice.upload.no_file');
             return $data;
         }
         if (Upload::is_valid()) {
@@ -40,7 +41,7 @@ class Model_Service_Upload
                         }
                         $data['photo_name'] = _PATH_ICON_ . $photo_name[0];
                     } else {
-                        $data['error'] = 'Save icon to database error';
+                        $data['error'] = Lang::get('notice.upload.save_icon_error');
                     }
                     break;
                 case 'category':
@@ -51,7 +52,7 @@ class Model_Service_Upload
                         }
                         $data['photo_name'] = _PATH_CATEGORY_ . $photo_name[0];
                     } else {
-                        $data['error'] = 'Save category photo to database error';
+                        $data['error'] = Lang::get('notice.upload.save_category_error');
                     }
                     break;
                 case 'product':
@@ -62,7 +63,7 @@ class Model_Service_Upload
                         }
                         $data['photo_name'] = _PATH_PRODUCT_ . $photo_name[0];
                     } else {
-                        $data['error'] = 'Save product photo to database error';
+                        $data['error'] = Lang::get('notice.upload.save_product_error');
                     }
                     break;
                 case 'photo':
@@ -75,16 +76,16 @@ class Model_Service_Upload
                             $data['photo_id'] = $photo_id;
                             $data['photo_name'] = _PATH_PHOTO_ . $photo_name[0];
                         } else {
-                            $data['error'] = 'Save sub product photo to database error';
+                            $data['error'] = Lang::get('notice.upload.save_photo_error');
                         }
                     }
                     break;
                 default:
-                    $data['error'] = 'No type';
+                    $data['error'] = Lang::get('system_error');
                     break;
             }
         } else {
-            $data['error'] = 'System error';
+            $data['error'] = Lang::get('system_error');
         }
 
         return $data;

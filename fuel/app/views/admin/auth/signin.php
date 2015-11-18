@@ -23,23 +23,23 @@
                 <form id="signin-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/signin', array(), array()); ?>">
                     <div class="col-xs-12 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
                         <div class="text-right">
-                            <a href="/" class="txt-default">WJ Shop</a>
+                            <a href="/" class="txt-default"><?php echo Fuel\Core\Lang::get('menu.home_page'); ?></a>
                         </div>
                         <div class="box">
                             <div class="box-content">
                                 <div class="text-center">
-                                    <h3 class="page-header">WJ SHOP Signin Page</h3>
+                                    <h3 class="page-header"><?php echo Fuel\Core\Lang::get('title.sign_in'); ?></h3>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Email</label><span class="red error email"></span>
+                                    <label class="control-label"><?php echo Fuel\Core\Lang::get('label.email'); ?></label><span class="red error email"></span>
                                     <input type="text" class="form-control" name="email" />
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Password</label><span class="red error password"></span>
+                                    <label class="control-label"><?php echo Fuel\Core\Lang::get('label.password'); ?></label><span class="red error password"></span>
                                     <input type="password" class="form-control" name="password" />
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                    <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.sign_in'); ?></button>
                                 </div>
                                 <div class="text-center">
                                     <span class="red error signin"></span>

@@ -14,7 +14,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Add Category</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.add_category'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -26,10 +26,10 @@
             <div class="box-content" style="display: none;">
                 <form id="create-category-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/category/create', array(), array()); ?>" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Parent category</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.parent_category'); ?></label>
                         <div class="col-sm-6">
                             <select class="populate placeholder" name="parent_category_id">
-                                <option value="" >--- Select category ---</option>
+                                <option value="" >--- <?php echo Fuel\Core\Lang::get('text.select_category'); ?> ---</option>
                                 <?php foreach ($category as $k => $v): ?>
                                     <option value="<?php echo $v['id']; ?>" ><?php echo $v['category_name_display']; ?></option>
                                 <?php endforeach; ?>
@@ -37,21 +37,21 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Category name</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.category_name'); ?></label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" name="category_name" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Category photo</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.category_photo'); ?></label>
                         <div class="col-sm-6">
                             <div id="category-uploader"></div>
                         </div>
                     </div>
                     <div class="form-group text-center">
                         <input type="hidden" name="id" />
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" id="reset" class="btn btn-default">Reset</button>
+                        <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.submit'); ?></button>
+                        <button type="button" id="reset" class="btn btn-default"><?php echo Fuel\Core\Lang::get('button.reset'); ?></button>
 
                     </div>
                 </form>
@@ -63,7 +63,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Category List</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.category_list'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -76,9 +76,9 @@
                 <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
                     <thead>
                         <tr>
-                            <th class="text-center">Category</th>
-                            <th class="col-sm-1 text-center">Status</th>
-                            <th class="col-sm-1 text-center">Action</th>
+                            <th class="text-center"><?php echo Fuel\Core\Lang::get('title.category'); ?></th>
+                            <th class="col-sm-1 text-center"><?php echo Fuel\Core\Lang::get('title.status'); ?></th>
+                            <th class="col-sm-1 text-center"><?php echo Fuel\Core\Lang::get('title.action'); ?></th>
                         </tr>
                     </thead>
                     <tbody class="sortable" id="category-list">
@@ -103,7 +103,7 @@
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-danger edit">Edit</button>
+                                    <button type="button" class="btn btn-danger edit"><?php echo Fuel\Core\Lang::get('button.edit'); ?></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -120,7 +120,7 @@
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
     </div>
     <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
-    <div><i class="fa fa-upload icon-white"></i> Select file</div>
+    <div><i class="fa fa-upload icon-white"></i> <?php echo Fuel\Core\Lang::get('text.select_file'); ?></div>
     </div>
     <div class="col-sm-12 main-icon">
     <br>
@@ -129,7 +129,7 @@
     <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
     <li>
     <div class="qq-upload-settings">
-    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#"><?php echo Fuel\Core\Lang::get('text.cancel'); ?></a>
     </div>
     <div class="qq-progress-bar-container-selector">
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>

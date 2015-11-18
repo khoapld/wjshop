@@ -2,6 +2,7 @@
 
 use Fuel\Core\Controller_Hybrid;
 use Fuel\Core\Config;
+use Fuel\Core\Lang;
 use Fuel\Core\Request;
 use Fuel\Core\Response;
 use Fuel\Core\View;
@@ -25,8 +26,10 @@ class Controller_Base_Admin extends Controller_Hybrid
         $this->action = Request::active()->action;
         static::$method = $this->controller . '/' . $this->action;
         $this->data['success'] = false;
+        Lang::load('app');
         $this->render_template();
         parent::before();
+        $this->set_title();
         $this->set_path();
         $this->init();
     }
@@ -57,10 +60,17 @@ class Controller_Base_Admin extends Controller_Hybrid
         }
     }
 
+    public function set_title()
+    {
+        if (is_object($this->template)) {
+            $this->template->title = Lang::get($this->controller . '.' . $this->action . '.title');
+        }
+    }
+
     public function init()
     {
-        View::set_global('controller', Request::active()->controller);
-        View::set_global('action', Request::active()->action);
+        View::set_global('controller', $this->controller);
+        View::set_global('action', $this->action);
         if (Model_Base_User::is_login()) {
             View::set_global('head', View::forge($this->layout . '/global/head'));
             View::set_global('header', View::forge($this->layout . '/global/header'));

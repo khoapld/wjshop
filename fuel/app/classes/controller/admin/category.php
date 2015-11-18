@@ -1,6 +1,6 @@
 <?php
 
-use Fuel\Core\Log;
+use Fuel\Core\Lang;
 use Fuel\Core\View;
 use Fuel\Core\Validation;
 use Fuel\Core\Input;
@@ -24,7 +24,6 @@ class Controller_Admin_Category extends Controller_Base_Admin
     public function action_index()
     {
         $this->data['category'] = Model_Base_Category::get_all();
-        $this->template->title = 'Category Page';
         $this->template->content = View::forge($this->layout . '/category/index', $this->data);
     }
 
@@ -32,9 +31,9 @@ class Controller_Admin_Category extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('category_name', 'Category name', 'required|max_length[255]');
-        $val->add_field('id', 'Category', 'trim|valid_numeric|valid_category');
-        $val->add_field('parent_category_id', 'Parent category', 'trim|valid_numeric|valid_category');
+        $val->add_field('category_name', Lang::get('label.category_name'), 'required|max_length[255]');
+        $val->add_field('id', Lang::get('label.category'), 'trim|valid_numeric|valid_category');
+        $val->add_field('parent_category_id', Lang::get('label.parent_category'), 'trim|valid_numeric|valid_category');
         if ($val->run()) {
             DB::start_transaction();
             $category_id = $val->validated('id');
@@ -57,7 +56,6 @@ class Controller_Admin_Category extends Controller_Base_Admin
                 }
                 if (empty($upload['error'])) {
                     DB::commit_transaction();
-                    Log::write('NOTICE', 'Create category success', static::$method);
                     $this->data['category'] = array(
                         'type' => $type,
                         'id' => $category_id,
@@ -68,14 +66,14 @@ class Controller_Admin_Category extends Controller_Base_Admin
                         'no_image' => _PATH_NO_IMAGE_
                     );
                     $this->data['success'] = true;
-                    $this->data['msg'] = 'Create category success';
+                    $this->data['msg'] = Lang::get($this->controller . '.' . $this->action . '.success');
                 } else {
                     DB::rollback_transaction();
                     $this->data['msg'] = $upload['error'];
                 }
             } else {
                 DB::rollback_transaction();
-                $this->data['msg'] = 'Create category error';
+                $this->data['msg'] = Lang::get($this->controller . '.' . $this->action . '.error');
             }
         } else {
             $this->data['errors'] = $val->error_message();
@@ -88,7 +86,7 @@ class Controller_Admin_Category extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('category', 'Category', 'required');
+        $val->add_field('category', Lang::get('label.category'), 'required');
         if ($val->run()) {
             $rank = 1;
             foreach ($val->validated('category') as $value) {
@@ -106,8 +104,8 @@ class Controller_Admin_Category extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('status', 'Status', 'required|valid_category_status');
-        $val->add_field('category_id', 'Category', 'required|valid_category');
+        $val->add_field('status', Lang::get('label.status'), 'required|valid_category_status');
+        $val->add_field('category_id', Lang::get('label.category'), 'required|valid_category');
         if ($val->run()) {
             Model_Base_Category::update($val->validated('category_id'), array('status' => $val->validated('status')));
             $this->data['success'] = true;

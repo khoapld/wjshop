@@ -20,7 +20,7 @@
                                     </div>
                                     <i class="fa fa-angle-down pull-right"></i>
                                     <div class="user-mini pull-right">
-                                        <span class="welcome">Welcome,</span>
+                                        <span class="welcome"><?php echo Fuel\Core\Lang::get('text.welcome'); ?></span>
                                         <span><?php echo $user['username']; ?></span>
                                     </div>
                                 </a>
@@ -28,19 +28,19 @@
                                     <li>
                                         <a href="<?php echo Uri::base(); ?>admin/facebook">
                                             <i class="fa fa-facebook"></i>
-                                            <span>Facebook</span>
+                                            <span><?php echo Fuel\Core\Lang::get('menu.facebook'); ?></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="<?php echo Uri::base(); ?>admin/profile">
                                             <i class="fa fa-user"></i>
-                                            <span>Profile</span>
+                                            <span><?php echo Fuel\Core\Lang::get('menu.profile'); ?></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="<?php echo Uri::base(); ?>admin/signout">
                                             <i class="fa fa-power-off"></i>
-                                            <span>Sign out</span>
+                                            <span><?php echo Fuel\Core\Lang::get('menu.sign_out'); ?></span>
                                         </a>
                                     </li>
                                 </ul>

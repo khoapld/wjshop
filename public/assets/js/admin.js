@@ -81,7 +81,6 @@ $(function () {
 
 //
 //  Dynamically load jQuery Select2 plugin
-//  homepage: https://github.com/ivaynberg/select2  v3.4.5  license - GPL2
 //
 function LoadSelect2Script(callback) {
     if (!$.fn.select2) {
@@ -96,11 +95,12 @@ function LoadSelect2Script(callback) {
 
 //
 //  Dynamically load Bootstrap Validator Plugin
-//  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
 //
 function LoadBootstrapValidatorScript(callback) {
     if (!$.fn.bootstrapValidator) {
-        $.getScript('/plugins/bootstrapvalidator/js/bootstrapValidator.min.js', callback);
+        $.getScript('/plugins/bootstrapvalidator/js/bootstrapValidator.min.js').done(function() {
+            $.getScript('/plugins/bootstrapvalidator/js/language/' + locale + '.js', callback);
+        });
     }
     else {
         if (callback && typeof (callback) === "function") {
@@ -195,55 +195,31 @@ function FormValidator() {
         fields: {
             email: {
                 validators: {
-                    notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
-                    },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
-                    }
+                    notEmpty: {},
+                    emailAddress: {}
                 }
             },
             shop_name: {
-                message: 'The shop name is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The shop name is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        max: 255,
-                        message: 'The shop name must be less than 255 characters long'
-                    }
+                    notEmpty: {},
+                    stringLength: {max: 255}
                 }
             },
             telephone: {
                 validators: {
-                    notEmpty: {
-                        message: 'The telephone is required and can\'t be empty'
-                    },
-                    digits: {
-                        message: 'The value can contain only digits'
-                    },
-                    stringLength: {
-                        max: 12,
-                        message: 'The telephone must be less than 12 characters long'
-                    }
+                    notEmpty: {},
+                    digits: {},
+                    stringLength: {max: 12}
                 }
             },
             address: {
-                message: 'The address is not valid',
                 validators: {
-                    stringLength: {
-                        max: 255,
-                        message: 'The address must be less than 255 characters long'
-                    }
+                    stringLength: {max: 255}
                 }
             },
             fb_url: {
-                message: 'The FB URL is not valid',
                 validators: {
-                    uri: {
-                        message: 'The FB URL is not a valid URL'
-                    }
+                    uri: {}
                 }
             }
         }
@@ -259,20 +235,10 @@ function FormValidator() {
     $('#update-username-form').bootstrapValidator({
         fields: {
             username: {
-                message: 'The username is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The username is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        min: 6,
-                        max: 50,
-                        message: 'The username must be more than 6 and less than 50 characters long'
-                    },
-                    regexp: {
-                        regexp: /^[a-z0-9]+$/,
-                        message: 'The username can only consist of alphabetical, number'
-                    }
+                    notEmpty: {},
+                    stringLength: {min: 6, max: 50},
+                    regexp: {regexp: /^[a-z0-9]+$/}
                 }
             }
         }
@@ -285,12 +251,8 @@ function FormValidator() {
         fields: {
             email: {
                 validators: {
-                    notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
-                    },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
-                    }
+                    notEmpty: {},
+                    emailAddress: {}
                 }
             }
         }
@@ -302,39 +264,21 @@ function FormValidator() {
     $('#update-user-form').bootstrapValidator({
         fields: {
             username: {
-                message: 'The username is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The username is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        min: 6,
-                        max: 50,
-                        message: 'The username must be more than 6 and less than 50 characters long'
-                    },
-                    regexp: {
-                        regexp: /^[a-z0-9]+$/,
-                        message: 'The username can only consist of alphabetical, number'
-                    }
+                    notEmpty: {},
+                    stringLength: {min: 6, max: 50},
+                    regexp: {regexp: /^[a-z0-9]+$/}
                 }
             },
             email: {
                 validators: {
-                    notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
-                    },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
-                    }
+                    notEmpty: {},
+                    emailAddress: {}
                 }
             },
             full_name: {
-                message: 'The full name is not valid',
                 validators: {
-                    stringLength: {
-                        max: 255,
-                        message: 'The full name must be less than 255 characters long'
-                    }
+                    stringLength: {max: 255}
                 }
             },
             birthday: {
@@ -347,22 +291,13 @@ function FormValidator() {
             },
             telephone: {
                 validators: {
-                    digits: {
-                        message: 'The value can contain only digits'
-                    },
-                    stringLength: {
-                        max: 12,
-                        message: 'The telephone must be less than 12 characters long'
-                    }
+                    digits: {},
+                    stringLength: {max: 12}
                 }
             },
             address: {
-                message: 'The address is not valid',
                 validators: {
-                    stringLength: {
-                        max: 255,
-                        message: 'The address must be less than 255 characters long'
-                    }
+                    stringLength: {max: 255}
                 }
             }
         }
@@ -375,33 +310,16 @@ function FormValidator() {
         fields: {
             password: {
                 validators: {
-                    notEmpty: {
-                        message: 'The password is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        min: 8,
-                        max: 50,
-                        message: 'The password must be more than 8 and less than 50 characters long'
-                    },
-                    regexp: {
-                        regexp: /^[a-zA-Z0-9]+$/,
-                        message: 'The password can only consist of alphabetical, number'
-                    },
-                    identical: {
-                        field: 'confirmPassword',
-                        message: 'The password and its confirm are not the same'
-                    }
+                    notEmpty: {},
+                    stringLength: {min: 8, max: 50},
+                    regexp: {regexp: /^[a-zA-Z0-9]+$/},
+                    identical: {field: 'confirmPassword'}
                 }
             },
             confirm_password: {
                 validators: {
-                    notEmpty: {
-                        message: 'The confirm password is required and can\'t be empty'
-                    },
-                    identical: {
-                        field: 'password',
-                        message: 'The password and its confirm are not the same'
-                    }
+                    notEmpty: {},
+                    identical: {field: 'password'}
                 }
             }
         }
@@ -413,15 +331,9 @@ function FormValidator() {
     $('#create-category-form').bootstrapValidator({
         fields: {
             category_name: {
-                message: 'The category name is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The category name is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        max: 255,
-                        message: 'The product name must be less than 255 characters long'
-                    }
+                    notEmpty: {},
+                    stringLength: {max: 255}
                 }
             }
         }
@@ -437,32 +349,19 @@ function FormValidator() {
     $('#create-product-form').bootstrapValidator({
         fields: {
             category_ids: {
-                message: 'The category is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The category is required and can\'t be empty'
-                    }
+                    notEmpty: {}
                 }
             },
             product_name: {
-                message: 'The product name is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The product name is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        max: 255,
-                        message: 'The product name must be less than 255 characters long'
-                    }
+                    notEmpty: {},
+                    stringLength: {max: 255}
                 }
             },
             product_description: {
-                message: 'The product description is not valid',
                 validators: {
-                    stringLength: {
-                        max: 1024,
-                        message: 'The product description must be less than 1024 characters long'
-                    }
+                    stringLength: {max: 1024}
                 }
             }
         }
@@ -478,32 +377,19 @@ function FormValidator() {
     $('#update-product-form').bootstrapValidator({
         fields: {
             'category_ids[]': {
-                message: 'The category is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The category is required and can\'t be empty'
-                    }
+                    notEmpty: {}
                 }
             },
             product_name: {
-                message: 'The product name is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The product name is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        max: 255,
-                        message: 'The product name must be less than 255 characters long'
-                    }
+                    notEmpty: {},
+                    stringLength: {max: 255}
                 }
             },
             product_description: {
-                message: 'The product description is not valid',
                 validators: {
-                    stringLength: {
-                        max: 1024,
-                        message: 'The product description must be less than 1024 characters long'
-                    }
+                    stringLength: {max: 1024}
                 }
             }
         }
@@ -519,26 +405,15 @@ function FormValidator() {
     $('#feed-fb-form').bootstrapValidator({
         fields: {
             message: {
-                message: 'The message is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The message is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        max: 10000,
-                        message: 'The message must be less than 10000 characters long'
-                    }
+                    notEmpty: {},
+                    stringLength: {max: 10000}
                 }
             },
             link: {
-                message: 'The link is not valid',
                 validators: {
-                    notEmpty: {
-                        message: 'The link is required and can\'t be empty'
-                    },
-                    uri: {
-                        message: 'The link is not a valid URL'
-                    }
+                    notEmpty: {},
+                    uri: {}
                 }
             }
         }

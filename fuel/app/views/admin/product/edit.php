@@ -14,7 +14,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Edit Product</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.edit_product'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -30,37 +30,37 @@
                     <div class="form-group text-center">
                         <div class="col-sm-12">
                             <button class="btn btn-primary <?php echo $product['status'] === 1 ? '' : 'disabled'; ?>"
-                                    type="button" id="feed-fb-btn" data-id="<?php echo $product['id']; ?>">Feed FB</button>
+                                    type="button" id="feed-fb-btn" data-id="<?php echo $product['id']; ?>"><?php echo Fuel\Core\Lang::get('button.feed_fb'); ?></button>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Status</label>
+                        <label class="col-sm-3 control-label"><?php echo Fuel\Core\Lang::get('label.status'); ?></label>
                         <div class="col-sm-4">
                             <label class="switch-light well" data-id="<?php echo $product['id']; ?>">
                                 <input type="checkbox" name="status" <?php echo $product['status'] === 1 ? 'checked' : ''; ?>>
                                 <span>
-                                    <span>Hide</span>
-                                    <span>Show</span>
+                                    <span><?php echo Fuel\Core\Lang::get('text.hide'); ?></span>
+                                    <span><?php echo Fuel\Core\Lang::get('text.show'); ?></span>
                                 </span>
                                 <a class="btn btn-info"></a>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Highlight</label>
+                        <label class="col-sm-3 control-label"><?php echo Fuel\Core\Lang::get('label.highlight'); ?></label>
                         <div class="col-sm-4">
                             <label class="switch-light well" data-id="<?php echo $product['id']; ?>">
                                 <input type="checkbox" name="highlight" <?php echo $product['highlight'] === 1 ? 'checked' : ''; ?>>
                                 <span>
-                                    <span>Hide</span>
-                                    <span>Show</span>
+                                    <span><?php echo Fuel\Core\Lang::get('text.off'); ?></span>
+                                    <span><?php echo Fuel\Core\Lang::get('text.on'); ?></span>
                                 </span>
                                 <a class="btn btn-warning"></a>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Category</label>
+                        <label class="col-sm-3 control-label"><?php echo Fuel\Core\Lang::get('label.category'); ?></label>
                         <div class="col-sm-9">
                             <select multiple="multiple" class="populate placeholder"
                                     id="category_id" name="category_ids[]">
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Product name</label>
+                        <label class="col-sm-3 control-label"><?php echo Fuel\Core\Lang::get('label.product_name'); ?></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control"
                                    name="product_name"
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="form-styles">Description</label>
+                        <label class="col-sm-3 control-label" for="form-styles"><?php echo Fuel\Core\Lang::get('label.description'); ?></label>
                         <div class="col-sm-9">
                             <textarea class="form-control"
                                       rows="10"
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="form-styles">Description</label>
+                        <label class="col-sm-3 control-label" for="form-styles"><?php echo Fuel\Core\Lang::get('label.information'); ?></label>
                         <div class="col-sm-9">
                             <textarea class="form-control"
                                       rows="10"
@@ -99,7 +99,7 @@
                     </div>
                     <div class="form-group text-center panel-heading">
                         <input type="hidden" name="id" value="<?php echo $product['id']; ?>"/>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.submit'); ?></button>
                     </div>
                 </form>
             </div>
@@ -110,7 +110,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Main Photo</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.main_photo'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -128,7 +128,7 @@
                     </div>
                     <div class="form-group text-center panel-heading">
                         <input type="hidden" name="id" value="<?php echo $product['id']; ?>"/>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.submit'); ?></button>
                     </div>
                 </form>
             </div>
@@ -139,7 +139,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Create Sub Photo</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.create_sub_photo'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -157,7 +157,7 @@
                     </div>
                     <div class="form-group text-center panel-heading">
                         <input type="hidden" name="id" value="<?php echo $product['id']; ?>"/>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.submit'); ?></button>
                     </div>
                 </form>
             </div>
@@ -168,7 +168,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Sub Photo</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.sub_photo'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -181,8 +181,8 @@
                 <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
                     <thead>
                         <tr>
-                            <th class="text-center">Photo</th>
-                            <th class="col-sm-1 text-center">Action</th>
+                            <th class="text-center"><?php echo Fuel\Core\Lang::get('title.photo'); ?></th>
+                            <th class="col-sm-1 text-center"><?php echo Fuel\Core\Lang::get('title.action'); ?></th>
                         </tr>
                     </thead>
                     <tbody id="sub-photo-list" class="sortable" data-id="<?php echo $product['id']; ?>">
@@ -192,7 +192,7 @@
                                     <img class="img-rounded" src="<?php echo $photo['s']; ?>">
                                 </td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-danger delete-btn">Delete</button>
+                                    <button type="button" class="btn btn-danger delete-btn"><?php echo Fuel\Core\Lang::get('button.delete'); ?></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -209,7 +209,7 @@
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
     </div>
     <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
-    <div><i class="fa fa-upload icon-white"></i> Select file</div>
+    <div><i class="fa fa-upload icon-white"></i> <?php echo Fuel\Core\Lang::get('text.select_file'); ?></div>
     </div>
     <div class="col-sm-12 main-icon">
     <br>
@@ -218,7 +218,7 @@
     <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
     <li>
     <div class="qq-upload-settings">
-    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#"><?php echo Fuel\Core\Lang::get('text.cancel'); ?></a>
     </div>
     <div class="qq-progress-bar-container-selector">
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
@@ -242,7 +242,7 @@
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
     </div>
     <div class="qq-upload-button-selector qq-upload-button btn btn-primary" style="width: auto;">
-    <div><i class="fa fa-upload icon-white"></i> Select file</div>
+    <div><i class="fa fa-upload icon-white"></i> <?php echo Fuel\Core\Lang::get('text.select_file'); ?></div>
     </div>
     <div class="col-sm-12 main-icon">
     <br>
@@ -251,7 +251,7 @@
     <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
     <li class="col-sm-3">
     <div class="qq-upload-settings">
-    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+    <a id="qq-cancel-link" class="qq-upload-cancel-selector qq-upload-cancel" href="#"><?php echo Fuel\Core\Lang::get('text.cancel'); ?></a>
     </div>
     <div class="qq-progress-bar-container-selector">
     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>

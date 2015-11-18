@@ -14,7 +14,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Product List</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.product_list'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -25,14 +25,14 @@
             </div>
             <div class="box-content">
                 <div class="form-group text-right">
-                    <a class="btn btn-lg btn-primary" href="/admin/product/new">New Product</a>
+                    <a class="btn btn-lg btn-primary" href="/admin/product/new"><?php echo Fuel\Core\Lang::get('button.new_product'); ?></a>
                 </div>
                 <table class="table table-striped table-bordered table-hover table-heading table-datatable no-border-bottom">
                     <thead>
                         <tr>
-                            <th class="text-center">Product</th>
-                            <th class="col-sm-1 text-center">Status</th>
-                            <th class="col-sm-1 text-center">Action</th>
+                            <th class="text-center"><?php echo Fuel\Core\Lang::get('title.product'); ?></th>
+                            <th class="col-sm-1 text-center"><?php echo Fuel\Core\Lang::get('title.status'); ?></th>
+                            <th class="col-sm-1 text-center"><?php echo Fuel\Core\Lang::get('title.action'); ?></th>
                         </tr>
                     </thead>
                     <tbody id="product-list">
@@ -52,7 +52,7 @@
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <a class="btn btn-danger" href="/admin/product/<?php echo $value['id']; ?>">Edit</a>
+                                    <a class="btn btn-danger" href="/admin/product/<?php echo $value['id']; ?>"><?php echo Fuel\Core\Lang::get('button.edit'); ?></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

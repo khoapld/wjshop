@@ -2,6 +2,7 @@
 
 use Fuel\Core\DB;
 use Fuel\Core\Log;
+use Fuel\Core\Lang;
 use Fuel\Core\View;
 use Fuel\Core\Validation;
 use Fuel\Core\Response;
@@ -27,7 +28,6 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $total_page = ceil(Model_Base_Product::count_all() / _DEFAULT_LIMIT_);
         View::set_global('total_page', $total_page);
         $this->data['product'] = Model_Base_Product::get_all();
-        $this->template->title = 'Product Page';
         $this->template->content = View::forge($this->layout . '/product/index', $this->data);
     }
 
@@ -40,14 +40,12 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $total_page = ceil(Model_Base_Product::admin_count_by_category($category_id) / _DEFAULT_LIMIT_);
         View::set_global('total_page', $total_page);
         $this->data['product'] = Model_Base_Product::admin_get_by_category($category_id);
-        $this->template->title = 'Product Page';
         $this->template->content = View::forge($this->layout . '/product/index', $this->data);
     }
 
     public function action_new()
     {
         $this->data['category'] = Model_Base_Category::get_all();
-        $this->template->title = 'Add Product Page';
         $this->template->content = View::forge($this->layout . '/product/new', $this->data);
     }
 
@@ -60,7 +58,6 @@ class Controller_Admin_Product extends Controller_Base_Admin
         $this->data['product'] = Model_Base_Product::get_one($id);
         $this->data['product']['category'] = Model_Base_ProductCategory::get_by('category_id', 'product_id', $id);
         $this->data['product']['sub_photo'] = Model_Base_Product::get_sub_photo($id);
-        $this->template->title = 'Edit Product Page';
         $this->template->content = View::forge($this->layout . '/product/edit', $this->data);
     }
 
@@ -82,10 +79,10 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('category_ids', 'Category list', 'required');
-        $val->add_field('product_name', 'Product name', 'required|max_length[255]');
-        $val->add_field('product_description', 'Product Description', 'trim|max_length[1024]');
-        $val->add_field('product_info', 'Product Info', 'trim|max_length[10000]');
+        $val->add_field('category_ids', Lang::get('label.category'), 'required');
+        $val->add_field('product_name', Lang::get('label.product_name'), 'required|max_length[255]');
+        $val->add_field('product_description', Lang::get('label.description'), 'trim|max_length[1024]');
+        $val->add_field('product_info', Lang::get('label.information'), 'trim|max_length[10000]');
         if ($val->run()) {
             DB::start_transaction();
             $category_ids = $val->validated('category_ids');
@@ -106,17 +103,16 @@ class Controller_Admin_Product extends Controller_Base_Admin
                 $upload = Model_Service_Upload::run('product', $photo_props);
                 if (empty($upload['error'])) {
                     DB::commit_transaction();
-                    Log::write('NOTICE', 'Create product success', static::$method);
                     $this->data['success'] = true;
                     $this->data['product']['id'] = $product_id;
-                    $this->data['msg'] = 'Update photo success';
+                    $this->data['msg'] = Lang::get('notice.upload.save_product_success');
                 } else {
                     DB::rollback_transaction();
                     $this->data['msg'] = $upload['error'];
                 }
             } else {
                 DB::rollback_transaction();
-                $this->data['msg'] = 'Create product error';
+                $this->data['msg'] = Lang::get($this->controller . '.' . $this->action . '.error');
             }
         } else {
             $this->data['errors'] = $val->error_message();
@@ -129,11 +125,11 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('id', 'Product', 'required|valid_product');
-        $val->add_field('category_ids', 'Category list', 'required');
-        $val->add_field('product_name', 'Product name', 'required|max_length[255]');
-        $val->add_field('product_description', 'Product Description', 'trim|max_length[1024]');
-        $val->add_field('product_info', 'Product Info', 'trim|max_length[10000]');
+        $val->add_field('id', Lang::get('label.product'), 'required|valid_product');
+        $val->add_field('category_ids', Lang::get('label.category'), 'required');
+        $val->add_field('product_name', Lang::get('label.product_name'), 'required|max_length[255]');
+        $val->add_field('product_description', Lang::get('label.description'), 'trim|max_length[1024]');
+        $val->add_field('product_info', Lang::get('label.information'), 'trim|max_length[10000]');
         if ($val->run()) {
             DB::start_transaction();
             $product_id = $val->validated('id');
@@ -149,11 +145,10 @@ class Controller_Admin_Product extends Controller_Base_Admin
             if (Model_Base_Product::update($product_id, $product_props) &&
                 Model_Base_ProductCategory::update($product_id, $category_ids)) {
                 DB::commit_transaction();
-                Log::write('NOTICE', 'Create product success', static::$method);
-                $this->data['success'] = 'Update product success';
+                $this->data['success'] = Lang::get($this->controller . '.' . $this->action . '.success');
             } else {
                 DB::rollback_transaction();
-                $this->data['error'] = 'Update product error';
+                $this->data['error'] = Lang::get($this->controller . '.' . $this->action . '.error');
             }
         } else {
             $this->data['errors'] = $val->error_message();
@@ -166,7 +161,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('id', 'Product', 'required|valid_product');
+        $val->add_field('id', Lang::get('label.product'), 'required|valid_product');
         if ($val->run()) {
             $props = array(
                 'type' => 'main_photo',
@@ -175,7 +170,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
             $upload = Model_Service_Upload::run('product', $props);
             if (empty($upload['error'])) {
                 $this->data['success'] = true;
-                $this->data['msg'] = 'Update photo success';
+                $this->data['msg'] = Lang::get($this->controller . '.' . $this->action . '.success');
                 $this->data['photo_name'] = $upload['photo_name'];
             } else {
                 $this->data['msg'] = $upload['error'];
@@ -191,7 +186,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('id', 'Product', 'required|valid_product');
+        $val->add_field('id', Lang::get('label.product'), 'required|valid_product');
         if ($val->run()) {
             $props = array(
                 'type' => 'sub_product_photo',
@@ -200,7 +195,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
             $upload = Model_Service_Upload::run('photo', $props);
             if (empty($upload['error'])) {
                 $this->data['success'] = true;
-                $this->data['msg'] = 'Update photo success';
+                $this->data['msg'] = Lang::get($this->controller . '.' . $this->action . '.success');
                 $this->data['photo_id'] = $upload['photo_id'];
                 $this->data['photo_name'] = $upload['photo_name'];
             } else {
@@ -217,8 +212,8 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('status', 'Status', 'required|valid_product_status');
-        $val->add_field('product_id', 'Product', 'required|valid_product');
+        $val->add_field('status', Lang::get('label.status'), 'required|valid_product_status');
+        $val->add_field('product_id', Lang::get('label.product'), 'required|valid_product');
         if ($val->run()) {
             Model_Base_Product::update($val->validated('product_id'), array('status' => $val->validated('status')));
             $this->data['success'] = true;
@@ -233,8 +228,8 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('highlight', 'Highlight', 'required|valid_product_highlight');
-        $val->add_field('product_id', 'Product', 'required|valid_product');
+        $val->add_field('highlight', Lang::get('label.highlight'), 'required|valid_product_highlight');
+        $val->add_field('product_id', Lang::get('label.product'), 'required|valid_product');
         if ($val->run()) {
             Model_Base_Product::update($val->validated('product_id'), array('highlight' => $val->validated('highlight')));
             $this->data['success'] = true;
@@ -249,8 +244,8 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('photo_id', 'Photo', 'required|valid_photo');
-        $val->add_field('product_id', 'Product', 'required|valid_product');
+        $val->add_field('photo_id', Lang::get('label.photo'), 'required|valid_photo');
+        $val->add_field('product_id', Lang::get('label.product'), 'required|valid_product');
         if ($val->run()) {
             $photo_id = $val->validated('photo_id');
             $photo_name = Model_Photo::find($photo_id)->photo_name;
@@ -269,7 +264,7 @@ class Controller_Admin_Product extends Controller_Base_Admin
     {
         $val = Validation::forge();
         $val->add_callable('MyRules');
-        $val->add_field('photo', 'Photo', 'required');
+        $val->add_field('photo', Lang::get('label.photo'), 'required');
         if ($val->run()) {
             $rank = 1;
             foreach ($val->validated('photo') as $value) {

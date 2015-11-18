@@ -14,7 +14,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-arrows"></i>
-                    <span>Configuration</span>
+                    <span><?php echo Fuel\Core\Lang::get('title.configuration'); ?></span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -26,50 +26,50 @@
             <div class="box-content">
                 <form id="update-config-form" method="post" action="<?php echo \Fuel\Core\Uri::create('/admin/dashboard/update_config', array(), array()); ?>" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Maintenance</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.maintenance'); ?></label>
                         <div class="col-sm-4">
                             <label class="switch-light well">
                                 <input type="checkbox" name="maintenance" <?php echo $config->maintenance != 1 ? '' : 'checked'; ?>>
                                 <span>
-                                    <span>OFF</span>
-                                    <span>ON</span>
+                                    <span><?php echo Fuel\Core\Lang::get('text.off'); ?></span>
+                                    <span><?php echo Fuel\Core\Lang::get('text.on'); ?></span>
                                 </span>
                                 <a class="btn btn-danger"></a>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Shop name</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.shop_name'); ?></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="shop_name" value="<?php echo $config->shop_name; ?>" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">FB URL</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.fb_url'); ?></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="fb_url" value="<?php echo $config->fb_url; ?>" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Email</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.email'); ?></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="email" value="<?php echo $config->email; ?>" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Telephone</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.telephone'); ?></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="telephone" value="<?php echo $config->telephone; ?>" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Address</label>
+                        <label class="col-sm-4 control-label"><?php echo Fuel\Core\Lang::get('label.address'); ?></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="address" value="<?php echo $config->address; ?>" />
                         </div>
                     </div>
                     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary"><?php echo Fuel\Core\Lang::get('button.update'); ?></button>
                     </div>
                 </form>
             </div>
