@@ -32,8 +32,8 @@ echo Asset::js(array(
                         var html = '';
                         $.each(data.products, function (index, value) {
                             html += ' \
-                                    <div class="col-sm-4"> \
-                                        <a href="/product/' + value.id + '"> \
+                                    <div class="col-sm-3"> \
+                                        <a href="/product/' + value.code + '"> \
                                             <div class="product-image-wrapper"> \
                                                 <div class="single-products"> \
                                                     <div class="productinfo"> \
